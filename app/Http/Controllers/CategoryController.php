@@ -43,7 +43,8 @@ class CategoryController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->back()->withSuccess('success', 'Catégorie enregistrée avec succès.');
+        return redirect()->back()->withMessage('Catégorie enregistrée avec succès.');
+
     }
 
     /**
@@ -83,7 +84,7 @@ class CategoryController extends Controller
             'description' => $request->description
         ]);
 
-        return redirect()->route('categories.index')->withSuccess('success', 'Catégorie modifiée avec succès.');
+        return redirect()->route('categories.index')->withMessage('Catégorie modifiée avec succès.');
     }
 
     /**
@@ -96,6 +97,6 @@ class CategoryController extends Controller
     {
         Category::where('id', $id)->delete();
 
-        return redirect()->route('categories.index')->withSuccess('success', 'Catégorie supprimée avec succès.');
+        return redirect()->route('categories.index')->withMessage('Catégorie supprimée avec succès.');
     }
 }

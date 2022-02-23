@@ -52,7 +52,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h3 class="title1">Modifier Catégorie</h3>
+					<h3 class="title1">Modifier Produit</h3>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
@@ -60,21 +60,54 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                         @endif
 						<div class="form-title">
-							<h4>Modifier cette catégorie de produits:</h4>
+							<h4>Modifier ce produit:</h4>
 						</div>
 						<div class="form-body">
-						 <form method="POST" action="{{ route('categories.update', $category->id)}}">
+						<form method="POST" action="{{ route('products.update', $product->id)}}" enctype="multipart/form-data">
                             @csrf
                             {{ method_field('PATCH') }}
                             <div class="form-group">
-                                <label for="">Libellé</label>
-                                <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
+                                <label for="">Nom du Produit</label>
+                                <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper le nom du produit" required value="{{ $product['nomprod']}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Catégorie</label>
+                                <select class="form-control" name="categorie_id" required>
+                                    <option selected hidden></option>
+                                    @foreach($categories as $categorie)
+                                        <option value="{{ $categorie['id']}}">{{ $categorie['libelle']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Image du Produit</label>
+                                <input type="file" class="form-control" id="image" name="image"  accept=".jpg, .png, .jpeg" required value="{{ $product['image']}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Nombre de PV</label>
+                                <input type="text" class="form-control" id="nbpv" name="nbpv" required value="{{ $product['nbpv']}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Prix Partenaire</label>
+                                <input type="number" class="form-control" id="prixpartenaire" name="prixpartenaire" required value="{{ $product['prixpartenaire']}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Prix Client</label>
+                                <input type="number" class="form-control" id="prixclient" name="prixclient" required value="{{ $product['prixclient']}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Status</label>
+                                <input type="text" class="form-control" id="status" name="status" required value="{{ $product['status']}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Quantité en stock</label>
+                                <input type="number" class="form-control" id="qte" name="qte" required value="{{ $product['qte']}}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description</label>
-                                <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
+                                <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :">{{ $product['description']}}</textarea>
                             </div>
-                            <button type="submit" class="btn btn-default">Modifier</button>
+                            <button type="submit" class="btn btn-default">Créer</button>
                         </form>
 						</div>
 					</div>

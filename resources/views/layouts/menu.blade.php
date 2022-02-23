@@ -12,7 +12,7 @@
 									<a href="{{route('categories.index')}}">Liste des Catégories</a>
 								</li>
                                 <li>
-									<a href="{{route('categories.store')}}">Ajouter Produit</a>
+									<a href="{{route('categories.create')}}">Ajouter Catégorie</a>
 								</li>
 
                                 <!-- <li>

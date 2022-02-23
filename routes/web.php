@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\http\controllers\HomeController;
 use App\http\controllers\UserController;
 use App\http\controllers\CategoryController;
+use App\http\controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,5 +37,6 @@ Route::middleware(['auth'])->group(function () {
 
         //crud category
         Route::resource('admin/categories', CategoryController::class);
+        Route::resource('admin/products', ProductController::class);
     });
 });

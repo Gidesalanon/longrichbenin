@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Modifier une categorie :: Admin</title>
+<title>Longrich Bénin | Liste de produits :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -51,33 +51,73 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- main content start-->
 		<div id="page-wrapper">
 			<div class="main-page">
-				<div class="forms">
-					<h3 class="title1">Modifier Catégorie</h3>
-					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+				<div class="tables">
+					<h3 class="title1">Nos Produits</h3>
+					<div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
-						<div class="form-title">
-							<h4>Modifier cette catégorie de produits:</h4>
-						</div>
-						<div class="form-body">
-						 <form method="POST" action="{{ route('categories.update', $category->id)}}">
-                            @csrf
-                            {{ method_field('PATCH') }}
-                            <div class="form-group">
-                                <label for="">Libellé</label>
-                                <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Description</label>
-                                <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
-                            </div>
-                            <button type="submit" class="btn btn-default">Modifier</button>
-                        </form>
-						</div>
+						<h4>Liste de nos produits</h4>
+						<table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th>Nom</th>
+                                    <th>Catégorie</th>
+                                    <th>PV</th>
+                                    <th>Prix Partenaire</th>
+                                    <th>Prix Client</th>
+                                    <th>Status</th>
+                                    <th>Quantité</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($products as $product)
+                                <tr>
+                                    <th scope="row">{{ $product->id }}</th>
+                                    <td><img src="{{ asset('imgProd/'.$product->image) }}" class="img-responsive"></td>
+                                    <td>{{ $product->nomprod }}</td>
+                                    <td>{{ $product->nom_categorie }}</td>
+                                    <td>{{ $product->nbpv }}</td>
+                                    <td>{{ $product->prixpartenaire }}</td>
+                                    <td>{{ $product->prixclient }}</td>
+                                    <td>{{ $product->status }}</td>
+                                    <td>{{ $product->qte }}</td>
+                                    <td>{{ $product->description }}</td>
+
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ route('products.edit', $product->id) }}">
+                                                <button type="button" class="btn btn-primary" title="Modifier">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                            </a>
+
+                                            <a href="#" data-toggle="modal" data-target="#modalDeleteProduct{{ $product->id}}">
+                                                <button type="button" class="btn btn-danger" title="Supprimer">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                    @include('product.delete')
+                                </tr>
+                            </tbody>
+                            @empty
+                                <tr>
+                                    <td colspan="4">Aucun Produit ajouté pour le moment.</td>
+                                </tr>
+                            @endforelse
+                        </table>
+
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -110,6 +150,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<script src="{{asset('js_admin/scripts.js')}}"></script>
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
-   <script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+	<script src="{{asset('js_admin/bootstrap.js')}}"> </script>
 </body>
 </html>

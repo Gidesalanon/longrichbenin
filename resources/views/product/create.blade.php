@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Modifier une categorie :: Admin</title>
+<title>Longrich Bénin | Nouveau produit :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -52,7 +52,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h3 class="title1">Modifier Catégorie</h3>
+					<h3 class="title1">Nouveau Produit</h3>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
@@ -60,21 +60,53 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                         @endif
 						<div class="form-title">
-							<h4>Modifier cette catégorie de produits:</h4>
+							<h4>Créer un nouveau produit:</h4>
 						</div>
 						<div class="form-body">
-						 <form method="POST" action="{{ route('categories.update', $category->id)}}">
+						 <form method="POST" action="{{ route('products.store')}}" enctype="multipart/form-data">
                             @csrf
-                            {{ method_field('PATCH') }}
                             <div class="form-group">
-                                <label for="">Libellé</label>
-                                <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
+                                <label for="">Nom du Produit</label>
+                                <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper le nom du produit" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Catégorie</label>
+                                <select class="form-control" name="categorie_id" required>
+                                    <option selected hidden></option>
+                                    @foreach($categories as $categorie)
+                                    <option value="{{ $categorie['id']}}">{{ $categorie['libelle']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Image du Produit</label>
+                                <input type="file" class="form-control" id="image" name="image"  accept=".jpg, .png, .jpeg" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Nombre de PV</label>
+                                <input type="number" class="form-control" id="nbpv" name="nbpv" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Prix Partenaire</label>
+                                <input type="number" class="form-control" id="prixpartenaire" name="prixpartenaire" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Prix Client</label>
+                                <input type="number" class="form-control" id="prixclient" name="prixclient" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Status</label>
+                                <input type="text" class="form-control" id="status" name="status" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Quantité en stock</label>
+                                <input type="number" class="form-control" id="qte" name="qte" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description</label>
-                                <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
+                                <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" ></textarea>
                             </div>
-                            <button type="submit" class="btn btn-default">Modifier</button>
+                            <button type="submit" class="btn btn-default">Créer</button>
                         </form>
 						</div>
 					</div>
@@ -91,14 +123,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 				showLeftPush = document.getElementById( 'showLeftPush' ),
 				body = document.body;
-
 			showLeftPush.onclick = function() {
 				classie.toggle( this, 'active' );
 				classie.toggle( body, 'cbp-spmenu-push-toright' );
 				classie.toggle( menuLeft, 'cbp-spmenu-open' );
 				disableOther( 'showLeftPush' );
 			};
-
 			function disableOther( button ) {
 				if( button !== 'showLeftPush' ) {
 					classie.toggle( showLeftPush, 'disabled' );
