@@ -10,11 +10,27 @@
 							<a href="#"><i class="fa fa-book nav_icon"></i>Nos Produits <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
-									<a href="general.html">Liste des Produits<span class="nav-badge-btm">08</span></a>
+									<a href="{{route('products.index')}}">Liste des Produits<span class="nav-badge-btm">08</span></a>
 								</li>
 
 							</ul>
 							<!-- /nav-second-level -->
+						</li>
+
+                        <li>
+							<a href="#"><i class="fa fa-user nav_icon"></i>Gérer Commande<span class="nav-badge-btm">02</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level collapse">
+								<li>
+									<a href="">Liste des Commandes</a>
+								</li>
+								<li>
+									<a href="typography.html">Ajouter Commande</a>
+								</li>
+							</ul>
+							<!-- //nav-second-level -->
+						</li>
+                        <li>
+							<a href=""><i class="fa fa-dollar nav_icon"></i>Faire mes points <span class="nav-badge-btm">08</span></a>
 						</li>
 					</ul>
 					<!-- //sidebar-collapse -->

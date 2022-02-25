@@ -25,14 +25,10 @@
 							<a href="#"><i class="fa fa-book nav_icon"></i>Nos Produits <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
-									<a href="general.html">Liste des Produits<span class="nav-badge-btm">08</span></a>
+									<a href="{{route('products.index')}}">Liste des Produits<span class="nav-badge-btm">08</span></a>
 								</li>
 								<li>
-									<a href="typography.html">Ajouter Produit</a>
-								</li>
-
-                                <li>
-									<a href="typography.html">Modifier Produit</a>
+									<a href="{{route('products.create')}}">Ajouter Produit</a>
 								</li>
 
 							</ul>

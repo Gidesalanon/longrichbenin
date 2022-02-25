@@ -5,6 +5,8 @@ use App\http\controllers\HomeController;
 use App\http\controllers\UserController;
 use App\http\controllers\CategoryController;
 use App\http\controllers\ProductController;
+use App\http\controllers\OrderController;
+use App\Models\Task;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['approved'])->group(function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+        Route::post('orders', [OrderController::class, 'store']);
+        Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
     });
 
     Route::middleware(['admin'])->group(function () {
