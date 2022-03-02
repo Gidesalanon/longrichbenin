@@ -71,6 +71,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper le nom du produit" required value="{{ $product['nomprod']}}">
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputPassword1">Stock</label>
+                                <select class="form-control" name="stock_id" required>
+                                    <option selected hidden></option>
+                                    @foreach($stocks as $stock)
+                                        <option value="{{ $stock['id']}}">{{ $stock['libelle']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputPassword1">Catégorie</label>
                                 <select class="form-control" name="categorie_id" required>
                                     <option selected hidden></option>
@@ -96,11 +105,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <input type="number" class="form-control" id="prixclient" name="prixclient" required value="{{ $product['prixclient']}}">
                             </div>
                             <div class="form-group">
-                                <label for="">Status</label>
-                                <input type="text" class="form-control" id="status" name="status" required value="{{ $product['status']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Quantité en stock</label>
+                                <label for="">Quantité</label>
                                 <input type="number" class="form-control" id="qte" name="qte" required value="{{ $product['qte']}}">
                             </div>
                             <div class="form-group">

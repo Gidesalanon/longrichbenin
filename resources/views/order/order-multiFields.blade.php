@@ -8,7 +8,7 @@
 </head>
 <body>
                 <div class="card-body">
-                    <form action="{{ url('orders') }}" method="POST">
+                <form action="{{ url('orders') }}" method="POST">
                     @csrf
                         @if ($errors->any())
                         <div class="alert alert-danger">
@@ -27,7 +27,7 @@
                         @endif
                         <table class="table table-bordered" id="dynamicAddRemove">
                             <tr>
-                                <th>Produit(s)</th>
+                                <th>Produit</th>
                                 <th>Qté</th>
                                 <th>Prix</th>
                                 <th>Description</th>
@@ -35,32 +35,69 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <select class="form-control" name="moreFields[0][product_id]" id="select_01" required>
+                                    <select name="moreFields[0][product_id]" class="form-control b"
+                                        oninput="document.getElementById('input_price_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];"
+                                        id="select_product_0" required>
                                             <option selected hidden></option>
                                             @foreach($products as $product)
-                                            <option value="{{ $product['id']}}">{{ $product['nomprod']}}</option>
+                                            <option value="{{ $product['id']}}|{{ $product['prixclient']}}">{{ $product['nomprod']}}</option>
                                             @endforeach
                                     </select>
                                 </td>
-                                <td><input type="number" name="moreFields[0][qte]" placeholder="Taper votre Quantité" class="form-control" /></td>
                                 <td>
-                                    <input type="number" name="moreFields[0][prix]" class="form-control1" value="{{$product['prixclient']}}" disabled/>
+                                    <input type="number" id="input_qte_0" oninput="document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]" placeholder="Taper votre Quantité" class="form-control c" />
+                                </td>
+                                <td>
+                                    <input type="number" id="input_price_0" name="moreFields[0][prix]" class="form-control1 a" disabled/>
                                 </td>
                                 <td><textarea name="moreFields[0][description]" placeholder="Laisser un Avis" class="form-control"></textarea></td>
                                 <td><button type="button" name="add" id="add-btn" class="btn btn-success"><i class="fa fa-plus"></i></button></td>
 
                             </tr>
                         </table>
-                        <button type="submit" class="btn btn-success">Enregistrer</button>
+                                <button type="submit" class="btn btn-success">Save</button>
                     </form>
                 </div>
-
         <script type="text/javascript">
-            var i = 0;
+            let i = 0;
             $("#add-btn").click(function(){
             ++i;
-            $("#dynamicAddRemove").append('<tr><td><select name="moreFields['+i+'][product_id]" class="form-control"required><option selected hidden></option>@foreach($products as $product)<option value="{{ $product['id']}}">{{ $product['nomprod']}}</option>@endforeach</select></td><td><input type="number" name="moreFields['+i+'][qte]" placeholder="Taper votre Quantité" class="form-control" /></td><td><input type="number" name="moreFields['+i+'][prix]" class="form-control" disabled/></td><td><textarea name="moreFields['+i+'][description]" placeholder="Laisser un Avis" class="form-control"></textarea></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fa fa-times"></i></button></td><p><h4 class="title1" style="color:#e94e02;">Total:0</h4></p></tr>');
-            });
+            $("#dynamicAddRemove").append(`
+            <tr>
+                <td>
+                    <select name="moreFields['+i+'][product_id]" id="select_product_`+i+`" class="form-control e"
+                        oninput="document.getElementById('input_price_`+i+`').value=document.getElementById('input_qte_`+i+`').value * document.getElementById('select_product_`+i+`').value.split('|')[1];"
+                        required>
+                        <option selected hidden></option>
+                        @foreach($products as $product)
+                            <option value="{{ $product['id']}}|{{ $product['prixclient']}}">{{ $product['nomprod']}}</option>
+                        @endforeach
+                    </select>
+                </td>
+
+                <td>
+                    <input type="number" id="input_qte_`+i+`"
+                    oninput="document.getElementById('input_price_`+i+`').value=this.value * document.getElementById('select_product_`+i+`').value.split('|')[1];"
+                    name="moreFields['+i+'][qte]"
+                    placeholder="Taper votre Quantité"
+                    class="form-control f" required>
+                </td>
+
+                <td>
+                    <input type="number" id="input_price_`+i+`"
+                    name="moreFields['+i+'][prix]" class="form-control d" disabled>
+                </td>
+
+                <td>
+                    <textarea name="moreFields['+i+'][description]" placeholder="Laisser un Avis" class="form-control"></textarea>
+                </td>
+
+                <td>
+                    <button type="button" class="btn btn-danger remove-tr"><i class="fa fa-times"></i></button>
+                </td>
+            </tr>
+            `);
+        });
             $(document).on('click', '.remove-tr', function(){
             $(this).parents('tr').remove();
             });

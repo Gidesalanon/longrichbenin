@@ -6,6 +6,7 @@ use App\http\controllers\UserController;
 use App\http\controllers\CategoryController;
 use App\http\controllers\ProductController;
 use App\http\controllers\OrderController;
+use App\http\controllers\StockController;
 use App\Models\Task;
 /*
 |--------------------------------------------------------------------------
@@ -43,5 +44,6 @@ Route::middleware(['auth'])->group(function () {
         //crud category
         Route::resource('admin/categories', CategoryController::class);
         Route::resource('admin/products', ProductController::class);
+        Route::resource('admin/stocks', StockController::class);
     });
 });

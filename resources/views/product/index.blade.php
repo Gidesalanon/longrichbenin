@@ -54,11 +54,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 				<div class="tables">
 					<h3 class="title1">Nos Produits</h3>
 					<div class="table-responsive bs-example widget-shadow">
-                        @if (session('message'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('message') }}
-                            </div>
-                        @endif
 						<h4>Liste de nos produits</h4>
 						<table class="table table-bordered">
                             <thead>
@@ -70,9 +65,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>PV</th>
                                     <th>Prix Partenaire</th>
                                     <th>Prix Client</th>
-                                    <th>Status</th>
                                     <th>Quantité</th>
                                     <th>Description</th>
+                                    <th>Stock</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -86,10 +81,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $product->nbpv }}</td>
                                     <td>{{ $product->prixpartenaire }}</td>
                                     <td>{{ $product->prixclient }}</td>
-                                    <td>{{ $product->status }}</td>
                                     <td>{{ $product->qte }}</td>
                                     <td>{{ $product->description }}</td>
-
+                                    <td>{{ $product->nom_stock }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('products.edit', $product->id) }}">
@@ -97,13 +91,11 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                                     <i class="fa fa-edit"></i>
                                                 </button>
                                             </a>
-
                                             <a href="#" data-toggle="modal" data-target="#modalDeleteProduct{{ $product->id}}">
                                                 <button type="button" class="btn btn-danger" title="Supprimer">
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
                                             </a>
-
                                         </div>
                                     </td>
                                     @include('product.delete')
@@ -115,7 +107,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </tr>
                             @endforelse
                         </table>
-
 					</div>
 
 				</div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Stock;
 class ProductController extends Controller
 {
     /**
@@ -15,9 +16,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products')->join('categories', 'categories.id', 'products.categorie_id')
-        ->select('products.*', 'categories.libelle AS nom_categorie')
-        ->get();
+        $products = DB::table('products')
+        ->join('categories', 'categories.id', 'products.categorie_id')
+        ->join('stocks', 'stocks.id', 'products.stock_id')
+        ->select('products.*', 'categories.libelle AS nom_categorie', 'stocks.libelle AS nom_stock')
+        ->orderBy('stock_id', 'asc')->get();
+
         return view('product.index', compact('products'));
     }
 
@@ -29,7 +33,9 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all()->toArray();
-        return view('product.create', compact( 'categories'));
+        $products = Product::all()->toArray();
+        $stocks = Stock::all()->toArray();
+        return view('product.create', compact( 'categories', 'stocks', 'products'));
     }
 
     /**
@@ -58,12 +64,13 @@ class ProductController extends Controller
             'prixclient' => $request->prixclient,
             'qte' => $request->qte,
             'image' => $name,
-            'status' => $request->status,
             'description' => $request->description,
             'categorie_id' => $request->categorie_id,
-        ]);
+            'stock_id' => $request->stock_id,
 
-        return redirect()->back()->withMessage('Produit enregistré avec succès.');
+        ]);
+        toastr()->success('Produit enregistré avec succès.', 'PRODUIT');
+        return redirect()->back();
 
     }
 
@@ -88,8 +95,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all()->toArray();
+        $stocks = Stock::all()->toArray();
         $product = Product::findOrFail($product->id);
-        return view('product.edit', compact('product', 'categories'));
+        return view('product.edit', compact('product', 'categories', 'stocks'));
     }
 
     /**
@@ -119,12 +127,12 @@ class ProductController extends Controller
             'prixclient' => $request->prixclient,
             'qte' => $request->qte,
             'image' => $name,
-            'status' => $request->status,
             'description' => $request->description,
             'categorie_id' => $request->categorie_id,
+            'stock_id' => $request->stock_id,
         ]);
-
-        return redirect()->route('products.index')->withMessage('Produit modifié avec succès');
+        toastr()->success('Produit modifié avec succès.', 'PRODUIT');
+        return redirect()->route('products.index');
     }
 
     /**
@@ -136,7 +144,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::where('id', $id)->delete();
-
-        return redirect()->route('products.index')->withMessage('Produit supprimé avec succès.');
+        toastr()->success('Produit supprimé avec succès.', 'PRODUIT');
+        return redirect()->route('products.index');
     }
 }

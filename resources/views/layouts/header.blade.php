@@ -1,3 +1,7 @@
+@jquery
+@toastr_css
+@toastr_js
+@toastr_render
 <div class="sticky-header header-section ">
 			<div class="header-left">
 				<!--toggle button start-->
