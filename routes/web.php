@@ -7,6 +7,7 @@ use App\http\controllers\CategoryController;
 use App\http\controllers\ProductController;
 use App\http\controllers\OrderController;
 use App\http\controllers\StockController;
+use App\http\controllers\UserManagementController;
 use App\Models\Task;
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
         Route::get('/users/{user_id}/approve', [UserController::class, 'approve'])->name('admin.users.approve');
         Route::delete('/users/{user_id}/destroy', [UserController::class, 'destroy'])->name('admin.users.destroy');
-
+        Route::resource('usermanagements', UserManagementController::class);
         //crud category
         Route::resource('admin/categories', CategoryController::class);
         Route::resource('admin/products', ProductController::class);

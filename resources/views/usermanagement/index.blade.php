@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Gestion des utilisateurs :: Admin</title>
+<title>Longrich Bénin | Liste des Utilisateurs :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -52,43 +52,45 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="tables">
-					<h3 class="title1">Gestion des Utilisateurs</h3>
+					<h3 class="title1">Nos Utilisateurs</h3>
                     @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                     @endif
 					<div class="table-responsive bs-example widget-shadow">
-						<h4>Gérer les Utilisateurs</h4>
+						<h4>Nos Utilisateurs</h4>
 						<table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Code</th>
                                     <th>Nom</th>
                                     <th>Prénom</th>
                                     <th>Email</th>
                                     <th>Adresse</th>
                                     <th>Téléphone</th>
-                                    <th>Date & Heure</th>
+                                    <th>Date Inscription</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($users as $user)
                                 <tr>
-                                    <th scope="row">{{ $user->code }}</th>
-                                    <td>{{ $user->nom }}</td>
-                                    <td>{{ $user->prenom }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->adresse }}</td>
-                                    <td>{{ $user->tel }}</td>
-                                    <td>{{ $user->created_at }}</td>
+                                    <th>{{ $user['id'] }}</th>
+                                    <th scope="row">{{ $user['code'] }}</th>
+                                    <td>{{ $user['nom'] }}</td>
+                                    <td>{{ $user['prenom'] }}</td>
+                                    <td>{{ $user['email'] }}</td>
+                                    <td>{{ $user['adresse'] }}</td>
+                                    <td>{{ $user['tel'] }}</td>
+                                    <td>{{ $user['created_at'] }}</td>
 
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('admin.users.approve', $user->id) }}">
-                                                <button type="button" class="btn btn-primary" title="Approuver">
-                                                    <i class="fa fa-check-circle"></i>
+                                            <a href="{{ route('usermanagements.edit', $user->id) }}">
+                                                <button type="button" class="btn btn-primary" title="Modifier">
+                                                    <i class="fa fa-pencil"></i>
                                                 </button>
                                             </a>
 
@@ -97,17 +99,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
                                             </a>
-
-
                                         </div>
                                     </td>
-                                    @include('layouts.modal_delete')
-
+                                    @include('usermanagement.delete')
                                 </tr>
                             </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="4">Aucun Utilisateur Non Approuvé pour le moment.</td>
+                                    <td colspan="4">Aucun Utilisateur Enregistré pour le moment.</td>
                                 </tr>
                             @endforelse
                         </table>

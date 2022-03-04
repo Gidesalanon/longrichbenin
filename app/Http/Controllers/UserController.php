@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class UserController extends Controller
 {
@@ -25,7 +27,7 @@ class UserController extends Controller
     {
         User::where('id', $user_id)->delete();
 
-        return redirect()->route('admin.users.index')->withMessage('Utilisateur supprimé avec succès');;  // -> resources/views/stocks/index.blade.php
+        return redirect()->route('admin.users.index')->withMessage('Utilisateur supprimé avec succès');  // -> resources/views/stocks/index.blade.php
     }
 
     public function administration(){
