@@ -55,8 +55,8 @@ class LoginController extends Controller
                 return redirect()->route('home');
             }
         }else{
-            return redirect()->route('login')
-                ->with('error','Adresse Email Ou Mot de Passe erroné.');
+            return redirect()->route('login');
+            toastr()->info('Adresse Email Ou Mot de Passe erroné.');
         }
 
     }

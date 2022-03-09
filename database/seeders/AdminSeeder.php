@@ -24,6 +24,7 @@ class AdminSeeder extends Seeder
             'status' => '1', //compte validé
             'password' => bcrypt('adminkdl'),
             'is_admin' => 1, //admin=1 & non admin=0
+            'isban' => '0', //compte activé
         ]);
     }
 }

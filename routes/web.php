@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+Route::group(['middleware' => ['auth','isUser']], function () {
     Route::get('/approval', [HomeController::class, 'approval'])->name('approval');
 
     Route::middleware(['approved'])->group(function () {
@@ -42,9 +42,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users/{user_id}/approve', [UserController::class, 'approve'])->name('admin.users.approve');
         Route::delete('/users/{user_id}/destroy', [UserController::class, 'destroy'])->name('admin.users.destroy');
         Route::resource('usermanagements', UserManagementController::class);
+        Route::get('/usermanagements/{user_id}/disable', [UserManagementController::class, 'isNotBan'])->name('admin.users.disable');
+        Route::get('/usermanagements/{user_id}/enable', [UserManagementController::class, 'isBan'])->name('admin.users.enable');
         //crud category
         Route::resource('admin/categories', CategoryController::class);
         Route::resource('admin/products', ProductController::class);
         Route::resource('admin/stocks', StockController::class);
     });
+
 });

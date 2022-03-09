@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('status')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->nullable();
-            $table->rememberToken();
+            $table->tinyInteger('isban')->default('0');
             $table->timestamps();
         });
     }
@@ -37,6 +37,10 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function(Blueprint $table){
+            $table->dropColumn('control');
+            Schema::dropIfExists('users');
+        });
+
     }
 }

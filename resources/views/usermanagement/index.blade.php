@@ -1,9 +1,3 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -38,6 +32,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
 <script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
+
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -59,7 +54,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                     @endif
 					<div class="table-responsive bs-example widget-shadow">
-						<h4>Nos Utilisateurs</h4>
+						<h4>Gérer vos Utilisateurs</h4>
 						<table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -70,6 +65,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>Email</th>
                                     <th>Adresse</th>
                                     <th>Téléphone</th>
+                                    <th>Status</th>
                                     <th>Date Inscription</th>
                                     <th>Action</th>
                                 </tr>
@@ -77,27 +73,30 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             <tbody>
                                 @forelse ($users as $user)
                                 <tr>
-                                    <th>{{ $user['id'] }}</th>
+                                    <th scope="row">{{ $user['id'] }}</th>
                                     <th scope="row">{{ $user['code'] }}</th>
                                     <td>{{ $user['nom'] }}</td>
                                     <td>{{ $user['prenom'] }}</td>
                                     <td>{{ $user['email'] }}</td>
                                     <td>{{ $user['adresse'] }}</td>
                                     <td>{{ $user['tel'] }}</td>
+                                    <td>
+                                        @if($user['isban'] == 0)
+                                            <a href="{{ route('admin.users.disable', $user->id) }}" title="Désactivé"><span class="label label-info">Activé</span></a>
+                                        @else
+                                            <a href="{{ route('admin.users.enable', $user->id) }}" title="Activé"><span class="label label-danger">Désactivé</span></a>
+                                        @endif
+                                    </td>
                                     <td>{{ $user['created_at'] }}</td>
 
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('usermanagements.edit', $user->id) }}">
-                                                <button type="button" class="btn btn-primary" title="Modifier">
-                                                    <i class="fa fa-pencil"></i>
-                                                </button>
+                                            <a href="{{ route('usermanagements.edit', $user->id) }}" class="nav-badge-btm" title="Modifier">
+                                                <img src="https://img.icons8.com/external-anggara-flat-anggara-putra/19/000000/external-edit-user-interface-anggara-flat-anggara-putra-3.png"/>
                                             </a>
 
                                             <a href="#!" data-toggle="modal" data-target="#modalDeleteUser{{ $user['id']}}">
-                                                <button type="button" class="btn btn-danger" title="Supprimer">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </button>
+                                                <img src="https://img.icons8.com/external-inkubators-gradient-inkubators/19/000000/external-delete-email-inkubators-gradient-inkubators.png"/>
                                             </a>
                                         </div>
                                     </td>

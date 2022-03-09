@@ -92,6 +92,7 @@ class UserManagementController extends Controller
             'tel' => $request->tel,
             'status' => '1',
             'is_admin' => '0',
+            'isban' => '1',
             'password' => Hash::make($request->password),
         ]);
         toastr()->success('Utilisateur modifié avec succès.', 'Succès');
@@ -109,6 +110,22 @@ class UserManagementController extends Controller
         User::where('id', $user_id)->delete();
 
         toastr()->success('Utilisateur supprimé avec succès.', 'Succès');
+        return redirect()->route('usermanagements.index');
+    }
+    //control: desactivé user
+    public function isNotBan($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $user->update(['isban' => 1]);
+        toastr()->success('Utilisateur Désactivé avec succès.', 'Succès');
+        return redirect()->route('usermanagements.index');
+    }
+    //control: activé user
+    public function isBan($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $user->update(['isban' => 0]);
+        toastr()->success('Utilisateur activé avec succès.', 'Succès');
         return redirect()->route('usermanagements.index');
     }
 }

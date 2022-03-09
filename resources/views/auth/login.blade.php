@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V15</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -28,16 +27,17 @@
 <!--===============================================================================================-->
 </head>
 <body>
-
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
+                @if (session('status'))
+                    <div class="alert alert-danger">{{ session('status') }}</div>
+                @endif
 				<div class="login100-form-title" style="background-image: url(images_login/bg-01.jpg);">
 					<span class="login100-form-title-1">
 						Se connecter
 					</span>
 				</div>
-
 				<form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                     @csrf
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
