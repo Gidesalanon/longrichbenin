@@ -82,9 +82,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $user['tel'] }}</td>
                                     <td>
                                         @if($user['isban'] == 0)
-                                            <a href="{{ route('admin.users.disable', $user->id) }}" title="Désactivé"><span class="label label-info">Activé</span></a>
+                                            <a href="{{ route('admin.users.disable', $user->id) }}" title="Désactivé" style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-info">Activé</span></a>
                                         @else
-                                            <a href="{{ route('admin.users.enable', $user->id) }}" title="Activé"><span class="label label-danger">Désactivé</span></a>
+                                            <a href="{{ route('admin.users.enable', $user->id) }}" title="Activé" style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-danger">Désactivé</span></a>
                                         @endif
                                     </td>
                                     <td>{{ $user['created_at'] }}</td>
@@ -92,11 +92,11 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('usermanagements.edit', $user->id) }}" class="nav-badge-btm" title="Modifier">
-                                                <img src="https://img.icons8.com/external-anggara-flat-anggara-putra/19/000000/external-edit-user-interface-anggara-flat-anggara-putra-3.png"/>
+                                                <img src="https://img.icons8.com/external-anggara-flat-anggara-putra/19/000000/external-edit-user-interface-anggara-flat-anggara-putra-3.png" style="box-shadow: 5px 5px 5px gray; border-radius:20%"/>
                                             </a>
 
                                             <a href="#!" data-toggle="modal" data-target="#modalDeleteUser{{ $user['id']}}">
-                                                <img src="https://img.icons8.com/external-inkubators-gradient-inkubators/19/000000/external-delete-email-inkubators-gradient-inkubators.png"/>
+                                                <img src="https://img.icons8.com/external-inkubators-gradient-inkubators/19/000000/external-delete-email-inkubators-gradient-inkubators.png" style="box-shadow: 5px 5px 5px gray; border-radius:20%"/>
                                             </a>
                                         </div>
                                     </td>
