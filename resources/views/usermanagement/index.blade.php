@@ -53,10 +53,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {{ session('message') }}
                             </div>
                     @endif
-					<div class="table-responsive bs-example widget-shadow">
+					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray;">
 						<h4>Gérer vos Utilisateurs</h4>
 						<table class="table table-bordered">
-                            <thead>
+                            <thead style="box-shadow: 5px 5px 5px gray;">
                                 <tr>
                                     <th>#</th>
                                     <th>Code</th>
