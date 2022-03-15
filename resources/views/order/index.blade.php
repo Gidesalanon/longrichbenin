@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Liste de Commandes :: Admin</title>
+<title>Longrich Bénin | Liste des Commandes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -59,49 +59,46 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {{ session('message') }}
                             </div>
                         @endif
-						<h4>Liste de commande</h4>
+                            <table style="width:100%">
+                                <tr>
+                                    <th><h4>Liste de commande</h4></th>
+                                    <th><h4>Total:</h4></th>
+                                </tr>
+                            </table>
+
+
 						<table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Image</th>
-                                    <th>Nom</th>
+                                    <th>Nom du Produit</th>
                                     <th>Quantité</th>
-                                    <th>Description</th>
+                                    <th>Prix</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($products as $product)
-                                <tr>
-                                    <th scope="row">{{ $product->id }}</th>
-                                    <td><img src="{{ asset('imgProd/'.$product->image) }}" class="img-responsive"></td>
-                                    <td>{{ $product->nomprod }}</td>
-                                    <td>{{ $product->nom_categorie }}</td>
-                                    <td>{{ $product->nbpv }}</td>
-                                    <td>{{ $product->prixpartenaire }}</td>
+                                @forelse ($orders as $order)
+                                    <tr>
+                                    <th scope="row">{{ $order->id }}</th>
+                                    <td>{{ $order->nom_produit }}</td>
+                                    <td>{{ $order->qte }}</td>
+                                    <td>{{ $order->prix }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('products.edit', $product->id) }}">
-                                                <button type="button" class="btn btn-primary" title="Modifier">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                            </a>
-
-                                            <a href="#" data-toggle="modal" data-target="#modalDeleteProduct{{ $product->id}}">
+                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $order->id}}">
                                                 <button type="button" class="btn btn-danger" title="Supprimer">
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
                                             </a>
-
                                         </div>
                                     </td>
-                                    @include('product.delete')
+                                    @include('order.delete')
                                 </tr>
                             </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="4">Aucune Commande enregistrée pour le moment.</td>
+                                    <td colspan="4">Aucune commande ajoutée pour le moment.</td>
                                 </tr>
                             @endforelse
                         </table>

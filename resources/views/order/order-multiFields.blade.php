@@ -7,6 +7,16 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+<style>
+select#select_product_0,input#input_qte_0,input#input_p_0 {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+td{
+    padding:0 !important;
+}
+</style>
                 <div class="card-body">
                 <form action="{{ url('orders') }}" method="POST">
                     @csrf
@@ -30,13 +40,15 @@
                                 <th>Produit</th>
                                 <th>Qté</th>
                                 <th>Prix</th>
-                                <th>Description</th>
                                 <th>Action</th>
                             </tr>
                             <tr>
                                 <td>
                                     <select name="moreFields[0][product_id]" class="form-control b"
-                                        oninput="document.getElementById('input_price_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];"
+                                        oninput="
+                                        document.getElementById('input_p_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
+                                        document.getElementById('input_price_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
+                                        "
                                         id="select_product_0" required>
                                             <option selected hidden></option>
                                             @foreach($products as $product)
@@ -45,17 +57,29 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" id="input_qte_0" oninput="document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]" placeholder="Taper votre Quantité" class="form-control c" />
+                                    <input type="number" id="input_qte_0" oninput="
+                                    document.getElementById('input_p_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]"
+                                    document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]
+                                    " placeholder="Taper votre Quantité" class="form-control c" />
                                 </td>
+
+                                const array = moreFields[0];
+                                let sum = 0;
+
+                                for (let i = 0; i < array.length; i++) {
+                                    sum += array[i];
+                                }
+                                console.log(sum);
+
                                 <td>
-                                    <input type="number" id="input_price_0" name="moreFields[0][prix]" class="form-control1 a" disabled/>
+                                    <input type="hidden" id="input_price_0" name="moreFields[0][prix]" class="form-control1 a"/>
+                                    <input type="number" id="input_p_0" name="rtp" class="form-control d" disabled/>
                                 </td>
-                                <td><textarea name="moreFields[0][description]" placeholder="Laisser un Avis" class="form-control"></textarea></td>
                                 <td><button type="button" name="add" id="add-btn" class="btn btn-success"><i class="fa fa-plus"></i></button></td>
 
                             </tr>
                         </table>
-                                <button type="submit" class="btn btn-success">Save</button>
+                                <button type="submit" class="btn btn-success">Enregistrer</button>
                     </form>
                 </div>
         <script type="text/javascript">
@@ -65,8 +89,11 @@
             $("#dynamicAddRemove").append(`
             <tr>
                 <td>
-                    <select name="moreFields['+i+'][product_id]" id="select_product_`+i+`" class="form-control e"
-                        oninput="document.getElementById('input_price_`+i+`').value=document.getElementById('input_qte_`+i+`').value * document.getElementById('select_product_`+i+`').value.split('|')[1];"
+                    <select name="moreFields[`+i+`][product_id]" id="select_product_`+i+`" class="form-control e"
+                        oninput="
+                        document.getElementById('input_p_`+i+`').value=document.getElementById('input_qte_`+i+`').value * document.getElementById('select_product_`+i+`').value.split('|')[1];
+                        document.getElementById('input_price_`+i+`').value=document.getElementById('input_qte_`+i+`').value * document.getElementById('select_product_`+i+`').value.split('|')[1];
+                        "
                         required>
                         <option selected hidden></option>
                         @foreach($products as $product)
@@ -77,19 +104,19 @@
 
                 <td>
                     <input type="number" id="input_qte_`+i+`"
-                    oninput="document.getElementById('input_price_`+i+`').value=this.value * document.getElementById('select_product_`+i+`').value.split('|')[1];"
-                    name="moreFields['+i+'][qte]"
+                    oninput="
+                    document.getElementById('input_p_`+i+`').value=this.value * document.getElementById('select_product_`+i+`').value.split('|')[1];
+                    document.getElementById('input_price_`+i+`').value=this.value * document.getElementById('select_product_`+i+`').value.split('|')[1];
+                    "
+                    name="moreFields[`+i+`][qte]"
                     placeholder="Taper votre Quantité"
                     class="form-control f" required>
                 </td>
 
                 <td>
-                    <input type="number" id="input_price_`+i+`"
-                    name="moreFields['+i+'][prix]" class="form-control d" disabled>
-                </td>
-
-                <td>
-                    <textarea name="moreFields['+i+'][description]" placeholder="Laisser un Avis" class="form-control"></textarea>
+                    <input type="hidden" style="display:none;" id="input_price_`+i+`"
+                    name="moreFields[`+i+`][prix]" class="form-control d">
+                    <input type="number" id="input_p_`+i+`" name="rantanplan" name="moreFields[`+i+`][prix]" class="form-control d" disabled/>
                 </td>
 
                 <td>

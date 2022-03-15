@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -16,8 +18,14 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $products = Product::all()->toArray();
-        return view('order.index', compact('products'));
+        $orders = DB::table('orders')
+        ->join('products', 'products.id', 'orders.product_id')
+        ->join('users', 'users.id', 'orders.user_id')
+        ->select('orders.*', 'products.nomprod AS nom_produit', 'users.nom AS nom', 'users.prenom AS prenom')
+        ->where('user_id', Auth::user()->id)
+        ->get();
+
+        return view('order.index', compact( 'orders'));
     }
 
     /**
@@ -40,17 +48,21 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'moreFields.*.status' => 'required',
-            'moreFields.*.date_validation' => 'required',
-            'moreFields.*.description' => 'required',
             'moreFields.*.product_id' => 'required',
+            'moreFields.*.qte' => 'required',
+            'moreFields.*.prix' => 'required',
         ]);
 
         foreach ($request->moreFields as $key => $value) {
+            $price = explode('|',$value["product_id"])[1];
+            $value["product_id"] = explode('|',$value["product_id"])[0];
+            $qte = $value['qte'];
+            $value['prix'] = $qte*$price;
+            $value["user_id"] = Auth::user()->id;
             Order::create($value);
         }
 
-        return back()->with('success', 'Votre Commande a été enregistrée avec succès, veuillez attendre l\'approbation de l\'administrateur.');
+        return back()->with('success', 'Votre Commande a été enregistrée avec succès, veuillez attendre la validation de l\'administrateur.');
     }
 
     /**
@@ -70,9 +82,11 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Order $order)
     {
-        //
+        $products = Product::all()->toArray();
+        $order = Order::findOrFail($order->id);
+        return view('order.edit', compact('order', 'products', 'orders'));
     }
 
     /**
@@ -84,7 +98,14 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request["product_id"] = explode('|',$request["product_id"])[0];
+        $request['prix'] = $request['qte'] * $request['prixclient'];
+        Order::where('id', $id)->update([
+            'product_id' => $request->product_id,
+            'prix' => $request->prix,
+            'qte' => $request->qte,
+        ]);
+        return redirect()->route('order.index')->withMessage('Commande modifiée avec succès.');
     }
 
     /**
@@ -95,6 +116,8 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Order::where('id', $id)->delete();
+
+        return redirect()->route('orders.index')->withMessage('La ligne de commande a été supprimée avec succès.');
     }
 }

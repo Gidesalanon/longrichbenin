@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Modifier une categorie :: Admin</title>
+<title>Longrich Bénin | Modifier une commande</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -52,7 +52,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h3 class="title1">Modifier Produit</h3>
+					<h3 class="title1">Modifier Commande</h3>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
@@ -63,51 +63,36 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 							<h4>Modifier ce produit:</h4>
 						</div>
 						<div class="form-body">
-						<form method="POST" action="{{ route('products.update', $product->id)}}" enctype="multipart/form-data">
+						<form method="POST" action="{{ route('orders.update', $order->id)}}">
                             @csrf
                             {{ method_field('PATCH') }}
                             <div class="form-group">
-                                <label for="">Nom du Produit</label>
-                                <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper le nom du produit" required value="{{ $product['nomprod']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Catégorie</label>
-                                <select class="form-control" name="categorie_id" required>
-                                    <option selected hidden></option>
-                                    @foreach($categories as $categorie)
-                                        <option value="{{ $categorie['id']}}">{{ $categorie['libelle']}}</option>
-                                    @endforeach
+                                <label for="exampleInputPassword1">Nom du Produit</label>
+                                <select name="product_id" class="form-control b"
+                                        oninput="
+                                        document.getElementById('input_p_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
+                                        document.getElementById('input_price_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
+                                        "
+                                        id="select_product_0" required>
+                                            <option selected hidden></option>
+                                            @foreach($products as $product)
+                                            <option value="{{ $product['id']}}|{{ $product['prixclient']}}" selected="selected">{{ $product['nomprod']}}</option>
+                                            @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="">Image du Produit</label>
-                                <input type="file" class="form-control" id="image" name="image"  accept=".jpg, .png, .jpeg" required value="{{ $product['image']}}">
+                                <label for="">Qté</label>
+                                <input type="number" id="input_qte_0" oninput="
+                                    document.getElementById('input_p_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="qte
+                                    document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="qte
+                                    " placeholder="Taper votre Quantité" class="form-control c" required value="{{ $order['qte']}}" />
                             </div>
                             <div class="form-group">
-                                <label for="">Nombre de PV</label>
-                                <input type="text" class="form-control" id="nbpv" name="nbpv" required value="{{ $product['nbpv']}}">
+                                <label for="">Prix</label>
+                                <input type="hidden" id="input_price_0" name="prix" class="form-control1 a"/>
+                                <input type="number" id="input_p_0" name="rtp" class="form-control d"  value="{{ $order['prix']}}" disabled/>
                             </div>
-                            <div class="form-group">
-                                <label for="">Prix Partenaire</label>
-                                <input type="number" class="form-control" id="prixpartenaire" name="prixpartenaire" required value="{{ $product['prixpartenaire']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Prix Client</label>
-                                <input type="number" class="form-control" id="prixclient" name="prixclient" required value="{{ $product['prixclient']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Status</label>
-                                <input type="text" class="form-control" id="status" name="status" required value="{{ $product['status']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Quantité en stock</label>
-                                <input type="number" class="form-control" id="qte" name="qte" required value="{{ $product['qte']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Description</label>
-                                <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :">{{ $product['description']}}</textarea>
-                            </div>
-                            <button type="submit" class="btn btn-default">Créer</button>
+                            <button type="submit" class="btn btn-default">Modifier</button>
                         </form>
 						</div>
 					</div>

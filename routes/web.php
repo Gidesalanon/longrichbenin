@@ -31,9 +31,7 @@ Route::group(['middleware' => ['auth','isUser']], function () {
 
     Route::middleware(['approved'])->group(function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
-        Route::get('/orders', [OrderController::class, 'index'])->name('orders');
-        Route::post('orders', [OrderController::class, 'store']);
-        Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+        Route::resource('/orders', OrderController::class);
     });
 
     Route::middleware(['admin'])->group(function () {
