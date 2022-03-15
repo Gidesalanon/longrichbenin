@@ -63,14 +63,6 @@ td{
                                     " placeholder="Taper votre Quantité" class="form-control c" />
                                 </td>
 
-                                const array = moreFields[0];
-                                let sum = 0;
-
-                                for (let i = 0; i < array.length; i++) {
-                                    sum += array[i];
-                                }
-                                console.log(sum);
-
                                 <td>
                                     <input type="hidden" id="input_price_0" name="moreFields[0][prix]" class="form-control1 a"/>
                                     <input type="number" id="input_p_0" name="rtp" class="form-control d" disabled/>
