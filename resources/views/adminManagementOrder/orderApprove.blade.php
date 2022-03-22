@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Liste des Commandes</title>
+<title>Longrich Bénin | Commandes non approuvées :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -52,33 +52,71 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="tables">
-					<h3 class="title1">Mes Commandes</h3>
-					<div class="table-responsive bs-example widget-shadow">
-                        @if (session('message'))
+					<h3 class="title1">Commandes non approuvées</h3>
+                    @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
-                        @endif
-                        <h4>Commande du:</h4>
+                    @endif
+					<div class="table-responsive bs-example widget-shadow">
+                    <h4>
+
+                        <table class="table table-bordered">
+                            @foreach ($orders as $order)
+                                @if ($count <> 0)
+                                    <tr>
+                                                @if ($order->approve == "0")
+                                                    @continue ($order->id == 4)
+
+                                                        <th><a href="{{ route('admin.orders.approve', $order->id) }}">
+                                                            <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Approuver cette commande</span>
+                                                        </a></th>
+
+                                                        <th>Prix Totale: </th>
+                                                    @break ($order->id == 4)
+                                                @else
+                                                @continue ($order->id == 4)
+                                                        <th>
+                                                            <a href="{{ route('admin.orders.desapprove', $order->id) }}">
+                                                                <span class="badge badge-success" title="Désapprouver cette commande">Commande Approuvée</span></a>
+                                                            </a>
+                                                        </th>
+                                                        <th> De: {{ $order->nom }} {{ $order->prenom }}</th>
+                                                        <th>Date: {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/y')}}</th>
+                                                        <th>Prix Totale: </th>
+                                                        </a>
+                                                @break ($order->id == 4)
+                                                @endif
+                                </tr>
+                                @endif
+
+                            @endforeach
+                        </table>
+                    </h4>
 						<table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Nom du Produit</th>
                                     <th>Quantité</th>
                                     <th>Prix</th>
-                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($orders as $order)
                                     <tr>
+                                    <th scope="row">{{ $order->id }}</th>
                                     <td>{{ $order->nom_produit }}</td>
                                     <td>{{ $order->qte }}</td>
                                     <td>{{ $order->prix }}</td>
-                                    <td>{{ $order->created_at }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
+                                            <a href="{{ route('order.edit', $order->id) }}">
+                                                <button type="button" class="btn btn-primary" title="Modifier">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                            </a>
                                             <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $order->id}}">
                                                 <button type="button" class="btn btn-danger" title="Supprimer">
                                                     <i class="fa fa-trash-o"></i>
@@ -86,12 +124,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                             </a>
                                         </div>
                                     </td>
-                                    @include('order.delete')
+                                    @include('adminManagementOrder.delete')
                                 </tr>
                             </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="4">Aucune commande ajoutée pour le moment.</td>
+                                    <td colspan="4">Aucune commande non approuvée pour le moment.</td>
                                 </tr>
                             @endforelse
                         </table>

@@ -23,8 +23,8 @@ class OrderController extends Controller
         ->join('users', 'users.id', 'orders.user_id')
         ->select('orders.*', 'products.nomprod AS nom_produit', 'users.nom AS nom', 'users.prenom AS prenom')
         ->where('user_id', Auth::user()->id)
+        /* ->where('orders.created_at', '=',  'orders.ref_created') */
         ->get();
-
         return view('order.index', compact( 'orders'));
     }
 
@@ -58,7 +58,10 @@ class OrderController extends Controller
             $value["product_id"] = explode('|',$value["product_id"])[0];
             $qte = $value['qte'];
             $value['prix'] = $qte*$price;
+            $value["approve"] = "0";
             $value["user_id"] = Auth::user()->id;
+            $created = now();
+            $value["ref_created"] = $created;
             Order::create($value);
         }
 
@@ -86,7 +89,7 @@ class OrderController extends Controller
     {
         $products = Product::all()->toArray();
         $order = Order::findOrFail($order->id);
-        return view('order.edit', compact('order', 'products', 'orders'));
+        return view('order.edit', compact('order', 'products'));
     }
 
     /**
@@ -120,4 +123,6 @@ class OrderController extends Controller
 
         return redirect()->route('orders.index')->withMessage('La ligne de commande a été supprimée avec succès.');
     }
+
+
 }

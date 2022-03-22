@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Modifier une commande</title>
+<title>Longrich Bénin | Modifier cette ligne de commande :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -52,7 +52,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h3 class="title1">Modifier Commande</h3>
+					<h3 class="title1">Modifier cette Commande</h3>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
@@ -60,37 +60,37 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                         @endif
 						<div class="form-title">
-							<h4>Modifier ce produit:</h4>
+							<h4>Modifier la commande:</h4>
 						</div>
 						<div class="form-body">
-						<form method="POST" action="{{ route('orders.update', $order->id)}}">
+						<form method="POST" action="{{ route('order.update', $order['id'])}}">
                             @csrf
                             {{ method_field('PATCH') }}
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Nom du Produit</label>
-                                <select name="product_id" class="form-control b"
-                                        oninput="
-                                        document.getElementById('input_p_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
-                                        document.getElementById('input_price_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
-                                        "
-                                        id="select_product_0" required>
-                                            <option selected hidden></option>
-                                            @foreach($products as $product)
-                                            <option value="{{ $product['id']}}|{{ $product['prixclient']}}" selected="selected">{{ $product['nomprod']}}</option>
-                                            @endforeach
-                                </select>
+                                    <select name="moreFields[0][product_id]" class="form-control b"
+                                            oninput="
+                                            document.getElementById('input_p_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
+                                            document.getElementById('input_price_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
+                                            "
+                                            id="select_product_0" required>
+                                                <option selected hidden></option>
+                                                @foreach($products as $product)
+                                                <option value="{{ $product['id']}}|{{ $product['prixclient']}}">{{ $product['nomprod']}}</option>
+                                                @endforeach
+                                    </select>
                             </div>
                             <div class="form-group">
                                 <label for="">Qté</label>
                                 <input type="number" id="input_qte_0" oninput="
-                                    document.getElementById('input_p_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="qte
-                                    document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="qte
-                                    " placeholder="Taper votre Quantité" class="form-control c" required value="{{ $order['qte']}}" />
+                                    document.getElementById('input_p_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]"
+                                    document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]
+                                    " placeholder="Taper votre Quantité" class="form-control c" value="{{ $order['qte']}}"/>
                             </div>
                             <div class="form-group">
                                 <label for="">Prix</label>
-                                <input type="hidden" id="input_price_0" name="prix" class="form-control1 a"/>
-                                <input type="number" id="input_p_0" name="rtp" class="form-control d"  value="{{ $order['prix']}}" disabled/>
+                                <input type="hidden" id="input_price_0" name="moreFields[0][prix]" class="form-control1 a"/>
+                                <input type="number" id="input_p_0" name="rtp" class="form-control d" value="{{ $order['prix']}}" disabled/>
                             </div>
                             <button type="submit" class="btn btn-default">Modifier</button>
                         </form>

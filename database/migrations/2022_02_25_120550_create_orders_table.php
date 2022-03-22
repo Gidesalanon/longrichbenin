@@ -17,6 +17,8 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->string('qte');
             $table->text('prix');
+            $table->text('ref_created')->nullable();
+            $table->boolean('approve')->nullable();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('product_id')->references('id')->on('products');
