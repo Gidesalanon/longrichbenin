@@ -34,7 +34,9 @@ class ProductController extends Controller
     {
         $categories = Category::all()->toArray();
         $products = Product::all()->toArray();
-        $stocks = Stock::all()->toArray();
+        $stocks = Stock::all()
+        ->where('id', '>', 1)
+        ->toArray();
         return view('product.create', compact( 'categories', 'stocks', 'products'));
     }
 
@@ -95,7 +97,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all()->toArray();
-        $stocks = Stock::all()->toArray();
+        $stocks = Stock::all()
+        ->where('id', '>', 1)
+        ->toArray();
         $product = Product::findOrFail($product->id);
         return view('product.edit', compact('product', 'categories', 'stocks'));
     }

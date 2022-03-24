@@ -75,18 +75,12 @@ class RegisterController extends Controller
             'prenom' => $data['prenom'],
             'email' => $data['email'],
             'adresse' => $data['adresse'],
+            'enterprise_id' => $data['enterprise_id'],
             'tel' => $data['tel'],
             'status' => '0',
             'isban' => '1',
             'is_admin' => '0',
             'password' => Hash::make($data['password']),
         ]);
-
-        $admin = User::where('is_admin', 1)->first();
-    if ($admin) {
-        $admin->notify(new NewUser($user));
-    }
-
-    return $user;
     }
 }

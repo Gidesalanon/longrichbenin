@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Enterprise;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 class UserManagementController extends Controller
 {
     /**
@@ -14,7 +16,11 @@ class UserManagementController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_admin', '<>', 1)->get();
+        $users = DB::table('users')
+        ->join('enterprises', 'enterprises.id', 'users.enterprise_id')
+        ->select('users.*', 'enterprises.designation AS enterprise')
+        ->where('is_admin', '<>', 1)
+        ->get();
         return view('usermanagement.index', compact('users'));
     }
 
@@ -25,7 +31,10 @@ class UserManagementController extends Controller
      */
     public function create()
     {
-        return view('usermanagement.create');
+        $enterprises = Enterprise::all()
+        ->where('id', '>', 1)
+        ->toArray();
+        return view('usermanagement.create', compact('enterprises'));
     }
 
     /**
@@ -42,6 +51,7 @@ class UserManagementController extends Controller
             'prenom' => $request->prenom,
             'email' => $request->email,
             'adresse' => $request->adresse,
+            'enterprise_id' => $request->enterprise_id,
             'tel' => $request->tel,
             'status' => '1',
             'is_admin' => '0',
@@ -70,8 +80,11 @@ class UserManagementController extends Controller
      */
     public function edit($user_id)
     {
+        $enterprises = Enterprise::all()
+        ->where('id', '>', 1)
+        ->toArray();
         $user = User::findOrFail($user_id);
-        return view('usermanagement.edit', compact('user'));
+        return view('usermanagement.edit', compact('user', 'enterprises'));
     }
 
     /**
@@ -92,7 +105,6 @@ class UserManagementController extends Controller
             'tel' => $request->tel,
             'status' => '1',
             'is_admin' => '0',
-            'isban' => '1',
             'password' => Hash::make($request->password),
         ]);
         toastr()->success('Utilisateur modifié avec succès.', 'Succès');

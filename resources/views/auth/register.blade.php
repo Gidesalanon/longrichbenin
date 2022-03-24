@@ -91,6 +91,9 @@
                         @enderror
 						<span class="focus-input100"></span>
 					</div>
+
+                    <input class="input100" type="hidden" id="enterprise_id" name="enterprise_id" value="1">
+
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Téléphone is required">
 						<span class="label-input100">Téléphone</span>
 						<input class="input100 @error('tel') is-invalid @enderror" type="number" id="tel" name="tel" placeholder="Entrer votre téléphone" value="{{ old('tel') }}" required autocomplete="tel" autofocus>

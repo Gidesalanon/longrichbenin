@@ -8,6 +8,7 @@ use App\http\controllers\ProductController;
 use App\http\controllers\OrderController;
 use App\http\controllers\StockController;
 use App\http\controllers\UserManagementController;
+use App\http\controllers\EnterpriseController;
 use App\Models\Task;
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/usermanagements/{user_id}/enable', [UserManagementController::class, 'isBan'])->name('admin.users.enable');
         //crud category
         Route::resource('admin/categories', CategoryController::class);
+        Route::resource('admin/enterprises', EnterpriseController::class);
         Route::resource('admin/products', ProductController::class);
         Route::resource('admin/stocks', StockController::class);
 

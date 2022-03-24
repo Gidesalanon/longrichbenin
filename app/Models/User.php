@@ -28,6 +28,7 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'isban',
+        'enterprise_id',
     ];
 
     /**
@@ -48,4 +49,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function enterprise()
+    {
+        return $this->belongsTo('App\Models\Enterprise');
+    }
+    
 }

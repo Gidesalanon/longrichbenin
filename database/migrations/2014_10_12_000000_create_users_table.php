@@ -26,7 +26,13 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->boolean('is_admin')->nullable();
             $table->tinyInteger('isban')->default('0');
+            $table->unsignedBigInteger('enterprise_id');
+            $table->softDeletes();
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('enterprise_id')->references('id')->on('enterprises');
         });
     }
 

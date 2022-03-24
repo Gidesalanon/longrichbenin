@@ -15,7 +15,9 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::all()->toArray();
+        $stocks = Stock::all()
+        ->where('id', '>', 1)
+        ->toArray();
 
         return view('stock.index', compact('stocks'));
     }
@@ -27,7 +29,9 @@ class StockController extends Controller
      */
     public function create()
     {
-        $stock = Stock::all()->toArray();
+        $stock = Stock::all()
+        ->where('id', '>', 1)
+        ->toArray();
         $product = Product::all()->toArray();
         return view('stock.create', compact('stock', 'product'));
     }
@@ -45,6 +49,7 @@ class StockController extends Controller
             'status' => $request->status,
             'dateacquis' => $request->dateacquis,
             'description' => $request->description,
+            'enterprise_id' => $request->enterprise_id,
         ]);
 
         return redirect()->back()->withMessage('Stock enregistré avec succès.');
@@ -88,6 +93,7 @@ class StockController extends Controller
             'status' => $request->status,
             'dateacquis' => $request->dateacquis,
             'description' => $request->description,
+            'enterprise_id' => $request->enterprise_id,
         ]);
 
         return redirect()->route('stocks.index')->withMessage('Stock modifié avec succès.');

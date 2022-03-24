@@ -86,6 +86,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <input type="text" class="form-control" name="tel" id="tel" value="{{ old('tel') }}" placeholder="Téléphone">
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputPassword1">Affecter une Entreprise</label>
+                                <select class="form-control" name="enterprise_id" required>
+                                    <option selected hidden></option>
+                                    @foreach($enterprises as $enterprise)
+                                    <option value="{{ $enterprise['id']}}">{{ $enterprise['designation']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputPassword1">Mot de Passe</label>
                                 <input type="text" class="form-control" name="password" id="Password" placeholder="Mot de Passe" required autocomplete="new-password">
                                 <input type="button" class="button" value="Génerer" onClick="randomPassword(10);" tabindex="2">

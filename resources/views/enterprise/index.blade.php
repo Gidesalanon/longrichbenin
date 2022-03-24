@@ -1,7 +1,13 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Liste des Utilisateurs :: Admin</title>
+<title>Longrich Bénin | Liste des entreprises :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -32,7 +38,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
 <script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
-
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -47,66 +52,54 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="tables">
-					<h3 class="title1">Nos Utilisateurs</h3>
-                    @if (session('message'))
+					<h3 class="title1">Nos Entreprises</h3>
+					<div class="table-responsive bs-example widget-shadow">
+                        @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
-                    @endif
-					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray;">
-						<h4>Gérer vos Utilisateurs</h4>
+                        @endif
+						<h4>Liste de nos entreprises</h4>
 						<table class="table table-bordered">
-                            <thead style="box-shadow: 5px 5px 5px gray;">
+                            <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Code</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Email</th>
+                                    <th>Désignation</th>
                                     <th>Adresse</th>
-                                    <th>Entreprise</th>
-                                    <th>Téléphone</th>
-                                    <th>Status</th>
-                                    <th>Date Inscription</th>
+                                    <th>Stock Principal</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($users as $user)
+                                @forelse ($enterprises as $enterprise)
                                 <tr>
-                                    <th scope="row">{{ $user->id }}</th>
-                                    <th scope="row">{{ $user->code }}</th>
-                                    <td>{{ $user->nom }}</td>
-                                    <td>{{ $user->prenom }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->adresse }}</td>
-                                    <td>{{ $user->enterprise }}</td>
-                                    <td>{{ $user->tel }}</td>
-                                    <td>
-                                        @if($user->isban == 0)
-                                            <a href="{{ route('admin.users.disable', $user->id) }}" title="Désactivé" style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-info">Activé</span></a>
-                                        @else
-                                            <a href="{{ route('admin.users.enable', $user->id) }}" title="Activé" style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-danger">Désactivé</span></a>
-                                        @endif
-                                    </td>
-                                    <td>{{ $user->created_at }}</td>
+                                    <th scope="row">{{ $enterprise->id}}</th>
+                                    <td>{{ $enterprise->designation }}</td>
+                                    <td>{{ $enterprise->adresse }}</td>
+                                    <td>{{ $enterprise->nom_stock }}</td>
+
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('usermanagements.edit', $user->id) }}" class="nav-badge-btm" title="Modifier">
-                                                <img src="https://img.icons8.com/external-anggara-flat-anggara-putra/19/000000/external-edit-user-interface-anggara-flat-anggara-putra-3.png" style="box-shadow: 5px 5px 5px gray; border-radius:20%"/>
+                                            <a href="{{ route('enterprises.edit', $enterprise->id) }}">
+                                                <button type="button" class="btn btn-primary" title="Modifier">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
                                             </a>
 
-                                            <a href="#!" data-toggle="modal" data-target="#modalDeleteUser{{ $user->id}}">
-                                                <img src="https://img.icons8.com/external-inkubators-gradient-inkubators/19/000000/external-delete-email-inkubators-gradient-inkubators.png" style="box-shadow: 5px 5px 5px gray; border-radius:20%"/>
+                                            <a href="#" data-toggle="modal" data-target="#modalDeleteEnterprise{{ $enterprise->id}}">
+                                                <button type="button" class="btn btn-danger" title="Supprimer">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
                                             </a>
+
                                         </div>
                                     </td>
-                                    @include('usermanagement.delete')
+                                    @include('enterprise.delete')
                                 </tr>
                             </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="4">Aucun Utilisateur Enregistré pour le moment.</td>
+                                    <td colspan="4">Aucune Entreprise ajoutée pour le moment.</td>
                                 </tr>
                             @endforelse
                         </table>

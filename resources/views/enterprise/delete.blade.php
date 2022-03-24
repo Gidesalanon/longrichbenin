@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalDeleteUser{{ $user->id}}" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDeleteEnterprise{{ $enterprise->id}}" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger">
@@ -7,11 +7,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="{{ route('usermanagements.destroy', $user->id)}}">
+            <form method="POST" action="{{ route('enterprises.destroy', $enterprise->id)}}">
                 @csrf
                 {{ method_field('delete') }}
                 <div class="modal-body">
-                    <p class="text-center">Voulez-vous vraiment supprimer cet utilisateur ?</p>
+                    <p class="text-center">Voulez-vous vraiment supprimer cette entreprise ?</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-danger">Supprimer</button>

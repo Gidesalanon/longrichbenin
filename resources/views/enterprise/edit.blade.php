@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Modifier cet utilisateur :: Admin</title>
+<title>Longrich Bénin | Modifier une entreprise :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -35,8 +35,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	</script>
 <!--//end-animate-->
 <!-- Metis Menu -->
-<script src="js_admin/metisMenu.min.js"></script>
-<script src="js_admin/custom.js"></script>
+<script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
+<script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
 <!--//Metis Menu -->
 </head>
@@ -52,71 +52,40 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h3 class="title1">Modifier un Utilisateur</h3>
+					<h3 class="title1">Modifier Entreprise</h3>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+                        @if (session('message'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('message') }}
+                            </div>
+                        @endif
 						<div class="form-title">
-							<h4>Modifier le(s) Informations de l'Utilisateur :</h4>
+							<h4>Modifier cette entreprise:</h4>
 						</div>
 						<div class="form-body">
-
-                        <form method="POST" action="{{ route('usermanagements.update', $user->id)}}" name="myform">
+						 <form method="POST" action="{{ route('enterprises.update', $enterprise->id)}}">
                             @csrf
                             {{ method_field('PATCH') }}
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Code</label>
-                                <input type="text" class="form-control" name="code" id="code" value="{{ $user['code']}}" placeholder="Code Longrich">
+                                <label for="">Désignation</label>
+                                <input type="text" class="form-control" id="designation" name="designation" placeholder="Désignation" required value="{{ $enterprise['designation']}}">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Nom</label>
-                                <input type="text" class="form-control" name="nom" id="nom" value="{{ $user['nom']}}" placeholder="Nom">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Prénom</label>
-                                <input type="text" class="form-control" name="prenom" id="prenom" value="{{ $user['prenom']}}" placeholder="Prénom">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Adresse Email</label>
-                                <input type="email" class="form-control" name="email" value="{{ $user['email']}}" id="exampleInputEmail1" placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Adresse</label>
-                                <input type="text" class="form-control" name="adresse" id="adresse" value="{{ $user['adresse']}}" placeholder="Adresse">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Affecter une Entreprise</label>
-                                <select class="form-control" name="enterprise_id" required>
+                                <label for="exampleInputPassword1">Stock</label>
+                                <select class="form-control" name="stock_id" required>
                                     <option selected hidden></option>
-                                    @foreach($enterprises as $enterprise)
-                                    <option value="{{ $enterprise['id']}}">{{ $enterprise['designation']}}</option>
+                                    @foreach($stocks as $stock)
+                                    <option value="{{ $stock['id']}}">{{ $stock['libelle']}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Téléphone</label>
-                                <input type="text" class="form-control" name="tel" id="tel" value="{{ $user['tel']}}" placeholder="Téléphone">
+                                <label for="">Adresse</label>
+                                <input type="text" class="form-control" id="adresse" name="adresse" placeholder="adresse" required value="{{ $enterprise['adresse']}}">
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Mot de Passe</label>
-                                <input type="text" class="form-control" name="password" id="Password" placeholder="Mot de Passe" required autocomplete="new-password">
-                                <input type="button" class="btn btn-default" value="Générer" onClick="randomPassword(10);" tabindex="2">
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Se Souvenir </label>
-                                </div>
                             <button type="submit" class="btn btn-default">Modifier</button>
                         </form>
-                        <script>
-                            function randomPassword(length) {
-                                var chars = "abcdefghijklmnopqrstuvwxyz!@#$%&*éè()-+ABCDEFGHIJKLMNOP1234567890";
-                                var pass = "";
-                                for (var x = 0; x < length; x++) {
-                                    var i = Math.floor(Math.random() * chars.length);
-                                    pass += chars.charAt(i);
-                                }
-                                myform.password.value = pass;
-                            }
-                        </script>
 						</div>
 					</div>
 				</div>

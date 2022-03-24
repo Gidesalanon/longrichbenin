@@ -23,11 +23,11 @@ class UserMiddleware
         Auth::logout();
 
         if ($banned == 1) {
-            $message = 'Votre compte a été désactivé. Veuillez contacter l\'administrateur.';
+            $message = 'Votre compte n\'est pas actif. Veuillez contacter l\'administrateur.';
         }
         return redirect()->route('login')
             ->with('status',$message)
-            ->withErrors(['email' => 'Votre compte a été désactivé. Veuillez contacter l\'administrateur.']);
+            ->withErrors(['email' => 'Votre compte n\'est pas actif. Veuillez contacter l\'administrateur.']);
 
     }
     return $next($request);
