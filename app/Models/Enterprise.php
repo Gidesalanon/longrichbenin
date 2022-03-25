@@ -16,7 +16,7 @@ class Enterprise extends Model
         return $this->hasOne('App\Models\Stock');
     }
 
-    public function user()
+    public function users()
     {
         return $this->hasMany('App\Models\User');
     }

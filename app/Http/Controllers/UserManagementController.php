@@ -16,12 +16,17 @@ class UserManagementController extends Controller
      */
     public function index()
     {
+        $enterprises = Enterprise::with('users')
+        ->where('id', '>', 1)
+        ->get();
+
         $users = DB::table('users')
         ->join('enterprises', 'enterprises.id', 'users.enterprise_id')
-        ->select('users.*', 'enterprises.designation AS enterprise')
+        ->select('users.*', 'enterprises.designation AS enterprise', 'users.code', 'enterprises.id')
         ->where('is_admin', '<>', 1)
         ->get();
-        return view('usermanagement.index', compact('users'));
+
+        return view('usermanagement.index', compact('users', 'enterprises'));
     }
 
     /**

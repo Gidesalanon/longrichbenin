@@ -53,12 +53,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {{ session('message') }}
                             </div>
                     @endif
+                    @forelse($enterprises as $enterprise)
 					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray;">
-						<h4>Gérer vos Utilisateurs</h4>
-						<table class="table table-bordered">
+						<h4>{{$enterprise->designation}}</h4>
+						
+                        
+                            <table class="table table-bordered">
                             <thead style="box-shadow: 5px 5px 5px gray;">
                                 <tr>
-                                    <th>#</th>
                                     <th>Code</th>
                                     <th>Nom</th>
                                     <th>Prénom</th>
@@ -72,15 +74,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($users as $user)
+                                @forelse ($enterprise->users as $user)
                                 <tr>
-                                    <th scope="row">{{ $user->id }}</th>
                                     <th scope="row">{{ $user->code }}</th>
                                     <td>{{ $user->nom }}</td>
                                     <td>{{ $user->prenom }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->adresse }}</td>
-                                    <td>{{ $user->enterprise }}</td>
+                                    <td>{{ $enterprise['designation'] }}</td>
                                     <td>{{ $user->tel }}</td>
                                     <td>
                                         @if($user->isban == 0)
@@ -106,12 +107,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="4">Aucun Utilisateur Enregistré pour le moment.</td>
+                                    <td colspan="4">0 utilisateur dans cette entreprise.</td>
                                 </tr>
                             @endforelse
                         </table>
-
 					</div>
+                    @empty
+                        @include('usermanagement.ElseFile')
+                    @endforelse
 
 				</div>
 			</div>
