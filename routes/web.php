@@ -49,13 +49,12 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::resource('admin/products', ProductController::class);
         Route::resource('admin/stocks', StockController::class);
 
-
-        Route::get('/order', [UserController::class, 'orderIndex'])->name('admin.order.index');
-        Route::get('/orders/{order_id}/orderApprove', [UserController::class, 'approveOrder'])->name('admin.orders.approve');
-        Route::get('/orders/{order_id}/desaprove', [UserController::class, 'desapproveOrder'])->name('admin.orders.desapprove');
-        Route::delete('/order/{order_id}/destroy', [UserController::class, 'destroyOrder'])->name('admin.order.destroy');
-        Route::get('orderedit/{order_id}/edit', [UserController::class, 'editOrder'])->name('order.edit');
-        Route::patch('orderedit/{order_id}', [UserController::class, 'updateOrder'])->name('order.update');
+        Route::get('/order', [OrderController::class, 'orderIndex'])->name('admin.order.index');
+        Route::get('/orders/{order_id}/orderApprove', [OrderController::class, 'approveOrder'])->name('admin.orders.approve');
+        Route::get('/orders/{order_id}/desaprove', [OrderController::class, 'desapproveOrder'])->name('admin.orders.desapprove');
+        Route::delete('/order/{order_id}/destroy', [OrderController::class, 'destroyOrder'])->name('admin.order.destroy');
+        Route::get('orderedit/{order_id}/edit', [OrderController::class, 'editOrder'])->name('order.edit');
+        Route::patch('orderedit/{order_id}', [OrderController::class, 'updateOrder'])->name('order.update');
     });
 
 });

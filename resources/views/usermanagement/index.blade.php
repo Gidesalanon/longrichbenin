@@ -66,7 +66,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>Prénom</th>
                                     <th>Email</th>
                                     <th>Adresse</th>
-                                    <th>Entreprise</th>
                                     <th>Téléphone</th>
                                     <th>Status</th>
                                     <th>Date Inscription</th>
@@ -81,7 +80,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $user->prenom }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->adresse }}</td>
-                                    <td>{{ $enterprise['designation'] }}</td>
                                     <td>{{ $user->tel }}</td>
                                     <td>
                                         @if($user->isban == 0)

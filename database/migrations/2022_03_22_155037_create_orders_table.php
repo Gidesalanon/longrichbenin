@@ -20,9 +20,9 @@ class CreateOrdersTable extends Migration
             $table->text('ref_created')->nullable();
             $table->boolean('approve')->nullable();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('ordergroup_id');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('ordergroup_id')->references('id')->on('ordergroups');
             $table->softDeletes()
                 ->onDelete('restrict')
                 ->onUpdate('cascade');

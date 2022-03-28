@@ -20,7 +20,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
-    public function order()
+    public function orders()
     {
         return $this->belongsTo('App\Models\Order');
     }

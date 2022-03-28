@@ -66,7 +66,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 @if ($count <> 0)
                                     <tr>
                                                 @if ($order->approve == "0")
-                                                    @continue ($order->id == 4)
 
                                                         <th><a href="{{ route('admin.orders.approve', $order->id) }}">
                                                             <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Approuver cette commande</span>

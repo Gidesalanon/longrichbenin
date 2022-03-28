@@ -53,51 +53,56 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			<div class="main-page">
 				<div class="tables">
 					<h3 class="title1">Mes Commandes</h3>
-					<div class="table-responsive bs-example widget-shadow">
+                    @forelse ($ordergroups as $ordergroup)
+                    <div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <h4>Commande du:</h4>
-						<table class="table table-bordered">
+                        <h4>Commande du {{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H\hi')}}</h4>
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Nom du Produit</th>
                                     <th>Quantité</th>
                                     <th>Prix</th>
-                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @forelse ($orders as $order)
-                                    <tr>
-                                    <td>{{ $order->nom_produit }}</td>
-                                    <td>{{ $order->qte }}</td>
-                                    <td>{{ $order->prix }}</td>
-                                    <td>{{ $order->created_at }}</td>
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $order->id}}">
-                                                <button type="button" class="btn btn-danger" title="Supprimer">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    @include('order.delete')
-                                </tr>
-                            </tbody>
-                            @empty
-                                <tr>
-                                    <td colspan="4">Aucune commande ajoutée pour le moment.</td>
-                                </tr>
-                            @endforelse
-                        </table>
+                            
 
+
+                            <tbody>
+                                @forelse ($ordergroup->orders as $order)
+                                    <tr>
+                                        <td>{{ $order->nomprod }}</td>
+                                        <td>{{ $order->qte }}</td>
+                                        <td>{{ $order->prix }}</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $order->id}}">
+                                                    <button type="button" class="btn btn-danger" title="Supprimer">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        @include('order.delete')
+                                    </tr>
+                            </tbody>
+                                @empty
+                                    <tr>
+                                        <td colspan="4">Aucune commande ajoutée pour le moment.</td>
+                                    </tr>
+                                @endforelse
+                            
+                        </table>
 					</div>
 
+                    @empty
+                        @include('order.ElseFile')
+                    @endforelse
 				</div>
 			</div>
 		</div>
