@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Ordergroup;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -22,11 +23,12 @@ class OrderController extends Controller
        $ordergroups = Ordergroup::with('orders')
         ->where('user_id', Auth::user()->id)
         ->get();
+        $products = Product::all();
 
         $orders = Product::with('orders')
         ->get();
         
-        return view('order.index', compact( 'orders', 'ordergroups'));
+        return view('order.index', compact( 'orders', 'ordergroups', 'products'));
     }
     /**
      * Show the form for creating a new resource.
@@ -111,6 +113,7 @@ class OrderController extends Controller
             'product_id' => $request->product_id,
             'prix' => $request->prix,
             'qte' => $request->qte,
+            'approve' => $request->approve,
         ]);
         return redirect()->route('order.index')->withMessage('Commande modifiée avec succès.');
     }
@@ -124,7 +127,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         Order::where('id', $id)->delete();
-        toastr()->success('Une ligne de commande a été supprimée avec succès.', 'Succès');
+        toastr()->success('Une ligne de commande supprimée avec succès.', 'Succès');
         return redirect()->route('orders.index');
 
     }
@@ -133,32 +136,57 @@ class OrderController extends Controller
 
     public function orderIndex()
     {
-        $orders = DB::table('orders')
-        ->join('products', 'products.id', 'orders.product_id')
-        ->join('users', 'users.id', 'orders.user_id')
-        ->select('orders.*', 'products.nomprod AS nom_produit', 'users.nom AS nom', 'users.prenom AS prenom')
+        $users = User::with('ordergroups')
+        ->get();
+
+        $ordergroups = Ordergroup::with('orders')
+        ->get();
+        $products = Product::all();
+
+        $orders = Product::with('orders')
         ->get();
         $count = count($orders);
 
-        return view('adminManagementOrder.orderApprove', compact('orders', 'count'));
+        return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count'));
+        
     }
 
+    //Approuver tous les orders d'un coup
     public function approveOrder()
     {
         DB::table('orders')
             ->where('id','<>', 0)
             ->update(['approve' => "1"]);
-        return redirect()->route('admin.order.index')->withMessage('Cette commande a été approuvée avec succès');
+        toastr()->success('Toutes les commandes ont été approuvées avec succès', 'Succès');
+        return redirect()->route('admin.order.index');
     }
-
+    //Désactiver tous  les orders d'un coup
     public function desapproveOrder()
     {
         DB::table('orders')
             ->where('id','<>', 0)
             ->update(['approve' => "0"]);
-        return redirect()->route('admin.order.index')->withMessage('Cette commande a été désapprouvée avec succès');
+        toastr()->success('Toutes les commandes ont été désapprouvées avec succès', 'Succès');
+        return redirect()->route('admin.order.index');
     }
 
+    //Approuver une seule ligne order
+    public function approveOneOrder($order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        $order->update(['approve' => 0]);
+        toastr()->success('Cette commande a été approuvée avec succès', 'Succès');
+        return redirect()->route('admin.order.index');
+    }
+
+    //Désactiver une seule ligne order
+    public function desapproveOneOrder($order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        $order->update(['approve' => 1]);
+        toastr()->success('Cette commande a été désapprouvée avec succès', 'Succès');
+        return redirect()->route('admin.order.index');
+    }
     public function editOrder($id)
     {
         $products = Product::all()->toArray();
@@ -166,45 +194,26 @@ class OrderController extends Controller
         return view('adminManagementOrder.edit', compact('order', 'products'));
     }
 
-    public function updateOrder(Request $request, Order $id)
+    public function updateOrder(Request $request, $id)
     {
         $request->validate([
-            'moreFields.*.product_id' => 'required',
-            'moreFields.*.qte' => 'required',
-            'moreFields.*.prix' => 'required',
+            'qte' => 'required',
         ]);
-
-        $prices = explode('|',$request["product_id"])[1];
-        $product_id = $request["product_id"] = explode('|',$request["product_id"])[0];
-        $qte = $request['qte'];
-        $price = $request['prix'] = $qte*$prices;
+        
         Order::where('id', $id)->update([
-            'product_id' => $request->product_id = $product_id,
-            'prix' => $request->prix = $price,
-            'qte' => $request->qte = $qte,
+            'qte' => $request->qte,
         ]);
+        dd($request->qte);
 
-        foreach ($request->moreFields as $key => $value) {
-            $price = explode('|',$value["product_id"])[1];
-            $value["product_id"] = explode('|',$value["product_id"])[0];
-            $qte = $value['qte'];
-            $value['prix'] = $qte*$price;
-
-            Order::where('id', $id)->update([
-            'product_id' => $request->product_id = $product_id,
-            'prix' => $request->prix = $price,
-            'qte' => $request->qte = $qte,
-        ]);
-
-        }
-
-        return redirect()->route('admin.order.index')->withMessage('Ligne de commande modifiée avec succès.');
+        toastr()->success('Ligne de commande modifiée avec succès.', 'Succès');
+        return redirect()->route('admin.order.index');
     }
 
     public function destroyOrder($id)
     {
         Order::where('id', $id)->delete();
-        return redirect()->route('admin.order.index')->withMessage('Cette commande a été supprimée avec succès.');
+        toastr()->success('Une ligne de commande supprimée avec succès.', 'Succès');
+        return redirect()->route('admin.order.index');
     }
 
 

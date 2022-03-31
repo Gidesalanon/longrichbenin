@@ -14,4 +14,9 @@ class Ordergroup extends Model
     {
         return $this->hasMany('App\Models\Order');
     }
+
+    public function users()
+    {
+        return $this->belongsTo('App\Models\Order');
+    }
 }

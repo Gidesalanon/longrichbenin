@@ -10,12 +10,12 @@ class Product extends Model
     use HasFactory;
     protected $fillable = ['id', 'nomprod', 'nbpv', 'prixpartenaire', 'prixclient','qte', 'image', 'description', 'categorie_id', 'stock_id'];
 
-    public function stock()
+    public function stocks()
     {
         return $this->belongsTo('App\Models\Stock');
     }
 
-    public function category()
+    public function categories()
     {
         return $this->belongsTo('App\Models\Category');
     }
@@ -23,5 +23,10 @@ class Product extends Model
     public function orders()
     {
         return $this->belongsTo('App\Models\Order');
+    }
+
+    public function ordergroups()
+    {
+        return $this->belongsTo('App\Models\Ordergroup');
     }
 }

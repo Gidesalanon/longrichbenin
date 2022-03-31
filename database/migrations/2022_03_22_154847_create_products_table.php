@@ -30,8 +30,8 @@ class CreateProductsTable extends Migration
 
 
         Schema::table('products', function (Blueprint $table) {
-            $table->foreign('categorie_id')->references('id')->on('categories');
-            $table->foreign('stock_id')->references('id')->on('stocks');
+            $table->foreign('categorie_id')->references('id')->on('categories')->onUpdate('cascade') ->onDelete('cascade');
+            $table->foreign('stock_id')->references('id')->on('stocks')->onUpdate('cascade') ->onDelete('cascade');
         });
     }
 

@@ -21,11 +21,8 @@ class CreateOrdersTable extends Migration
             $table->boolean('approve')->nullable();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('ordergroup_id');
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('ordergroup_id')->references('id')->on('ordergroups');
-            $table->softDeletes()
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade') ->onDelete('cascade');
+            $table->foreign('ordergroup_id')->references('id')->on('ordergroups')->onUpdate('cascade') ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -10,7 +10,7 @@ class Stock extends Model
     use HasFactory;
     protected $fillable = ['id', 'libelle', 'status', 'dateacquis', 'description'];
 
-    public function product()
+    public function products()
     {
         return $this->hasMany('App\Models\Product');
     }

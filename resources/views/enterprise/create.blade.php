@@ -65,22 +65,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 						<div class="form-body">
 						 <form method="POST" action="{{ route('enterprises.store')}}">
                             @csrf
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Stock</label>
-                                <select class="form-control" name="stock_id" required>
-                                    <option selected hidden></option>
-                                    @foreach($stocks as $stock)
-                                    <option value="{{ $stock['id']}}">{{ $stock['libelle']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            
                             <div class="form-group">
                                 <label for="">Désignation</label>
                                 <input type="text" class="form-control" id="designation" name="designation" placeholder="Désignation" required>
                             </div>
                             <div class="form-group">
                                 <label for="">Adresse</label>
-                                <input type="text" class="form-control" id="adresse" name="adresse" placeholder="adresse" required>
+                                <input type="text" class="form-control" id="adresse" name="adresse" placeholder="adresse">
                             </div>
                             <button type="submit" class="btn btn-default">Créer</button>
                         </form>

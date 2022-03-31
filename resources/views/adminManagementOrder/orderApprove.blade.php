@@ -51,66 +51,73 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- main content start-->
 		<div id="page-wrapper">
 			<div class="main-page">
-				<div class="tables">
-					<h3 class="title1">Commandes non approuvées</h3>
-                    @if (session('message'))
+			<div class="tables">
+					<h3 class="title1">Liste des Commandes</h3>
+                @forelse ($users as $user)
+                    @forelse ($ordergroups as $ordergroup)
+                    <div class="table-responsive bs-example widget-shadow">
+                        @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
-                    @endif
-					<div class="table-responsive bs-example widget-shadow">
-                    <h4>
-
+                        @endif
+                        <h4>
                         <table class="table table-bordered">
-                            @foreach ($orders as $order)
+                            @foreach ($ordergroup->orders as $order)
                                 @if ($count <> 0)
                                     <tr>
                                                 @if ($order->approve == "0")
 
                                                         <th><a href="{{ route('admin.orders.approve', $order->id) }}">
-                                                            <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Approuver cette commande</span>
+                                                            <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Toute Approuvée</span>
                                                         </a></th>
+                                                        <th> De: {{ $user->nom }} {{ $user->prenom }}</th>
+                                                        <th>Date: {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/y')}}</th>
 
                                                         <th>Prix Totale: </th>
-                                                    @break ($order->id == 4)
+                                                        @break ($ordergroup->id == 1)
                                                 @else
-                                                @continue ($order->id == 4)
                                                         <th>
                                                             <a href="{{ route('admin.orders.desapprove', $order->id) }}">
                                                                 <span class="badge badge-success" title="Désapprouver cette commande">Commande Approuvée</span></a>
                                                             </a>
                                                         </th>
-                                                        <th> De: {{ $order->nom }} {{ $order->prenom }}</th>
+                                                        <th> De: {{ $user->nom }} {{ $user->prenom }}</th>
                                                         <th>Date: {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/y')}}</th>
                                                         <th>Prix Totale: </th>
-                                                        </a>
-                                                @break ($order->id == 4)
+                                                        @break ($ordergroup->id == 1)
                                                 @endif
-                                </tr>
+                                    </tr>
                                 @endif
-
                             @endforeach
                         </table>
-                    </h4>
-						<table class="table table-bordered">
+                        </h4>
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Nom du Produit</th>
                                     <th>Quantité</th>
                                     <th>Prix</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                @forelse ($orders as $order)
+                                @forelse ($ordergroup->orders as $order)
                                     <tr>
-                                    <th scope="row">{{ $order->id }}</th>
-                                    <td>{{ $order->nom_produit }}</td>
-                                    <td>{{ $order->qte }}</td>
-                                    <td>{{ $order->prix }}</td>
-                                    <td>
+                                        <td>{{ $products[$order->product_id-1]->nomprod }}</td>
+                                        <td>{{ $order->qte }}</td>
+                                        <td>{{ $order->prix }}</td>
+                                        <td>
+                                            @if($order->approve == 0)
+                                                <span style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-danger">Désapprouvée</span></span>
+                                            @else
+                                                <span style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-info">Approuvée</span></span>
+                                            @endif
+                                        </td>
+                                        <td>
                                         <div class="btn-group" role="group">
+                                            
                                             <a href="{{ route('order.edit', $order->id) }}">
                                                 <button type="button" class="btn btn-primary" title="Modifier">
                                                     <i class="fa fa-edit"></i>
@@ -124,19 +131,28 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         </div>
                                     </td>
                                     @include('adminManagementOrder.delete')
-                                </tr>
+                                    </tr>
                             </tbody>
-                            @empty
-                                <tr>
-                                    <td colspan="4">Aucune commande non approuvée pour le moment.</td>
-                                </tr>
-                            @endforelse
+                                @empty
+                                    <tr>
+                                        <td colspan="4">Aucune commande ajoutée pour le moment.</td>
+                                    </tr>
+                                @endforelse
+                            
                         </table>
-
 					</div>
 
-				</div>
+                    @empty
+                        <tr>
+                            <td colspan="4">Aucune commande ajoutée pour cet utilisateur.</td>
+                        </tr>
+                    @endforelse
+
+                    @empty
+                    @include('order.ElseFile')
+                @endforelse
 			</div>
+		</div>
 		</div>
 		<!--footer-->
 		@include('layouts.footer')

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Stock;
+use App\Models\Ordergroup;
+use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     /**
@@ -16,13 +18,19 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $stocks = Stock::with('products')
+        ->where('id', '>', 1)
+        ->get();
+
+        $categories = Category::all();
+
         $products = DB::table('products')
         ->join('categories', 'categories.id', 'products.categorie_id')
         ->join('stocks', 'stocks.id', 'products.stock_id')
         ->select('products.*', 'categories.libelle AS nom_categorie', 'stocks.libelle AS nom_stock')
         ->orderBy('stock_id', 'asc')->get();
 
-        return view('product.index', compact('products'));
+        return view('product.index', compact('products', 'stocks', 'categories'));
     }
 
     /**

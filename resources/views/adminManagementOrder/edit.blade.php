@@ -68,7 +68,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             {{ method_field('PATCH') }}
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Nom du Produit</label>
-                                    <select name="moreFields[0][product_id]" class="form-control b"
+                                    <select name="product_id" class="form-control b" disabled
                                             oninput="
                                             document.getElementById('input_p_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
                                             document.getElementById('input_price_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
@@ -76,20 +76,22 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                             id="select_product_0" required>
                                                 <option selected hidden></option>
                                                 @foreach($products as $product)
-                                                <option value="{{ $product['id']}}|{{ $product['prixclient']}}">{{ $product['nomprod']}}</option>
+                                                <option value="{{ $product['id']}}|{{ $product['prixclient']}}" @if ($product['id']==$order['product_id']) selected @endif {{ $product['nomprod']}}</option>
                                                 @endforeach
                                     </select>
+                                                <input value="{{ $product['id']}}|{{ $product['prixclient']}}" name="product_id" type="hidden">
                             </div>
+                            
                             <div class="form-group">
                                 <label for="">Qté</label>
                                 <input type="number" id="input_qte_0" oninput="
-                                    document.getElementById('input_p_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]"
-                                    document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]
+                                    document.getElementById('input_p_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="qte"
+                                    document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="qte
                                     " placeholder="Taper votre Quantité" class="form-control c" value="{{ $order['qte']}}"/>
                             </div>
                             <div class="form-group">
                                 <label for="">Prix</label>
-                                <input type="hidden" id="input_price_0" name="moreFields[0][prix]" class="form-control1 a"/>
+                                <input type="hidden" id="input_price_0" name="prix" class="form-control1 a"/>
                                 <input type="number" id="input_p_0" name="rtp" class="form-control d" value="{{ $order['prix']}}" disabled/>
                             </div>
                             <button type="submit" class="btn btn-default">Modifier</button>

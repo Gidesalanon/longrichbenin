@@ -20,7 +20,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($user_id);
         $user->update(['status' => 1]);
-
         return redirect()->route('admin.users.index')->withMessage('Utilisateur approuvé avec succès');
     }
 
@@ -34,4 +33,5 @@ class UserController extends Controller
     public function administration(){
         return view('admin');
     }
+    
 }

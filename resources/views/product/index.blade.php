@@ -52,38 +52,34 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="tables">
-					<h3 class="title1">Nos Produits</h3>
+					<h3 class="title1">Nos Produits/Stocks</h3>
+                    @forelse($stocks as $stock)
 					<div class="table-responsive bs-example widget-shadow">
-						<h4>Liste de nos produits</h4>
+						<h4>{{ $stock->libelle }}</h4>
+
 						<table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Image</th>
                                     <th>Nom</th>
-                                    <th>Catégorie</th>
                                     <th>PV</th>
                                     <th>Prix Partenaire</th>
                                     <th>Prix Client</th>
                                     <th>Quantité</th>
                                     <th>Description</th>
-                                    <th>Stock</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($products as $product)
+                                @forelse ($stock->products as $product)
                                 <tr>
                                     <th scope="row">{{ $product->id }}</th>
-                                    <td><img src="{{ asset('imgProd/'.$product->image) }}" class="img-responsive"></td>
                                     <td>{{ $product->nomprod }}</td>
-                                    <td>{{ $product->nom_categorie }}</td>
                                     <td>{{ $product->nbpv }}</td>
                                     <td>{{ $product->prixpartenaire }}</td>
                                     <td>{{ $product->prixclient }}</td>
                                     <td>{{ $product->qte }}</td>
                                     <td>{{ $product->description }}</td>
-                                    <td>{{ $product->nom_stock }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('products.edit', $product->id) }}">
@@ -103,12 +99,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="4">Aucun Produit ajouté pour le moment.</td>
+                                    <td colspan="4">Aucun Produit dans {{ $stock->libelle }}.</td>
                                 </tr>
                             @endforelse
                         </table>
-					</div>
 
+					</div>
+                    @empty
+                    @endforelse
 				</div>
 			</div>
 		</div>

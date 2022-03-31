@@ -20,4 +20,9 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Ordergroup');
     }
+
+    public function users()
+    {
+        return $this->hasMany('App\Models\User');
+    }
 }

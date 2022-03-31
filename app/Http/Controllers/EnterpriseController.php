@@ -46,11 +46,17 @@ class EnterpriseController extends Controller
      */
     public function store(Request $request)
     {
+        $stockId = Stock::create([
+            'libelle' => $request->libelle = 'stock'.'-'.$request->designation,
+            'status' => $request->status = 'Encours',
+        ])->id;
+
         Enterprise::create([
-            'stock_id' => $request->stock_id,
+            'stock_id' => $request->stock_id = $stockId,
             'designation' => $request->designation,
             'adresse' => $request->adresse,
         ]);
+
         toastr()->success('Entreprise enregistrée avec succès.', 'Succès');
         return back();
     }
@@ -90,10 +96,15 @@ class EnterpriseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $stockId = Stock::create([
+            'libelle' => $request->libelle = 'stock'.'-'.$request->designation,
+            'status' => $request->status = 'Encours',
+        ])->id;
+
         $enterprise = Enterprise::where('id', $id)->update([
+            'stock_id' => $request->stock_id = $stockId,
             'designation' => $request->designation,
             'adresse' => $request->adresse,
-            'stock_id' => $request->stock_id,
         ]);
 
         toastr()->success('Entreprise modifiée avec succès.', 'SUCCÈS');
@@ -109,6 +120,7 @@ class EnterpriseController extends Controller
     public function destroy($id)
     {
         Enterprise::where('id', $id)->delete();
+        Stock::where('id', $id)->delete();
 
         toastr()->success('Entreprise supprimée avec succès.', 'SUCCÈS');
         return redirect()->route('enterprises.index');

@@ -49,7 +49,6 @@ class StockController extends Controller
             'status' => $request->status,
             'dateacquis' => $request->dateacquis,
             'description' => $request->description,
-            'enterprise_id' => $request->enterprise_id,
         ]);
 
         return redirect()->back()->withMessage('Stock enregistré avec succès.');
@@ -93,7 +92,6 @@ class StockController extends Controller
             'status' => $request->status,
             'dateacquis' => $request->dateacquis,
             'description' => $request->description,
-            'enterprise_id' => $request->enterprise_id,
         ]);
 
         return redirect()->route('stocks.index')->withMessage('Stock modifié avec succès.');

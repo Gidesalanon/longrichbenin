@@ -54,5 +54,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Enterprise');
     }
+
+    public function orders()
+    {
+        return $this->belongsTo('App\Models\Order');
+    }  
     
+    public function ordergroups()
+    {
+        return $this->hasMany('App\Models\Ordergroup');
+    }   
 }

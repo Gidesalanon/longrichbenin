@@ -63,20 +63,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 						<table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Désignation</th>
                                     <th>Adresse</th>
-                                    <th>Stock Principal</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($enterprises as $enterprise)
                                 <tr>
-                                    <th scope="row">{{ $enterprise->id}}</th>
                                     <td>{{ $enterprise->designation }}</td>
                                     <td>{{ $enterprise->adresse }}</td>
-                                    <td>{{ $enterprise->nom_stock }}</td>
 
                                     <td>
                                         <div class="btn-group" role="group">

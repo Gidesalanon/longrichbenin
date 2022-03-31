@@ -60,7 +60,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <h4>Commande du {{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H\hi')}}</h4>
+                        <h4>Commande du {{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</h4>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -70,13 +70,11 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            
-
 
                             <tbody>
                                 @forelse ($ordergroup->orders as $order)
                                     <tr>
-                                        <td>{{ $order->nomprod }}</td>
+                                        <td>{{ $products[$order->product_id-1]->nomprod }}</td>
                                         <td>{{ $order->qte }}</td>
                                         <td>{{ $order->prix }}</td>
                                         <td>
