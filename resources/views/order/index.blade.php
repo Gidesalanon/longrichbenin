@@ -53,15 +53,18 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			<div class="main-page">
 				<div class="tables">
 					<h3 class="title1">Mes Commandes</h3>
+                    @if ($count_order == 0)
+                        @include('order.ElseFile')
+                    @endif
                     @forelse ($ordergroups as $ordergroup)
-                    <div class="table-responsive bs-example widget-shadow">
+                    <div class="table-responsive bs-example widget-shadow" id="table-id{{$ordergroup->id}}">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <h4>Commande du {{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</h4>
-                        <table class="table table-bordered">
+                        <h4 id="{{$ordergroup->id}}">Commande du {{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</h4>
+						<table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Nom du Produit</th>
@@ -70,11 +73,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>Action</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 @forelse ($ordergroup->orders as $order)
                                     <tr>
-                                        <td>{{ $products[$order->product_id-1]->nomprod }}</td>
+                                        <td>{{ $products[$order->product_id] }}</td>
                                         <td>{{ $order->qte }}</td>
                                         <td>{{ $order->prix }}</td>
                                         <td>
@@ -90,11 +92,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     </tr>
                             </tbody>
                                 @empty
-                                    <tr>
-                                        <td colspan="4">Aucune commande ajoutée pour le moment.</td>
-                                    </tr>
+                                    <!-- <tr>
+                                        <td colspan="4">Aucune Commande ajoutée pour le moment.</td>
+                                    </tr> -->
+                                    <style>
+                                        #table-id{{$ordergroup->id}} {
+                                            visibility:hidden;
+                                            margin-top:-168px;
+                                        }
+                                    </style>
                                 @endforelse
-                            
                         </table>
 					</div>
 

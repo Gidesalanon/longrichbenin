@@ -23,12 +23,16 @@ class OrderController extends Controller
        $ordergroups = Ordergroup::with('orders')
         ->where('user_id', Auth::user()->id)
         ->get();
-        $products = Product::all();
-
+        $o = Order::all();
+        $count_order = count($o);
+        $p = Product::all();
+        foreach($p as $product) :
+            $products[$product->id] = $product->nomprod;
+        endforeach;
         $orders = Product::with('orders')
         ->get();
-        
-        return view('order.index', compact( 'orders', 'ordergroups', 'products'));
+
+        return view('order.index', compact( 'orders', 'ordergroups', 'products', 'o', 'count_order'));
     }
     /**
      * Show the form for creating a new resource.
@@ -52,7 +56,7 @@ class OrderController extends Controller
         $orderId = Ordergroup::create([
             'user_id' => $request->user_id = Auth::user()->id,
         ])->id;
-        
+
         $request->validate([
             'moreFields.*.product_id' => 'required',
             'moreFields.*.qte' => 'required',
@@ -148,7 +152,7 @@ class OrderController extends Controller
         $count = count($orders);
 
         return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count'));
-        
+
     }
 
     //Approuver tous les orders d'un coup
@@ -199,7 +203,7 @@ class OrderController extends Controller
         $request->validate([
             'qte' => 'required',
         ]);
-        
+
         Order::where('id', $id)->update([
             'qte' => $request->qte,
         ]);
