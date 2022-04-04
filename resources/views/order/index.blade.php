@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Liste des Commandes</title>
+<title>Longrich Bénin | Liste de commandes :: Utilisateur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -51,65 +51,58 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- main content start-->
 		<div id="page-wrapper">
 			<div class="main-page">
-				<div class="tables">
-					<h3 class="title1">Mes Commandes</h3>
-                    @if ($count_order == 0)
-                        @include('order.ElseFile')
-                    @endif
-                    @forelse ($ordergroups as $ordergroup)
-                    <div class="table-responsive bs-example widget-shadow" id="table-id{{$ordergroup->id}}">
+			<div class="tables">
+					<h3 class="title1">Liste des Commandes</h3>
+                    <div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <h4 id="{{$ordergroup->id}}">Commande du {{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</h4>
-						<table class="table table-bordered">
+                        <h4>
+                        </h4>
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Nom du Produit</th>
-                                    <th>Quantité</th>
-                                    <th>Prix</th>
+                                    <th>Commande du</th>
+                                    <th>Information du Demandeur</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @forelse ($ordergroup->orders as $order)
-                                    <tr>
-                                        <td>{{ $products[$order->product_id] }}</td>
-                                        <td>{{ $order->qte }}</td>
-                                        <td>{{ $order->prix }}</td>
-                                        <td>
-                                            <div class="btn-group" role="group">
-                                                <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $order->id}}">
-                                                    <button type="button" class="btn btn-danger" title="Supprimer">
-                                                        <i class="fa fa-trash-o"></i>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        </td>
-                                        @include('order.delete')
-                                    </tr>
+
+                                <tbody>
+                                @forelse ($ordergroups as $ordergroup)
+                                <tr>
+                                    <th scope="row">{{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</th>
+                                    <td>{{ $users[$ordergroup->user_id] }}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $ordergroup->id}}">
+                                                <button type="button" class="btn btn-danger" title="Supprimer">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </a>
+                                            <a href="#" data-toggle="modal" data-target="#ShowOrder{{ $ordergroup->id}}">
+                                                <button type="button" class="btn btn-info" title="Voir Plus">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    @include('order.delete')
+                                    @include('order.deleteLine')
+                                    @include('order.show')
+                                </tr>
                             </tbody>
-                                @empty
-                                    <!-- <tr>
-                                        <td colspan="4">Aucune Commande ajoutée pour le moment.</td>
-                                    </tr> -->
-                                    <style>
-                                        #table-id{{$ordergroup->id}} {
-                                            visibility:hidden;
-                                            margin-top:-165px;
-                                        }
-                                    </style>
-                                @endforelse
+                            @empty
+                                <tr>
+                                    <td colspan="4">Aucune Commande ajoutée pour le moment.</td>
+                                </tr>
+                            @endforelse
                         </table>
 					</div>
-
-                    @empty
-                        @include('order.ElseFile')
-                    @endforelse
-				</div>
 			</div>
+		</div>
 		</div>
 		<!--footer-->
 		@include('layouts.footer')

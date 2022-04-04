@@ -54,7 +54,8 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/orders/{order_id}/oneApprove', [OrderController::class, 'approveOneOrder'])->name('admin.orders.Oneapprove');
         Route::get('/orders/{order_id}/desaprove', [OrderController::class, 'desapproveOrder'])->name('admin.orders.desapprove');
         Route::get('/orders/{order_id}/oneDesaprove', [OrderController::class, 'desapproveOneOrder'])->name('admin.orders.Onedesapprove');
-        Route::delete('/order/{order_id}/destroy', [OrderController::class, 'destroyOrder'])->name('admin.order.destroy');
+        Route::delete('/order/{ordergroup_id}/destroy', [OrderController::class, 'destroyOrder'])->name('admin.order.destroy');
+        Route::delete('/order/{order_id}/destroy', [OrderController::class, 'destroyLineOrder'])->name('admin.lineOrder.destroy');
         Route::get('orderedit/{order_id}/edit', [OrderController::class, 'editOrder'])->name('order.edit');
         Route::patch('orderedit/{order_id}', [OrderController::class, 'updateOrder'])->name('order.update');
     });

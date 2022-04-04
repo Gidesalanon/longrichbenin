@@ -77,12 +77,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $users[$ordergroup->user_id] }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-
-                                            <a href="{{ route('order.edit', $ordergroup->id) }}">
-                                                <button type="button" class="btn btn-primary" title="Modifier">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                            </a>
                                             <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $ordergroup->id}}">
                                                 <button type="button" class="btn btn-danger" title="Supprimer">
                                                     <i class="fa fa-trash-o"></i>
@@ -96,6 +90,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         </div>
                                     </td>
                                     @include('adminManagementOrder.delete')
+                                    @include('adminManagementOrder.deleteLine')
                                     @include('adminManagementOrder.show')
                                 </tr>
                             </tbody>

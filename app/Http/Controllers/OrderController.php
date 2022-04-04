@@ -20,21 +20,29 @@ class OrderController extends Controller
      */
     public function index()
     {
-       $ordergroups = Ordergroup::with('orders', 'users')
-        ->where('user_id', Auth::user()->id)
+       $users = User::with('ordergroups')
         ->get();
 
-        $o = Order::all();
-        $count_order = count($o);
+        $ordergroups = Ordergroup::with('orders')
+        ->get();
+
+        $user = User::all();
+        foreach($user as $user) :
+            $users[$user->id] = $user->nom.' '.$user->prenom;
+        endforeach;
+
+        $products = Product::all();
+
+        $orders = Product::with('orders')
+        ->get();
+        $count = count($orders);
 
         $p = Product::all();
         foreach($p as $product) :
             $products[$product->id] = $product->nomprod;
         endforeach;
-        $orders = Product::with('orders')
-        ->get();
 
-        return view('order.index', compact( 'orders', 'ordergroups', 'products', 'o', 'count_order'));
+        return view('order.index', compact('orders', 'products', 'ordergroups', 'users', 'count'));
     }
     /**
      * Show the form for creating a new resource.
@@ -192,7 +200,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
         $order->update(['approve' => 1]);
-        toastr()->success('Cette commande a été approuvée avec succès', 'Succès');
+        toastr()->success('Ligne de commande approuvée avec succès', 'Succès');
         return redirect()->route('admin.order.index');
     }
 
@@ -201,7 +209,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
         $order->update(['approve' => 0]);
-        toastr()->success('Cette commande a été désapprouvée avec succès', 'Succès');
+        toastr()->success('Ligne de commande désapprouvée avec succès', 'Succès');
         return redirect()->route('admin.order.index');
     }
     public function editOrder($id)
@@ -228,8 +236,15 @@ class OrderController extends Controller
 
     public function destroyOrder($id)
     {
+        Ordergroup::where('id', $id)->delete();
+        toastr()->success('Cette commande a été supprimée avec succès.', 'Succès');
+        return redirect()->route('admin.order.index');
+    }
+
+    public function destroyLineOrder($id)
+    {
         Order::where('id', $id)->delete();
-        toastr()->success('Une ligne de commande supprimée avec succès.', 'Succès');
+        toastr()->success('Cette ligne de commande a été supprimée avec succès.', 'Succès');
         return redirect()->route('admin.order.index');
     }
 
