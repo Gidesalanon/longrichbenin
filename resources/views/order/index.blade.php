@@ -98,7 +98,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <style>
                                         #table-id{{$ordergroup->id}} {
                                             visibility:hidden;
-                                            margin-top:-168px;
+                                            margin-top:-165px;
                                         }
                                     </style>
                                 @endforelse

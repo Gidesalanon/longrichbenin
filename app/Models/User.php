@@ -58,8 +58,8 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->belongsTo('App\Models\Order');
-    }  
-    
+    }
+
     public function ordergroups()
     {
         return $this->hasMany('App\Models\Ordergroup');

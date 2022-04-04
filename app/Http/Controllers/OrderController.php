@@ -20,11 +20,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-       $ordergroups = Ordergroup::with('orders')
+       $ordergroups = Ordergroup::with('orders', 'users')
         ->where('user_id', Auth::user()->id)
         ->get();
+
         $o = Order::all();
         $count_order = count($o);
+
         $p = Product::all();
         foreach($p as $product) :
             $products[$product->id] = $product->nomprod;
@@ -145,11 +147,22 @@ class OrderController extends Controller
 
         $ordergroups = Ordergroup::with('orders')
         ->get();
+
+        $user_nom = User::all();
+        foreach($user_nom as $user) :
+            $users[$user->id] = $user->nom.' '.$user->prenom;
+        endforeach;
+
         $products = Product::all();
 
         $orders = Product::with('orders')
         ->get();
         $count = count($orders);
+
+        $p = Product::all();
+        foreach($p as $product) :
+            $products[$product->id] = $product->nomprod;
+        endforeach;
 
         return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count'));
 
@@ -178,7 +191,7 @@ class OrderController extends Controller
     public function approveOneOrder($order_id)
     {
         $order = Order::findOrFail($order_id);
-        $order->update(['approve' => 0]);
+        $order->update(['approve' => 1]);
         toastr()->success('Cette commande a été approuvée avec succès', 'Succès');
         return redirect()->route('admin.order.index');
     }
@@ -187,7 +200,7 @@ class OrderController extends Controller
     public function desapproveOneOrder($order_id)
     {
         $order = Order::findOrFail($order_id);
-        $order->update(['approve' => 1]);
+        $order->update(['approve' => 0]);
         toastr()->success('Cette commande a été désapprouvée avec succès', 'Succès');
         return redirect()->route('admin.order.index');
     }

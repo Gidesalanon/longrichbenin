@@ -56,9 +56,7 @@ class EnterpriseController extends Controller
             'designation' => $request->designation,
             'adresse' => $request->adresse,
         ]);
-
-        toastr()->success('Entreprise enregistrée avec succès.', 'Succès');
-        return back();
+        return redirect()->back()->withMessage('Entreprise enregistrée avec succès.');
     }
 
     /**

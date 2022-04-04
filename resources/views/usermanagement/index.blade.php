@@ -54,10 +54,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                     @endif
                     @forelse($enterprises as $enterprise)
-					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray;">
+					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray;" id="table-id{{$enterprise->id}}">
 						<h4>{{$enterprise->designation}}</h4>
-						
-                        
+
+
                             <table class="table table-bordered">
                             <thead style="box-shadow: 5px 5px 5px gray;">
                                 <tr>
@@ -104,9 +104,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </tr>
                             </tbody>
                             @empty
-                                <tr>
-                                    <td colspan="4">0 utilisateur dans cette entreprise.</td>
-                                </tr>
+                                <style>
+                                        #table-id{{$enterprise->id}} {
+                                            visibility:hidden;
+                                            margin-top:-165px;
+                                        }
+                                    </style>
                             @endforelse
                         </table>
 					</div>
