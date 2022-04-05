@@ -28,12 +28,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth','isUser']], function () {
-    Route::get('/approval', [HomeController::class, 'approval'])->name('approval');
-
-    Route::middleware(['approved'])->group(function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::resource('/orders', OrderController::class);
-    });
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');

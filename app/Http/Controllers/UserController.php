@@ -11,15 +11,15 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('status', '<>', 1)->get();
-        $nbUserNotApproved = User::where('status', '<>', 1)->count();
+        $users = User::where('isban', '>', 0)->get();
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
         return view('users', compact('users', 'nbUserNotApproved'));
     }
 
     public function approve($user_id)
     {
         $user = User::findOrFail($user_id);
-        $user->update(['status' => 1]);
+        $user->update(['isban' => 0]);
         return redirect()->route('admin.users.index')->withMessage('Utilisateur approuvé avec succès');
     }
 
@@ -33,6 +33,5 @@ class UserController extends Controller
     public function administration(){
         return view('admin');
     }
-    
 
 }
