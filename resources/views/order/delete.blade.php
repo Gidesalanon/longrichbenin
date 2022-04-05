@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="{{ route('admin.order.destroy', $ordergroup->id)}}">
+            <form method="POST" action="{{ route('orders.destroy', $ordergroup->id)}}">
                 @csrf
                 {{ method_field('delete') }}
                 <div class="modal-body">

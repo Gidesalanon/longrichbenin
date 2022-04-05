@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('status')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->nullable();
+            $table->boolean('is_magasinier')->nullable();
             $table->tinyInteger('isban')->default('0');
             $table->unsignedBigInteger('enterprise_id');
             $table->timestamps();

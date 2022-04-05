@@ -144,7 +144,6 @@ class OrderController extends Controller
         Order::where('id', $id)->delete();
         toastr()->success('Une ligne de commande supprimée avec succès.', 'Succès');
         return redirect()->route('orders.index');
-
     }
 
     /* ADMINISTRATION/ORDER/MANAGEMENT */

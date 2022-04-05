@@ -27,6 +27,7 @@ class User extends Authenticatable
         'status',
         'password',
         'is_admin',
+        'is_magasinier',
         'isban',
         'enterprise_id',
     ];
@@ -63,5 +64,5 @@ class User extends Authenticatable
     public function ordergroups()
     {
         return $this->hasMany('App\Models\Ordergroup');
-    }   
+    }
 }

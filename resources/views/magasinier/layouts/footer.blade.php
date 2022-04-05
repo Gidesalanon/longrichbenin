@@ -1,0 +1,3 @@
+<div class="footer">
+		   <p>&copy;<script>document.write(new Date().getFullYear());</script> Longrich Bénin. Tous Droits Réservés | Créé par <a href="https://kdlfournitures.com/" target="_blank">KDL Fournitures</a></p>
+		</div>

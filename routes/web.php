@@ -9,7 +9,7 @@ use App\http\controllers\OrderController;
 use App\http\controllers\StockController;
 use App\http\controllers\UserManagementController;
 use App\http\controllers\EnterpriseController;
-use App\Models\Task;
+use App\http\controllers\MagasinierController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +58,10 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::delete('/order/{order_id}/destroy', [OrderController::class, 'destroyLineOrder'])->name('admin.lineOrder.destroy');
         Route::get('orderedit/{order_id}/edit', [OrderController::class, 'editOrder'])->name('order.edit');
         Route::patch('orderedit/{order_id}', [OrderController::class, 'updateOrder'])->name('order.update');
+    });
+
+    Route::middleware(['magasinier', 'admin'])->group(function () {
+        Route::resource('magasiniers', MagasinierController::class);
     });
 
 });

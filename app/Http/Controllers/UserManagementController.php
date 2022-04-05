@@ -111,6 +111,7 @@ class UserManagementController extends Controller
             'tel' => $request->tel,
             'status' => '1',
             'is_admin' => '0',
+            'is_magasinier' => '0',
             'password' => Hash::make($request->password),
         ]);
         toastr()->success('Utilisateur modifié avec succès.', 'Succès');

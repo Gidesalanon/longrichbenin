@@ -3,10 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
-class CheckAdmin
+class IsMagasinier
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,9 @@ class CheckAdmin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user() &&  Auth::user()->is_admin == 1) {
-             return $next($request);
+            return $next($request);
+        }elseif (Auth::user() &&  Auth::user()->is_admin == 2) {
+             return response()->view('magasinier.index');
         }
         return redirect('home')->with('error','Vous n\'êtes pas un admin svp');
     }
