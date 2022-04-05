@@ -24,6 +24,7 @@ class OrderController extends Controller
         ->get();
 
         $ordergroups = Ordergroup::with('orders')
+        ->where('user_id', '=', Auth::user()->id)
         ->get();
 
         $user = User::all();
