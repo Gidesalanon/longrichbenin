@@ -27,6 +27,8 @@ class UserManagementController extends Controller
         ->where('is_admin', '<>', 1)
         ->get();
 
+    
+
         return view('usermanagement.index', compact('users', 'enterprises', 'count_user', 'u'));
     }
 

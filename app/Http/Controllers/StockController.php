@@ -50,7 +50,6 @@ class StockController extends Controller
             'dateacquis' => $request->dateacquis,
             'description' => $request->description,
         ]);
-
         return redirect()->back()->withMessage('Stock enregistré avec succès.');
 
     }
