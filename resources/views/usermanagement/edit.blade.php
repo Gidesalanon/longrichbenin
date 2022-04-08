@@ -101,9 +101,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <input type="button" class="btn btn-default" value="Générer" onClick="randomPassword(10);" tabindex="2">
                             </div>
                             <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Se Souvenir </label>
-                                </div>
                             <button type="submit" class="btn btn-default">Modifier</button>
                         </form>
                         <script>

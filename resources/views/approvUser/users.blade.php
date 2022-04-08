@@ -76,7 +76,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($users as $i => $user)
+                                 @forelse ($users as $i => $user)
                                 <tr>
                                     <th scope="row">{{ $user->code }}</th>
                                     <td>{{ $user->nom }}</td>
@@ -84,33 +84,38 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->adresse }}</td>
                                     <td>{{ $user->tel }}</td>
+
+                                    <form method="PUT" action="{{ route('users.edit', $user->id)}}">
+                                            @csrf
+                                            {{ method_field('PATCH') }}
                                     <td>
-                                        <select class="form-control enterprise_id" name="enterprise_id" required" id="select_enterprise_id-{{$i}}" onchange="if(this.value!=1){document.getElementById('approuv-{{$i}}').classList.remove('hidden')}else{document.getElementById('approuv-{{$i}}').classList.add('hidden')}">
-                                            <option value="1" selected>Affecter</option>
-                                                @foreach($enterprises as $enterprise)
-                                                    <option value="{{ $enterprise['id']}}">{{ $enterprise['designation']}}</option>
-                                                @endforeach
+                                        <select class="form-control enterprise_id" name="enterprise_id" required"
+                                            id="select_enterprise_id-{{$i}}"
+                                            onchange="if(this.value!=1){document.getElementById('approuv-{{$i}}').classList.remove('hidden')}else{document.getElementById('approuv-{{$i}}').classList.add('hidden')}">
+                                                <option value="1" selected>Affecter à une entreprise</option>
+                                                    @foreach($enterprises as $enterprise)
+                                                        <option value="{{ $enterprise['id']}}">{{ $enterprise['designation']}}</option>
+                                                    @endforeach
                                         </select>
+
                                     </td>
                                     <td>{{ $user->created_at }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('admin.users.approve', $user->id) }}" id="approuv-{{$i}}" class="{{$user->enterprise_id==1?'hidden':''}}">
-                                                <button type="button" class="btn btn-primary" title="Approuver" >
+                                            <a href="{{ route('users.edit', $user->id) }}" id="approuv-{{$i}}" class="{{$user->enterprise_id==1?'hidden':''}}">
+                                                <button class="btn btn-primary" title="Approuver" >
                                                     <i class="fa fa-check-circle"></i>
                                                 </button>
                                             </a>
-
                                             <a href="#!" data-toggle="modal" data-target="#modalDeleteUser{{ $user['id']}}">
                                                 <button type="button" class="btn btn-danger" title="Supprimer">
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
                                             </a>
-
                                         </div>
                                     </td>
-                                    @include('layouts.modal_delete')
-
+                                    </form>
+                                    @include('approvUser.modal_delete')
                                 </tr>
                             </tbody>
                             @empty

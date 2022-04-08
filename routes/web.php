@@ -33,9 +33,8 @@ Route::group(['middleware' => ['auth','isUser']], function () {
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');
-        Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
-        Route::get('/users/{user_id}/approve', [UserController::class, 'approve'])->name('admin.users.approve');
-        Route::delete('/users/{user_id}/destroy', [UserController::class, 'destroy'])->name('admin.users.destroy');
+        /* Route::get('/users/{id}/editer', [UserController::class, 'editer'])->name('admin.use    rs.editer'); */
+        Route::resource('users', UserController::class);
         Route::resource('usermanagements', UserManagementController::class);
         Route::get('/usermanagements/{user_id}/disable', [UserManagementController::class, 'isNotBan'])->name('admin.users.disable');
         Route::get('/usermanagements/{user_id}/enable', [UserManagementController::class, 'isBan'])->name('admin.users.enable');

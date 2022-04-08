@@ -17,27 +17,36 @@ class UserController extends Controller
 
         $enterprises = Enterprise::where('id', '>', 1)->get();
 
-        return view('users', compact('users', 'nbUserNotApproved', 'enterprises'));
+        return view('approvUser.users', compact('users', 'nbUserNotApproved', 'enterprises'));
     }
 
-    public function approve(Request $request, $user_id)
+    public function create(){
+
+    }
+
+    public function edit(Request $request, $user_id)
     {
-        $user = User::findOrFail($user_id);
-        $user->update([
-            'isban' => 0,
-            'enterprise_id' => $request->enterprise_id
+        // dd($request->enterprise_id);
+         $user = User::findOrFail($user_id);
+            $user->update([
+                'isban' => 0,
+                'enterprise_id' => $request->enterprise_id
             ]);
-        return redirect()->route('admin.users.index')->withMessage('Utilisateur approuvé avec succès');
+
+        return redirect()->route('users.index')->withMessage('Utilisateur approuvé avec succès');
+    }
+
+    public function show(){
+
     }
 
     public function destroy($user_id)
     {
         User::where('id', $user_id)->delete();
-        return redirect()->route('admin.users.index')->withMessage('Utilisateur supprimé avec succès');  // -> resources/views/stocks/index.blade.php
+        return redirect()->route('users.index')->withMessage('Utilisateur supprimé avec succès');  // -> resources/views/stocks/index.blade.php
     }
 
     public function administration(){
         return view('admin');
     }
-
 }
