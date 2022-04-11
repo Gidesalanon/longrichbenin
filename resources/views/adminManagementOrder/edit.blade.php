@@ -81,7 +81,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     </select>
                                                 <input value="{{ $product['id']}}|{{ $product['prixclient']}}" name="product_id" type="hidden">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="">Qté</label>
                                 <input type="number" id="input_qte_0" oninput="
@@ -92,7 +92,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             <div class="form-group">
                                 <label for="">Prix</label>
                                 <input type="hidden" id="input_price_0" name="prix" class="form-control1 a"/>
-                                <input type="number" id="input_p_0" name="rtp" class="form-control d" value="{{ $order['prix']}}" disabled/>
+                                <input type="number" id="input_p_0" name="prix" class="form-control d" value="{{ $order['prix']}}" readonly/>
                             </div>
                             <button type="submit" class="btn btn-default">Modifier</button>
                         </form>

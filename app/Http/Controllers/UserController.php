@@ -26,14 +26,14 @@ class UserController extends Controller
 
     public function edit(Request $request, $user_id)
     {
-        // dd($request->enterprise_id);
          $user = User::findOrFail($user_id);
             $user->update([
                 'isban' => 0,
                 'enterprise_id' => $request->enterprise_id
             ]);
 
-        return redirect()->route('users.index')->withMessage('Utilisateur approuvé avec succès');
+        toastr()->success('Utilisateur approuvé avec succès', 'Succès');
+        return redirect()->route('users.index');
     }
 
     public function show(){
@@ -43,7 +43,8 @@ class UserController extends Controller
     public function destroy($user_id)
     {
         User::where('id', $user_id)->delete();
-        return redirect()->route('users.index')->withMessage('Utilisateur supprimé avec succès');  // -> resources/views/stocks/index.blade.php
+        toastr()->success('Utilisateur supprimé avec succès', 'Succès');
+        return redirect()->route('users.index');
     }
 
     public function administration(){

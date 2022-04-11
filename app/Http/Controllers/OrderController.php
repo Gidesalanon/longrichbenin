@@ -156,6 +156,10 @@ class OrderController extends Controller
         $ordergroups = Ordergroup::with('orders')
         ->get();
 
+        $orderss = Order::with('ordergroups')
+        ->get();
+        $count_order = count($orderss);
+
         $user_nom = User::all();
         foreach($user_nom as $user) :
             $users[$user->id] = $user->nom.' '.$user->prenom;
@@ -172,7 +176,7 @@ class OrderController extends Controller
             $products[$product->id] = $product->nomprod;
         endforeach;
 
-        return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count'));
+        return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count', 'orderss', 'count_order'));
 
     }
 
@@ -221,14 +225,10 @@ class OrderController extends Controller
 
     public function updateOrder(Request $request, $id)
     {
-        $request->validate([
-            'qte' => 'required',
-        ]);
-
         Order::where('id', $id)->update([
             'qte' => $request->qte,
+            'prix' => $request->prix,
         ]);
-        dd($request->qte);
 
         toastr()->success('Ligne de commande modifiée avec succès.', 'Succès');
         return redirect()->route('admin.order.index');
@@ -247,6 +247,5 @@ class OrderController extends Controller
         toastr()->success('Cette ligne de commande a été supprimée avec succès.', 'Succès');
         return redirect()->route('admin.order.index');
     }
-
 
 }
