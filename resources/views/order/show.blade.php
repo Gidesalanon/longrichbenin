@@ -11,14 +11,14 @@
                     <div class="table-responsive bs-example widget-shadow">
                         @foreach ($ordergroup->orders as $order)
                         Par: <strong>{{ $users[$ordergroup->user_id] }} </strong>
-                        <a href="{{ route('order.edit', $order->id) }}">
+                        <a href="{{ route('orders.edit', $order->id) }}">
                             <i class="fa fa-pencil" title="Modifier"></i>
                         </a>
 
-                        <a onclick="return confirm('Êtes vous sûr de vouloir supprimer cette ligne?')" href="{{ route('orders.destroy', $order->id)}}">
+                        <a onclick="return confirm('Êtes vous sûr de vouloir supprimer cette ligne?')" href="{{ route('lineOrder.destroy', $order->id)}}">
                                 <i class="fa fa-trash-o" style="color:red;" title="Supprimer"></i>
                         </a>
-                        <form action="{{ route('orders.destroy', $order->id)}}" method="POST">
+                        <form action="{{ route('lineOrder.destroy', $order->id)}}" method="POST">
                             @csrf
                             {{ method_field('delete') }}
                         </form></br>

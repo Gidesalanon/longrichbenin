@@ -106,31 +106,22 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
         $products = Product::all()->toArray();
-        $order = Order::findOrFail($order->id);
+        $order = Order::find($id);
         return view('order.edit', compact('order', 'products'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $request["product_id"] = explode('|',$request["product_id"])[0];
-        $request['prix'] = $request['qte'] * $request['prixclient'];
         Order::where('id', $id)->update([
-            'product_id' => $request->product_id,
-            'prix' => $request->prix,
             'qte' => $request->qte,
-            'approve' => $request->approve,
+            'prix' => $request->prix,
         ]);
-        return redirect()->route('order.index')->withMessage('Commande modifiée avec succès.');
+
+        toastr()->success('Ligne de commande modifiée avec succès.', 'Succès');
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -141,8 +132,15 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+        Ordergroup::where('id', $id)->delete();
+        toastr()->success('Cette commande a été supprimée avec succès.', 'Succès');
+        return redirect()->route('orders.index');
+    }
+
+    public function destrLineOrder($id)
+    {
         Order::where('id', $id)->delete();
-        toastr()->success('Une ligne de commande supprimée avec succès.', 'Succès');
+        toastr()->success('Cette ligne de commande a été supprimée avec succès.', 'Succès');
         return redirect()->route('orders.index');
     }
 

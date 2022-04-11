@@ -49,6 +49,11 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/orders/{order_id}/oneApprove', [OrderController::class, 'approveOneOrder'])->name('admin.orders.Oneapprove');
         Route::get('/orders/{order_id}/desaprove', [OrderController::class, 'desapproveOrder'])->name('admin.orders.desapprove');
         Route::get('/orders/{order_id}/oneDesaprove', [OrderController::class, 'desapproveOneOrder'])->name('admin.orders.Onedesapprove');
+        Route::get('orders/{order_id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+        Route::patch('orders/{order_id}', [OrderController::class, 'update'])->name('orders.update');
+        Route::delete('/orders/{ordergroup_id}/destroy', [OrderController::class, 'destroy'])->name('orders.destroy');
+        Route::get('/orders/{order_id}/destroy', [OrderController::class, 'destrLineOrder'])->name('lineOrder.destroy');
+
         Route::delete('/order/{ordergroup_id}/destroy', [OrderController::class, 'destroyOrder'])->name('admin.order.destroy');
         Route::get('/order/{order_id}/destroy', [OrderController::class, 'destroyLineOrder'])->name('admin.lineOrder.destroy');
         Route::get('orderedit/{order_id}/edit', [OrderController::class, 'editOrder'])->name('order.edit');
