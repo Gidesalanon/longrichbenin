@@ -17,11 +17,10 @@ class IsMagasinier
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->is_admin == 1) {
+        if ( Auth::check() && Auth::user()->is_admin == 2 )
+        {
             return $next($request);
-        }elseif (Auth::user() &&  Auth::user()->is_admin == 2) {
-             return response()->view('magasinier.index');
         }
-        return redirect('home')->with('error','Vous n\'êtes pas un admin svp');
+        return redirect('/admin');
     }
 }

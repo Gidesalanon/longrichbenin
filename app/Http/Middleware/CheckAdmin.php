@@ -20,6 +20,6 @@ class CheckAdmin
         if (Auth::user() &&  Auth::user()->is_admin == 1) {
              return $next($request);
         }
-        return redirect('home')->with('error','Vous n\'êtes pas un admin svp');
+        return redirect('/manager');
     }
 }

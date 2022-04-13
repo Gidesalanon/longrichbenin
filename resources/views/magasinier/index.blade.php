@@ -47,10 +47,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <body class="cbp-spmenu-push">
 	<div class="main-content">
 		<!--left-fixed -navigation-->
-		@include('magasinier.layouts.menu')
+		@include('layouts.menu')
 		<!--left-fixed -navigation-->
 		<!-- header-starts -->
-		@include('magasinier.layouts.header')
+		@include('layouts.header')
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
@@ -400,7 +400,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 		<!--footer-->
-		@include('magasinier.layouts.footer')
+		@include('layouts.footer')
         <!--//footer-->
 	</div>
 	<!-- Classie -->
@@ -416,7 +416,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 				classie.toggle( menuLeft, 'cbp-spmenu-open' );
 				disableOther( 'showLeftPush' );
 			};
-
 
 			function disableOther( button ) {
 				if( button !== 'showLeftPush' ) {

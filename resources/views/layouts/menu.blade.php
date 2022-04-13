@@ -58,6 +58,9 @@
                         <li>
 							<a href="{{route('admin.order.index')}}"><i class="fa fa-check-circle nav_icon"></i>Validation Commande <span class="nav-badge-btm">08</span></a>
 						</li>
+                        <li>
+							<a href=""><i class="fa fa-check-circle nav_icon"></i>Commande Approuvée<span class="nav-badge-btm">08</span></a>
+						</li>
 					</ul>
 					<!-- //sidebar-collapse -->
 				</nav>

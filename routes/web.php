@@ -33,12 +33,11 @@ Route::group(['middleware' => ['auth','isUser']], function () {
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');
-        /* Route::get('/users/{id}/editer', [UserController::class, 'editer'])->name('admin.use    rs.editer'); */
+
         Route::resource('users', UserController::class);
         Route::resource('usermanagements', UserManagementController::class);
         Route::get('/usermanagements/{user_id}/disable', [UserManagementController::class, 'isNotBan'])->name('admin.users.disable');
         Route::get('/usermanagements/{user_id}/enable', [UserManagementController::class, 'isBan'])->name('admin.users.enable');
-        //crud category
         Route::resource('admin/categories', CategoryController::class);
         Route::resource('admin/enterprises', EnterpriseController::class);
         Route::resource('admin/products', ProductController::class);
@@ -54,14 +53,16 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::delete('/orders/{ordergroup_id}/destroy', [OrderController::class, 'destroy'])->name('orders.destroy');
         Route::get('/orders/{order_id}/destroy', [OrderController::class, 'destrLineOrder'])->name('lineOrder.destroy');
 
-        Route::delete('/order/{ordergroup_id}/destroy', [OrderController::class, 'destroyOrder'])->name('admin.order.destroy');
-        Route::get('/order/{order_id}/destroy', [OrderController::class, 'destroyLineOrder'])->name('admin.lineOrder.destroy');
-        Route::get('orderedit/{order_id}/edit', [OrderController::class, 'editOrder'])->name('order.edit');
-        Route::patch('orderedit/{order_id}', [OrderController::class, 'updateOrder'])->name('order.update');
+        /* Route order administrateur */
+        Route::delete('admin/order/{ordergroup_id}/destroy', [OrderController::class, 'destroyOrder'])->name('admin.order.destroy');
+        Route::get('admin/order/{order_id}/destroy', [OrderController::class, 'destroyLineOrder'])->name('admin.lineOrder.destroy');
+        Route::get('admin/orderedit/{order_id}/edit', [OrderController::class, 'editOrder'])->name('order.edit');
+        Route::patch('admin/orderedit/{order_id}', [OrderController::class, 'updateOrder'])->name('order.update');
     });
 
-    Route::middleware(['magasinier', 'admin'])->group(function () {
-        Route::resource('magasiniers', MagasinierController::class);
+    Route::middleware(['magasinier'])->group(function () {
+        Route::get('/manager', [MagasinierController::class, 'manager'])->name('manager');
+        Route::get('manager/order-approved', [MagasinierController::class, 'order'])->name('order.approved.index');
+        Route::get('manager/order/{order_id}/execute', [MagasinierController::class, 'executeOrder'])->name('order.execute');
     });
-
 });
