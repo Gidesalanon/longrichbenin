@@ -19,7 +19,9 @@ class CheckAdmin
     {
         if (Auth::user() &&  Auth::user()->is_admin == 1) {
              return $next($request);
+        }elseif (Auth::user() &&  Auth::user()->is_admin == 2) {
+             return redirect('/manager');
         }
-        return redirect('/manager');
+        return redirect('/home');
     }
 }

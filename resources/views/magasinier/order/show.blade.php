@@ -11,17 +11,6 @@
                     <div class="table-responsive bs-example widget-shadow">
                         @foreach ($ordergroup->orders as $order)
                         N°: <strong>{{ $order->id }} </strong>
-                        <a href="{{ route('order.edit', $order->id) }}">
-                            <i class="fa fa-pencil" title="Modifier"></i>
-                        </a>
-
-                            <a onclick="return confirm('Êtes vous sûr de vouloir supprimer cette ligne?')" href="{{ route('admin.lineOrder.destroy', $order->id)}}">
-                                    <i class="fa fa-trash-o" style="color:red;" title="Supprimer"></i>
-                            </a>
-                            <form action="{{ route('admin.lineOrder.destroy', $order->id)}}" method="delete">
-                                @csrf
-                                {{ method_field('delete') }}
-                            </form>
                         </br>
 
                         Nom du Produit: {{ $products[$order->product_id] }}</br>

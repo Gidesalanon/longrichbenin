@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Ordergroup;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 class MagasinierController extends Controller
 {
@@ -24,11 +25,14 @@ class MagasinierController extends Controller
         ->get();
 
         $ordergroups = Ordergroup::with('orders')
-        ->where('user_id', '=', Auth::user()->id)
         ->get();
 
-        $user = User::all();
-        foreach($user as $user) :
+        $orderss = Order::with('ordergroups')
+        ->get();
+        $count_order = count($orderss);
+
+        $user_nom = User::all();
+        foreach($user_nom as $user) :
             $users[$user->id] = $user->nom.' '.$user->prenom;
         endforeach;
 
@@ -43,7 +47,7 @@ class MagasinierController extends Controller
             $products[$product->id] = $product->nomprod;
         endforeach;
 
-        return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count'));
+        return view('magasinier.order.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count', 'orderss', 'count_order'));
     }
 
     public function executeOrder()

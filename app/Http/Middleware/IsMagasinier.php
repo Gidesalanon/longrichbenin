@@ -20,7 +20,9 @@ class IsMagasinier
         if ( Auth::check() && Auth::user()->is_admin == 2 )
         {
             return $next($request);
+        }elseif (Auth::user() &&  Auth::user()->is_admin == 1) {
+             return redirect('/admin');
         }
-        return redirect('/admin');
+        return redirect('/home');
     }
 }

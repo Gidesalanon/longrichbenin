@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="table-responsive bs-example widget-shadow">
                         @foreach ($ordergroup->orders as $order)
-                        Par: <strong>{{ $users[$ordergroup->user_id] }} </strong>
+                        N°: <strong>{{ $order->id }} </strong>
                         <a href="{{ route('orders.edit', $order->id) }}">
                             <i class="fa fa-pencil" title="Modifier"></i>
                         </a>

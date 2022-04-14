@@ -11,7 +11,7 @@
 				<div class="logo">
 					<a href="{{url('/')}}">
 						<h1>Longrich Bénin</h1>
-						<span>Administration</span>
+						 <span>Dashboard</span>
 					</a>
 				</div>
 				<!--//logo-->
@@ -172,7 +172,12 @@
 									<span class="prfil-img"><img src="{{asset('images_admin/a.png')}}" alt=""> </span>
 									<div class="user-name">
 										<p>{{ Auth::user()->nom }}</p>
-										<span>Admin</span>
+										@if (Auth::user()->is_admin ==1)
+                                            <span>Administration</span>
+                                        @elseif (Auth::user()->is_admin ==2)
+                                            <span>Manager</span>
+                                        @else <span>Commercial</span>
+                                        @endif
 									</div>
 									<i class="fa fa-angle-down lnr"></i>
 									<i class="fa fa-angle-up lnr"></i>
