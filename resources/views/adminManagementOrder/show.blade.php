@@ -28,17 +28,22 @@
                         Quantité: {{ $order->qte }}</br>
                         Prix: {{ $order->prix }} </br>
                         Status:
-                        @if ($order->approve == "0")
 
+                        @if ($order->approve == "0")
                                                         <a href="{{ route('admin.orders.Oneapprove', $order->id) }}">
                                                             <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Non Approuvée</span>
                                                         </a>
 
                                                 @else
+                                                    @if ($order->execute == "1")
+                                                        <span class="badge badge-success" title="Désapprouver cette commande">
+                                                            Approuvée | Exécutée
+                                                        </span>
+                                                    @else
                                                             <a href="{{ route('admin.orders.Onedesapprove', $order->id) }}">
                                                                 <span class="badge badge-success" title="Désapprouver cette commande">Approuvée</span></a>
                                                             </a>
-                                                @endif </br></br>
+                                                @endif @endif</br></br>
                         @endforeach
                     </div>
                 </div>

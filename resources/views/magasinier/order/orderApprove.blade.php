@@ -52,7 +52,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 			<div class="tables">
-					<h3 class="title1">Liste des Commandes Approuvées</h3>
+					<h3 class="title1">Commandes Approuvées</h3>
                     <div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
@@ -77,11 +77,11 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $users[$ordergroup->user_id] }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $ordergroup->id}}">
-                                                <button type="button" class="btn btn-success" title="Éxecuter">
-                                                    <i class="fa fa-play"></i>
+                                            <!-- <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $ordergroup->id}}">
+                                                <button type="button" class="btn btn-success" title="Exécuter">
+                                                    <i class="fa fa-play-circle"></i>
                                                 </button>
-                                            </a>
+                                            </a> -->
                                             <a href="#" data-toggle="modal" data-target="#modalShowOrder{{ $ordergroup->id}}">
                                                 <button type="button" class="btn btn-info" title="Voir Plus">
                                                     <i class="fa fa-eye"></i>

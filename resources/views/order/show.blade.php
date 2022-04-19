@@ -33,7 +33,8 @@
                             </span>
                         @else
                             <span class="badge badge-success" title="Désapprouver cette commande">
-                                Approuvée</span>
+                                Approuvée
+                            </span>
                             @endif
                             </br></br>
                         @endforeach

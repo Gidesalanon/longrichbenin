@@ -12,22 +12,20 @@
                         @foreach ($ordergroup->orders as $order)
                         N°: <strong>{{ $order->id }} </strong>
                         </br>
-
                         Nom du Produit: {{ $products[$order->product_id] }}</br>
                         Quantité: {{ $order->qte }}</br>
                         Prix: {{ $order->prix }} </br>
                         Status:
-                        @if ($order->approve == "0")
-
-                                                        <a href="{{ route('admin.orders.Oneapprove', $order->id) }}">
-                                                            <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Non Approuvée</span>
-                                                        </a>
-
-                                                @else
-                                                            <a href="{{ route('admin.orders.Onedesapprove', $order->id) }}">
-                                                                <span class="badge badge-success" title="Désapprouver cette commande">Approuvée</span></a>
-                                                            </a>
-                                                @endif </br></br>
+                        @if ($order->execute == "0")
+                            <a href="{{ route('manager.orders.execute', $order->id) }}">
+                                <span class="label label-default" title="Exécuter cette commande"><i class="fa fa-stop"></i> Commande Inexécutée</span>
+                            </a>
+                        @else
+                            <a href="{{ route('manager.orders.unExecute', $order->id) }}">
+                                <span class="badge badge-success" title="Annuler cette commande"><i class="fa fa-play-circle"></i> Commande Exécutée</span></a>
+                            </a>
+                        @endif
+                        </br></br>
                         @endforeach
                     </div>
                 </div>

@@ -80,6 +80,7 @@ class OrderController extends Controller
             $qte = $value['qte'];
             $value['prix'] = $qte*$price;
             $value["approve"] = "0";
+            $value["execute"] = "0";
             $value["ordergroup_id"] = $orderId;
             $created = now();
             $value["ref_created"] = $created;
@@ -135,6 +136,12 @@ class OrderController extends Controller
         Ordergroup::where('id', $id)->delete();
         toastr()->success('Cette commande a été supprimée avec succès.', 'Succès');
         return redirect()->route('orders.index');
+    }
+
+    //point quotidient /order/ des users
+
+    public function point(){
+        
     }
 
     public function destrLineOrder($id)

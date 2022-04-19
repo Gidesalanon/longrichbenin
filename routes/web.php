@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth','isUser']], function () {
     Route::middleware(['magasinier'])->group(function () {
         Route::get('/manager', [MagasinierController::class, 'manager'])->name('manager');
         Route::get('manager/order-approved', [MagasinierController::class, 'order'])->name('order.approved.index');
-        Route::get('manager/order/{order_id}/execute', [MagasinierController::class, 'executeOrder'])->name('order.execute');
+        Route::get('/orders/{order_id}/execute', [MagasinierController::class, 'execute'])->name('manager.orders.execute');
+        Route::get('/orders/{order_id}/unExecute', [MagasinierController::class, 'unExecute'])->name('manager.orders.unExecute');
     });
 });

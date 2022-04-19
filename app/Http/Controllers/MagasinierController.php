@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Ordergroup;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class MagasinierController extends Controller
 {
     /**
@@ -27,10 +28,6 @@ class MagasinierController extends Controller
         $ordergroups = Ordergroup::with('orders')
         ->get();
 
-        $orderss = Order::with('ordergroups')
-        ->get();
-        $count_order = count($orderss);
-
         $user_nom = User::all();
         foreach($user_nom as $user) :
             $users[$user->id] = $user->nom.' '.$user->prenom;
@@ -38,20 +35,40 @@ class MagasinierController extends Controller
 
         $products = Product::all();
 
-        $orders = Product::with('orders')
+       /*  $orders = Product::with('orders')
         ->get();
-        $count = count($orders);
+        $count = count($orders); */
 
         $p = Product::all();
         foreach($p as $product) :
             $products[$product->id] = $product->nomprod;
         endforeach;
 
-        return view('magasinier.order.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count', 'orderss', 'count_order'));
+        return view('magasinier.order.orderApprove', compact( 'products', 'ordergroups', 'users'));
     }
 
-    public function executeOrder()
+    //exécuter une seule ligne order
+    public function execute($order_id)
     {
+        $order = Order::findOrFail($order_id);
+        $product = Product::findOrFail($order->product_id);
+        $order->update(['execute' => 1]);
+        $product->update(['qte' => $product->qte - $order->qte]);
+
+        toastr()->success('Commande exécutée avec succès', 'Succès');
+        return redirect()->route('order.approved.index');
+    }
+
+    //Désexecuter une seule ligne order
+    public function unExecute($order_id)
+    {
+        $order = Order::findOrFail($order_id);
+        $product = Product::findOrFail($order->product_id);
+        $order->update(['execute' => 0]);
+        $product->update(['qte' => $product->qte + $order->qte]);
+
+        toastr()->success('Commande annulée avec succès', 'Succès');
+        return redirect()->route('order.approved.index');
     }
 
     /**
