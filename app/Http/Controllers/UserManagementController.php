@@ -29,6 +29,61 @@ class UserManagementController extends Controller
         return view('usermanagement.index', compact('users', 'enterprises'));
     }
 
+    public function network()
+    {
+        $enterprises = Enterprise::with('users')
+        ->where('id', '>', 1)
+        ->get();
+
+        $load = ['allChildren'];
+
+        $users_list = User::with($load)
+                //  ->filter($request->all())
+               //  ->where('deleted',null)
+               //  ->orwhere('deleted','0')
+                 ->orderByDesc('created_at')
+                //  ->filter(array_filter($request->all(),function($k){return $k!="page";},ARRAY_FILTER_USE_KEY))
+                //  ->paginate(request('per_page', 15))
+                ->get(['code AS name', 'nom AS title', 'email AS description','users.*']);
+            $x = 0;
+            for($i = 0; $i < count($users_list) ; $i++){
+                if(!$users_list[$i]->parents) {
+                    $users[$x] = ($users_list[$i]);
+                    $users[$x]->children = $users[$x]->allChildren;
+                    unset($users[$x]->allChildren);
+                    unset($users[$x]->parents);
+                    $x++;
+                }
+            }
+            $users = $users[0];
+//             echo '<pre>';
+// echo json_encode($users);die;
+            return view('usermanagement.treeview', compact('users', 'enterprises'),);
+    }
+
+    
+    function buildTreeView($arr,$parent,$level = 0,$prelevel = -1){
+        foreach($arr as $id=>$data){
+            if($parent==$data['parent_id']){
+                if($level>$prelevel){
+                    echo "<ol>";
+                }
+                if($level==$prelevel){
+                    echo "</li>";
+                }
+                echo "<li>".$data['city'];
+                if($level>$prelevel){
+                    $prelevel=$level;
+                }
+                $level++;
+                buildTreeView($arr,$id,$level,$prelevel);
+                $level--;	
+            }
+        }
+        if($level==$prelevel){
+            echo "</li></ol>";
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

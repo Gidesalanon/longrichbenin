@@ -64,4 +64,23 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Ordergroup');
     }   
+    
+    public function parents()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+    public function allChildren()
+    {
+        return $this->children()->with('children');
+    }
+    public function allParents()
+    {
+        return $this->parents()->with('children', 'parents');
+    }
+
 }

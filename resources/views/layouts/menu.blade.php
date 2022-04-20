@@ -3,10 +3,10 @@
 				<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
 					<ul class="nav" id="side-menu">
 						<li>
-							<a href="index.html" class="active"><i class="fa fa-home nav_icon"></i>Dashboard</a>
+							<a href="{{route('admin.home')}}" class="active"><i class="fa fa-home nav_icon"></i>Tableau de board</a>
 						</li>
 						<li>
-							<a href="#"><i class="fa fa-list-alt nav_icon"></i>Nos Catégories <span class="nav-badge">12</span> <span class="fa arrow"></span></a>
+							<a href="{{route('categories.index')}}"><i class="fa fa-list-alt nav_icon"></i>Nos Catégories <span class="nav-badge">12</span> <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
 									<a href="{{route('categories.index')}}">Liste des Catégories</a>
@@ -22,7 +22,7 @@
 							<!-- /nav-second-level -->
 						</li>
 						<li class="">
-							<a href="#"><i class="fa fa-book nav_icon"></i>Nos Produits <span class="fa arrow"></span></a>
+							<a href="{{route('products.index')}}"><i class="fa fa-book nav_icon"></i>Nos Produits <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
 									<a href="{{route('products.index')}}">Liste des Produits<span class="nav-badge-btm">08</span></a>
@@ -36,13 +36,13 @@
 						</li>
 
                         <li>
-							<a href="#"><i class="fa fa-user nav_icon"></i>Nos Utilisateurs<span class="nav-badge-btm">02</span><span class="fa arrow"></span></a>
+							<a href="{{route('usermanagements.index')}}"><i class="fa fa-user nav_icon"></i>Nos Utilisateurs<span class="nav-badge-btm">02</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
-									<a href="">Liste des Utilisateurs</a>
+									<a href="#">Liste des Utilisateurs</a>
 								</li>
 								<li>
-									<a href="typography.html">Ajouter Utilisateur</a>
+									<a href="#">Ajouter Utilisateur</a>
 								</li>
 
                                 <li>

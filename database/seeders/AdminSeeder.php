@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         User::create([
-            'code' => '1',
+            'code' => '1070',
             'nom' => 'Admin KDL',
             'prenom' => 'KDL',
             'email' => 'adminkdl@gmail.com',
@@ -25,6 +25,21 @@ class AdminSeeder extends Seeder
             'status' => '1', //compte validé
             'password' => bcrypt('adminkdl'),
             'is_admin' => 1, //admin=1 & non admin=0
+            'isban' => '0', //compte activé
+            'enterprise_id' => Enterprise::all()->random()->id,
+        ]);
+        
+        User::create([
+            'code' => '1234',
+            'nom' => 'DIMON',
+            'prenom' => 'Judicael',
+            'email' => 'judicaelbdimon@gmail.com',
+            'adresse' => 'cotonou',
+            'tel' => '+229 96521420',
+            'status' => '1', //compte validé
+            'password' => bcrypt('password'),
+            'parent_id' => '1',
+            'is_admin' => 0, //admin=1 & non admin=0
             'isban' => '0', //compte activé
             'enterprise_id' => Enterprise::all()->random()->id,
         ]);
