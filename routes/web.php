@@ -30,6 +30,7 @@ Auth::routes();
 Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::resource('/orders', OrderController::class);
+        Route::get('/order/situation', [OrderController::class, 'orderSituation'])->name('orders.situation');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');

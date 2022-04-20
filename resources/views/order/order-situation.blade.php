@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Liste de commandes :: Utilisateur</title>
+<title>Longrich Bénin | Point des commandes :: Utilisateur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -43,6 +43,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+
+<style>
+    @import url("http://bootswatch.com/simplex/bootstrap.min.css");
+
+    table .collapse.in {
+        display:table-row;
+    }
+</style>
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -57,7 +65,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 			<div class="tables">
-					<h3 class="title1">Liste des Commandes</h3>
+					<h3 class="title1">Point des Ventes</h3>
                     <div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
@@ -69,39 +77,46 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Commande du</th>
-                                    <th>Information du Demandeur</th>
+                                    <th>Demandeur</th>
+                                    <th>Produit</th>
+                                    <th>Quantité Obtenue</th>
+                                    <th>Prix Total</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
                                 <tbody>
-                                @forelse ($ordergroups as $ordergroup)
-                                <tr>
-                                    <th scope="row">{{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</th>
-                                    <td>{{ $users[$ordergroup->user_id] }}</td>
+                                @forelse ($orders as $order)
+                                <tr class="clickable" data-toggle="collapse" id="row{{ $order->id }}" data-target=".row{{ $order->id }}">
+                                    <td><img src="{{asset('icons8-plus.gif')}}" style="width:25px; height:25px;"></td>
+                                    <th scope="row">{{ \Carbon\Carbon::parse($order->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</th>
+                                    <td>{{ $users[$order->user_id] }}</td>
+                                    <td>{{ $products[$order->product_id] }}</td>
+                                    <td>{{ $order->qte }}</td>
+                                    <td>{{ $order->prix }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $ordergroup->id}}">
+                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder">
                                                 <button type="button" class="btn btn-danger" title="Supprimer">
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
                                             </a>
-                                            <a href="#" data-toggle="modal" data-target="#ShowOrder{{ $ordergroup->id}}">
-                                                <button type="button" class="btn btn-info" title="Voir Plus">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>
-                                            </a>
-                                            <!-- <a href="#" data-toggle="modal" data-target="#ShowOrder{{ $ordergroup->id}}">
-                                                <button type="button" class="btn btn-info btn-sm pull-right">
-                                                    <i class="fa fa-eye"></i>
-                                                </button>  <br>  <br>
-                                            </a> -->
                                         </div>
                                     </td>
-                                    @include('order.delete')
-                                    @include('order.deleteLine')
-                                    @include('order.show')
+                                </tr>
+                                <tr class="collapse row{{ $order->id }}" style="background-color:slategrey;">
+                                <td style="color:#fff; font-weight: bold;">VENTE</td>
+                                    <td colspan="2" style="color:#fff; width:25%;"><input type="number" class="form-control" id="qte_vendu" name="qte_vendu" placeholder="Tapez la Quantité Vendue" required></td>
+                                    <td colspan="3" style="color:#fff; font-weight: bold;" align="center">ÉCART QUANTITÉ: {{ $order->id }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ÉCART PRIX: {{ $order->id }}</td>
+                                    <td>
+                                        <a href="#">
+                                                <button type="button" class="btn btn-info" title="Voir Plus">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </a>
+                                    </td>
                                 </tr>
                             </tbody>
                             @empty

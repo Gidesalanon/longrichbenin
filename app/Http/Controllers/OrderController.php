@@ -84,6 +84,7 @@ class OrderController extends Controller
             $value["ordergroup_id"] = $orderId;
             $created = now();
             $value["ref_created"] = $created;
+            $value["user_id"] = Auth::user()->id;
             Order::create($value);
         }
         toastr()->success('Votre Commande a été enregistrée avec succès, veuillez attendre la validation de l\'administrateur.', 'Succès');
@@ -140,8 +141,33 @@ class OrderController extends Controller
 
     //point quotidient /order/ des users
 
-    public function point(){
-        
+    public function orderSituation(){
+        $users = User::with('ordergroups')
+        ->get();
+
+        $ordergroups = Ordergroup::with('orders')
+        ->where('user_id', '=', Auth::user()->id)
+        ->get();
+
+        $user = User::all();
+        foreach($user as $user) :
+            $users[$user->id] = $user->nom.' '.$user->prenom;
+        endforeach;
+
+        $products = Product::all();
+        $orders = Order::all()
+        ->where('execute', '=', '1');
+
+        /* $orders = Product::with('orders')
+        ->get();
+        $count = count($orders); */
+
+        $p = Product::all();
+        foreach($p as $product) :
+            $products[$product->id] = $product->nomprod;
+        endforeach;
+
+        return view('order.order-situation', compact('orders', 'products', 'ordergroups', 'users'));
     }
 
     public function destrLineOrder($id)

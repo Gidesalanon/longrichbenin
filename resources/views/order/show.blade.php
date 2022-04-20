@@ -35,7 +35,7 @@
                             <span class="badge badge-success" title="Désapprouver cette commande">
                                 Approuvée
                             </span>
-                            @endif
+                        @endif
                             </br></br>
                         @endforeach
                     </div>
