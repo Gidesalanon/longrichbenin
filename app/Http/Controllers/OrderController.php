@@ -82,6 +82,7 @@ class OrderController extends Controller
             $value['prix'] = $qte*$price;
             $value["approve"] = "0";
             $value["execute"] = "0";
+            $value["status"] = "0"; //point fait ou pas
             $value["ordergroup_id"] = $orderId;
             $created = now();
             $value["ref_created"] = $created;
@@ -158,7 +159,9 @@ class OrderController extends Controller
 
         $orders = Order::all()
         ->where('execute', '=', '1')
-        ->where('user_id', '=', Auth::user()->id);
+        ->where('user_id', '=', Auth::user()->id)
+        ->where('status', '=', '0');
+
 
         /* $orders = Product::with('orders')
         ->get();

@@ -38,14 +38,18 @@ class SellingController extends Controller
     public function store(Request $request)
     {
         $order = Order::where('id', $request->order_id)->get();
+        $getIdOrder = Order::findOrFail($request->order_id);
+        $getIdOrder->update(['status' => 1]);
         /* dd($order[0]); */
         $product = Product::findOrFail($order[0]->product_id);
 
        Selling::create([
                         'qte_vendu' => $request->qte_vendu,
                         'ca' => $request->qte_vendu * $product->prixclient,   //ca:chiffre d'affaire =qte vendu*prix client produit
-                        'srd' => $order[0]->qte - $request->qte_vendu,          //srd:stock restant du = stock obtenu-stock vendu
+                        'srd' => $order[0]->qte - $request->qte_vendu,       //srd:stock restant du = stock obtenu-stock vendu
                         'vs' => $request->qte_vendu * $product->prixclient, //vs:valeur du stock client= srd*prix client produit
+                        'ecart' => $order[0]->prix - ($request->qte_vendu * $product->prixclient), //ecart: montant total de cmde - chiffre d'affaire du client
+                        'status' => "1", //status=1 -> vente enregistrée, status=0 -> non enregistrée
                         'order_id'=> $order[0]->id,
                         'user_id'=> Auth::user()->id]);
 

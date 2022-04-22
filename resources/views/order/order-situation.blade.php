@@ -98,7 +98,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $products[$order->product_id] }}</td>
                                     <td>{{ $produits[$order->product_id] }} FCFA</td>
                                     <td>{{ $order->qte }}</td>
-                                    <td>{{ $order->prix }}</td>
+                                    <td>{{ $order->prix }} FCFA</td>
 
                                 </tr>
                                 <tr class="collapse row{{ $order->id }}" style="background-color:dimgray;">
