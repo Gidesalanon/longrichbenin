@@ -96,11 +96,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th scope="row">{{ \Carbon\Carbon::parse($order->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</th>
                                     <td>{{ $users[$order->user_id] }}</td>
                                     <td>{{ $products[$order->product_id] }}</td>
-                                    <td>{{ $produits[$order->product_id] }} FCFA</td>
+                                    <td class="myDIV">{{ $produits[$order->product_id] }}</td>
                                     <td>{{ $order->qte }}</td>
-                                    <td>{{ $order->prix }} FCFA</td>
+                                    <td class="myDIV">{{ $order->prix }}</td>
 
                                 </tr>
+
                                 <tr class="collapse row{{ $order->id }}" style="background-color:dimgray;">
                                 <td style="color:#fff; font-weight: bold;">VENTE</td>
 
@@ -108,8 +109,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         @csrf
                                         <input type="hidden" name="order_id" value="{{ $order->id }}" />
                                         <input type="hidden" name="prixclient" value="{{ $produits[$order->product_id] }}" />
+
                                         <td style="color:#fff; width:20%;">
                                             <input type="number" min="0" max="{{ $order->qte }}"
+                                            onKeyUp="if(this.value > {{ $order->qte }}){this.value='';}else if(this.value<0){this.value='';}"
                                                     style="border-radius: 30px;"
                                                     class="form-control"
                                                     id="qte_vendu"
@@ -145,6 +148,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 		</div>
+        <script>
+                let x = document.querySelectorAll(".myDIV");
+                for (let i = 0, len = x.length; i < len; i++) {
+                let num = Number(x[i].innerHTML)
+                    .toLocaleString('MX');
+                    x[i].innerHTML = num;
+                    x[i].classList.add("currSign");
+                }
+        </script>
 		<!--footer-->
 		@include('layouts.footer')
         <!--//footer-->
