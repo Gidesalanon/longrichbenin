@@ -152,7 +152,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 let x = document.querySelectorAll(".myDIV");
                 for (let i = 0, len = x.length; i < len; i++) {
                 let num = Number(x[i].innerHTML)
-                    .toLocaleString('MX');
+                    .toLocaleString('de-DE');
                     x[i].innerHTML = num;
                     x[i].classList.add("currSign");
                 }

@@ -14,7 +14,7 @@
                         </br>
                         Nom du Produit: {{ $products[$order->product_id] }}</br>
                         Quantité: {{ $order->qte }}</br>
-                        Prix: {{ $order->prix }} </br>
+                        Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
                         Status:
                         @if ($order->execute == "0")
                             <a href="{{ route('manager.orders.execute', $order->id) }}">

@@ -106,6 +106,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		@include('layouts.footer')
         <!--//footer-->
 	</div>
+    <script>
+                let x = document.querySelectorAll(".myDIV");
+                for (let i = 0, len = x.length; i < len; i++) {
+                let num = Number(x[i].innerHTML)
+                    .toLocaleString('de-DE');
+                    x[i].innerHTML = num;
+                    x[i].classList.add("currSign");
+                }
+        </script>
 	<!-- Classie -->
 		<script src="{{asset('js_admin/classie.js')}}"></script>
 		<script>

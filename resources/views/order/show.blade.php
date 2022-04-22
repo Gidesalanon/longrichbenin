@@ -25,7 +25,7 @@
 
                         Nom du Produit: {{ $products[$order->product_id] }}</br>
                         Quantité: {{ $order->qte }}</br>
-                        Prix: {{ $order->prix }} </br>
+                        Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
                         Status:
                         @if ($order->approve == "0")
                             <span class="label label-default" title="Approuver cette commande">
@@ -40,6 +40,7 @@
                         @endforeach
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button class="btn btn-dark" data-dismiss="modal">Fermer</button>
                 </div>

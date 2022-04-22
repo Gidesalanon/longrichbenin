@@ -26,14 +26,13 @@
 
                         Nom du Produit: {{ $products[$order->product_id] }}</br>
                         Quantité: {{ $order->qte }}</br>
-                        Prix: {{ $order->prix }} </br>
+                        Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
                         Status:
 
                         @if ($order->approve == "0")
                                                         <a href="{{ route('admin.orders.Oneapprove', $order->id) }}">
                                                             <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Non Approuvée</span>
                                                         </a>
-
                                                 @else
                                                     @if ($order->execute == "1")
                                                         <span class="badge badge-success" title="Désapprouver cette commande">

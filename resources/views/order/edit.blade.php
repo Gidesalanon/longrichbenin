@@ -91,8 +91,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                             <div class="form-group">
                                 <label for="">Prix</label>
-                                <input type="hidden" id="input_price_0" name="prix" class="form-control1 a"/>
-                                <input type="number" id="input_p_0" name="prix" class="form-control d" value="{{ $order['prix']}}" readonly/>
+                                <input type="hidden" id="input_price_0" name="prix" class="form-control1 myDIV a"/>
+                                <input type="number" id="input_p_0" name="prix" class="form-control myDIV d" value="{{ $order['prix']}}" readonly/>
                             </div>
                             <button type="submit" class="btn btn-default">Modifier</button>
                         </form>
@@ -105,6 +105,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		@include('layouts.footer')
         <!--//footer-->
 	</div>
+    <script>
+                let x = document.querySelectorAll(".myDIV");
+                for (let i = 0, len = x.length; i < len; i++) {
+                let num = Number(x[i].innerHTML)
+                    .toLocaleString('es');
+                    x[i].innerHTML = num;
+                    x[i].classList.add("currSign");
+                }
+        </script>
 	<!-- Classie -->
 		<script src="{{asset('js_admin/classie.js')}}"></script>
 		<script>
