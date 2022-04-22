@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Ordergroup;
 use App\Models\User;
+use App\Models\Selling;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -154,20 +155,29 @@ class OrderController extends Controller
             $users[$user->id] = $user->nom.' '.$user->prenom;
         endforeach;
 
-        $products = Product::all();
+
         $orders = Order::all()
-        ->where('execute', '=', '1');
+        ->where('execute', '=', '1')
+        ->where('user_id', '=', Auth::user()->id);
 
         /* $orders = Product::with('orders')
         ->get();
         $count = count($orders); */
 
+        $products = Product::all();
         $p = Product::all();
         foreach($p as $product) :
             $products[$product->id] = $product->nomprod;
         endforeach;
 
-        return view('order.order-situation', compact('orders', 'products', 'ordergroups', 'users'));
+
+        $produits = Product::all();
+        $pr = Product::all();
+        foreach($pr as $produit) :
+            $produits[$produit->id] = $produit->prixclient;
+        endforeach;
+
+        return view('order.order-situation', compact('orders', 'products', 'ordergroups', 'users', 'produits'));
     }
 
     public function destrLineOrder($id)

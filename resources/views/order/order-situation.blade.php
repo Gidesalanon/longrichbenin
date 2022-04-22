@@ -51,6 +51,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
         display:table-row;
     }
 </style>
+
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -81,42 +82,57 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>Commande du</th>
                                     <th>Demandeur</th>
                                     <th>Produit</th>
+                                    <th>PU</th>
                                     <th>Quantité Obtenue</th>
-                                    <th>Prix Total</th>
-                                    <th>Action</th>
+                                    <th>Montant</th>
                                 </tr>
                             </thead>
 
                                 <tbody>
-                                @forelse ($orders as $order)
+                                @forelse ($orders as $i=> $order)
+
                                 <tr class="clickable" data-toggle="collapse" id="row{{ $order->id }}" data-target=".row{{ $order->id }}">
                                     <td><img src="{{asset('icons8-plus.gif')}}" style="width:25px; height:25px;"></td>
                                     <th scope="row">{{ \Carbon\Carbon::parse($order->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</th>
                                     <td>{{ $users[$order->user_id] }}</td>
                                     <td>{{ $products[$order->product_id] }}</td>
+                                    <td>{{ $produits[$order->product_id] }} FCFA</td>
                                     <td>{{ $order->qte }}</td>
                                     <td>{{ $order->prix }}</td>
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder">
-                                                <button type="button" class="btn btn-danger" title="Supprimer">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </td>
+
                                 </tr>
-                                <tr class="collapse row{{ $order->id }}" style="background-color:slategrey;">
+                                <tr class="collapse row{{ $order->id }}" style="background-color:dimgray;">
                                 <td style="color:#fff; font-weight: bold;">VENTE</td>
-                                    <td colspan="2" style="color:#fff; width:25%;"><input type="number" class="form-control" id="qte_vendu" name="qte_vendu" placeholder="Tapez la Quantité Vendue" required></td>
-                                    <td colspan="3" style="color:#fff; font-weight: bold;" align="center">ÉCART QUANTITÉ: {{ $order->id }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ÉCART PRIX: {{ $order->id }}</td>
-                                    <td>
-                                        <a href="#">
-                                                <button type="button" class="btn btn-info" title="Voir Plus">
-                                                    <i class="fa fa-check"></i>
-                                                </button>
-                                            </a>
-                                    </td>
+
+                                    <form method="POST" action="{{ route('sellings.store')}}">
+                                        @csrf
+                                        <input type="hidden" name="order_id" value="{{ $order->id }}" />
+                                        <input type="hidden" name="prixclient" value="{{ $produits[$order->product_id] }}" />
+                                        <td style="color:#fff; width:20%;">
+                                            <input type="number" min="0" max="{{ $order->qte }}"
+                                                    style="border-radius: 30px;"
+                                                    class="form-control"
+                                                    id="qte_vendu"
+                                                    name="qte_vendu"
+                                                    placeholder="Tapez la Quantité Vendue"
+                                                    oninput="document.getElementById('ca-<?=$i?>').innerHTML = this.value * Number({{ $produits[$order->product_id] }});
+                                                    document.getElementById('srd-<?=$i?>').innerHTML = - this.value + Number({{ $order->qte }});
+                                                    document.getElementById('vs-<?=$i?>').innerHTML = (- this.value + Number({{ $order->qte }})) * Number({{ $produits[$order->product_id] }});
+                                                    document.getElementById('ecart-<?=$i?>').innerHTML = Number({{ $order->prix }}) - this.value * Number({{ $produits[$order->product_id] }});"
+                                                    required
+                                                    ">
+                                        </td>
+
+                                        <td colspan="4" style="color:#fff; font-weight: bold;"align="center">
+                                            <span>CHIFFRE D'AFFAIRES: <span id="ca-<?=$i?>">0</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>STOCK FINAL: <span id="srd-<?=$i?>">0</span> </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>VALEUR DU STOCK: <span id="vs-<?=$i?>">0</span> </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>ECART: <span id="ecart-<?=$i?>">0</span> </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-info"><i class="fa fa-check"></i></button>
+                                        </td>
+                                    </form>
                                 </tr>
                             </tbody>
                             @empty

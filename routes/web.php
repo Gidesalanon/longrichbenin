@@ -10,6 +10,7 @@ use App\http\controllers\StockController;
 use App\http\controllers\UserManagementController;
 use App\http\controllers\EnterpriseController;
 use App\http\controllers\MagasinierController;
+use App\http\controllers\SellingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::resource('/orders', OrderController::class);
         Route::get('/order/situation', [OrderController::class, 'orderSituation'])->name('orders.situation');
+        Route::resource('sellings', SellingController::class);
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');
