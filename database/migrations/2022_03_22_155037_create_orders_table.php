@@ -19,10 +19,14 @@ class CreateOrdersTable extends Migration
             $table->text('prix');
             $table->text('ref_created')->nullable();
             $table->boolean('approve')->nullable();
+            $table->boolean('execute')->nullable();
+            $table->boolean('status')->nullable();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('ordergroup_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade') ->onDelete('cascade');
             $table->foreign('ordergroup_id')->references('id')->on('ordergroups')->onUpdate('cascade') ->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade') ->onDelete('cascade');
             $table->timestamps();
         });
     }

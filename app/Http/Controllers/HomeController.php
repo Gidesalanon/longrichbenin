@@ -25,10 +25,4 @@ class HomeController extends Controller
     {
         return view('utilisateur.home');
     }
-
-    public function approval()
-{
-    return view('approval');
-}
-
 }

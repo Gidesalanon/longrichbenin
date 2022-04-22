@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CheckAdmin
 {
@@ -19,7 +19,9 @@ class CheckAdmin
     {
         if (Auth::user() &&  Auth::user()->is_admin == 1) {
              return $next($request);
+        }elseif (Auth::user() &&  Auth::user()->is_admin == 2) {
+             return redirect('/manager');
         }
-        return redirect('home')->with('error','Vous n\'êtes pas un admin svp');
+        return redirect('/home');
     }
 }

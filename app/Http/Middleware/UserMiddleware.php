@@ -21,14 +21,12 @@ class UserMiddleware
     {
         $banned = Auth::user()->isban == "1"; // "1"= user is banned / "0"= user is unBanned
         Auth::logout();
+        toastr()->success('Inscription éffectuée avec succès, mais votre compte est inactif. Veuillez contacter l\'adminitrateur svp.', 'Succès');
 
         if ($banned == 1) {
-            $message = 'Votre compte n\'est pas actif. Veuillez contacter l\'administrateur.';
+            return redirect()->route('login');
+            toastr()->success('Inscription éffectuée avec succès, mais votre compte est inactif. Veuillez contacter l\'adminitrateur svp!', 'Succès');
         }
-        return redirect()->route('login')
-            ->with('status',$message)
-            ->withErrors(['email' => 'Votre compte n\'est pas actif. Veuillez contacter l\'administrateur.']);
-
     }
     return $next($request);
     }

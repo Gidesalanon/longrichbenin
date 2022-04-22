@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalDeleteOrder{{ $order->id}}" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDeleteOrder{{ $ordergroup->id}}" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger">
@@ -7,11 +7,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="{{ route('admin.order.destroy', $order->id)}}">
+            <form method="POST" action="{{ route('admin.order.destroy', $ordergroup->id)}}">
                 @csrf
                 {{ method_field('delete') }}
                 <div class="modal-body">
-                    <p class="text-center">Voulez-vous vraiment supprimer cette ligne ?</p>
+                    <p class="text-center">Voulez-vous vraiment supprimer cette commande ?</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-danger">Supprimer</button>

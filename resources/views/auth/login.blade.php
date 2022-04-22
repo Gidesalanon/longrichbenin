@@ -24,9 +24,16 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css_login/util.css">
 	<link rel="stylesheet" type="text/css" href="css_login/main.css">
+    <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 <!--===============================================================================================-->
 </head>
 <body>
+@jquery
+@toastr_css
+@toastr_js
+@toastr_render
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">

@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Commandes non approuvées :: Admin</title>
+<title>Longrich Bénin | Gestion de commande :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -53,8 +53,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			<div class="main-page">
 			<div class="tables">
 					<h3 class="title1">Liste des Commandes</h3>
-                @forelse ($users as $user)
-                    @forelse ($ordergroups as $ordergroup)
                     <div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
@@ -62,95 +60,47 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                         @endif
                         <h4>
-                        <table class="table table-bordered">
-                            @foreach ($ordergroup->orders as $order)
-                                @if ($count <> 0)
-                                    <tr>
-                                                @if ($order->approve == "0")
-
-                                                        <th><a href="{{ route('admin.orders.approve', $order->id) }}">
-                                                            <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Toute Approuvée</span>
-                                                        </a></th>
-                                                        <th> De: {{ $user->nom }} {{ $user->prenom }}</th>
-                                                        <th>Date: {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/y')}}</th>
-
-                                                        <th>Prix Totale: </th>
-                                                        @break ($ordergroup->id == 1)
-                                                @else
-                                                        <th>
-                                                            <a href="{{ route('admin.orders.desapprove', $order->id) }}">
-                                                                <span class="badge badge-success" title="Désapprouver cette commande">Commande Approuvée</span></a>
-                                                            </a>
-                                                        </th>
-                                                        <th> De: {{ $user->nom }} {{ $user->prenom }}</th>
-                                                        <th>Date: {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/y')}}</th>
-                                                        <th>Prix Totale: </th>
-                                                        @break ($ordergroup->id == 1)
-                                                @endif
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </table>
                         </h4>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Nom du Produit</th>
-                                    <th>Quantité</th>
-                                    <th>Prix</th>
+                                    <th>Commande du</th>
+                                    <th>Information du Demandeur</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
-                            <tbody>
-                                @forelse ($ordergroup->orders as $order)
-                                    <tr>
-                                        <td>{{ $products[$order->product_id-1]->nomprod }}</td>
-                                        <td>{{ $order->qte }}</td>
-                                        <td>{{ $order->prix }}</td>
-                                        <td>
-                                            @if($order->approve == 0)
-                                                <span style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-danger">Désapprouvée</span></span>
-                                            @else
-                                                <span style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-info">Approuvée</span></span>
-                                            @endif
-                                        </td>
-                                        <td>
+                                <tbody>
+                                @forelse ($ordergroups as $ordergroup)
+                                <tr>
+                                    <th scope="row">{{ \Carbon\Carbon::parse($ordergroup->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</th>
+                                    <td>{{ $users[$ordergroup->user_id] }}</td>
+                                    <td>
                                         <div class="btn-group" role="group">
-                                            
-                                            <a href="{{ route('order.edit', $order->id) }}">
-                                                <button type="button" class="btn btn-primary" title="Modifier">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                            </a>
-                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $order->id}}">
+                                            <a href="#" data-toggle="modal" data-target="#modalDeleteOrder{{ $ordergroup->id}}">
                                                 <button type="button" class="btn btn-danger" title="Supprimer">
                                                     <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </a>
+                                            <a href="#" data-toggle="modal" data-target="#modalShowOrder{{ $ordergroup->id}}">
+                                                <button type="button" class="btn btn-info" title="Voir Plus">
+                                                    <i class="fa fa-eye"></i>
                                                 </button>
                                             </a>
                                         </div>
                                     </td>
                                     @include('adminManagementOrder.delete')
-                                    </tr>
+                                    @include('adminManagementOrder.deleteLine')
+                                    @include('adminManagementOrder.show')
+                                </tr>
                             </tbody>
-                                @empty
-                                    <tr>
-                                        <td colspan="4">Aucune commande ajoutée pour le moment.</td>
-                                    </tr>
-                                @endforelse
-                            
+                            @empty
+                                <tr>
+                                    <td colspan="4">Aucune Commande ajoutée pour le moment.</td>
+                                </tr>
+                            @endforelse
                         </table>
 					</div>
-
-                    @empty
-                        <tr>
-                            <td colspan="4">Aucune commande ajoutée pour cet utilisateur.</td>
-                        </tr>
-                    @endforelse
-
-                    @empty
-                    @include('order.ElseFile')
-                @endforelse
 			</div>
 		</div>
 		</div>
@@ -158,6 +108,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		@include('layouts.footer')
         <!--//footer-->
 	</div>
+    <script>
+                let x = document.querySelectorAll(".myDIV");
+                for (let i = 0, len = x.length; i < len; i++) {
+                let num = Number(x[i].innerHTML)
+                    .toLocaleString('de-DE');
+                    x[i].innerHTML = num;
+                    x[i].classList.add("currSign");
+                }
+        </script>
 	<!-- Classie -->
 		<script src="{{asset('js_admin/classie.js')}}"></script>
 		<script>

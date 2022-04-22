@@ -47,10 +47,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <body class="cbp-spmenu-push">
 	<div class="main-content">
 		<!--left-fixed -navigation-->
-		@include('utilisateur.layouts.menu')
+		@include('layouts.menu')
 		<!--left-fixed -navigation-->
 		<!-- header-starts -->
-		@include('utilisateur.layouts.header')
+		@include('layouts.header')
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
@@ -400,7 +400,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 		<!--footer-->
-		@include('utilisateur.layouts.footer')
+		@include('layouts.footer')
         <!--//footer-->
 	</div>
 	<!-- Classie -->

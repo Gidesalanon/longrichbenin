@@ -21,6 +21,8 @@ class ProductController extends Controller
         $stocks = Stock::with('products')
         ->where('id', '>', 1)
         ->get();
+        $p = Product::all();
+        $count_product = count($p);
 
         $categories = Category::all();
 
@@ -30,7 +32,7 @@ class ProductController extends Controller
         ->select('products.*', 'categories.libelle AS nom_categorie', 'stocks.libelle AS nom_stock')
         ->orderBy('stock_id', 'asc')->get();
 
-        return view('product.index', compact('products', 'stocks', 'categories'));
+        return view('product.index', compact('products', 'stocks', 'categories', 'count_product', 'p'));
     }
 
     /**

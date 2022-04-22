@@ -64,9 +64,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                     @endif
                     @forelse($enterprises as $enterprise)
-					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray; width: 100%;">
+					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray;" id="table-id{{$enterprise->id}}">
 						<h4>{{$enterprise->designation}}</h4>
-                        
+
+
                             <table class="table table-bordered">
                             <thead style="box-shadow: 5px 5px 5px gray; ">
                                 <tr>
@@ -97,7 +98,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                             <a href="{{ route('admin.users.enable', $user->id) }}" title="Activé" style="box-shadow: 5px 5px 5px gray; border-radius:20%"><span class="label label-danger">Désactivé</span></a>
                                         @endif
                                     </td>
-                                    <td>{{ $user->created_at }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($user->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('usermanagements.edit', $user->id) }}" class="nav-badge-btm" title="Modifier">

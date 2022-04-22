@@ -27,6 +27,7 @@ class User extends Authenticatable
         'status',
         'password',
         'is_admin',
+        'is_magasinier',
         'isban',
         'enterprise_id',
     ];
@@ -83,4 +84,5 @@ class User extends Authenticatable
         return $this->parents()->with('children', 'parents');
     }
 
+    }
 }

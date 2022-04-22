@@ -80,6 +80,7 @@ class RegisterController extends Controller
             'status' => '0',
             'isban' => '1',
             'is_admin' => '0',
+            'is_magasinier' => '0',
             'password' => Hash::make($data['password']),
         ]);
     }

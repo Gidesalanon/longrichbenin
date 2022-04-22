@@ -9,7 +9,8 @@ use App\http\controllers\OrderController;
 use App\http\controllers\StockController;
 use App\http\controllers\UserManagementController;
 use App\http\controllers\EnterpriseController;
-use App\Models\Task;
+use App\http\controllers\MagasinierController;
+use App\http\controllers\SellingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,23 +29,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth','isUser']], function () {
-    Route::get('/approval', [HomeController::class, 'approval'])->name('approval');
-
-    Route::middleware(['approved'])->group(function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::resource('/orders', OrderController::class);
-    });
+        Route::get('/order/situation', [OrderController::class, 'orderSituation'])->name('orders.situation');
+        Route::resource('sellings', SellingController::class);
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');
-        Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
-        Route::get('/users/{user_id}/approve', [UserController::class, 'approve'])->name('admin.users.approve');
-        Route::delete('/users/{user_id}/destroy', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+        Route::resource('users', UserController::class);
         Route::resource('usermanagements', UserManagementController::class);
         Route::get('/usermanagement/network', [UserManagementController::class, 'network'])->name('admin.users.network');
         Route::get('/usermanagements/{user_id}/disable', [UserManagementController::class, 'isNotBan'])->name('admin.users.disable');
         Route::get('/usermanagements/{user_id}/enable', [UserManagementController::class, 'isBan'])->name('admin.users.enable');
-        //crud category
         Route::resource('admin/categories', CategoryController::class);
         Route::resource('admin/enterprises', EnterpriseController::class);
         Route::resource('admin/products', ProductController::class);
@@ -55,9 +52,22 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/orders/{order_id}/oneApprove', [OrderController::class, 'approveOneOrder'])->name('admin.orders.Oneapprove');
         Route::get('/orders/{order_id}/desaprove', [OrderController::class, 'desapproveOrder'])->name('admin.orders.desapprove');
         Route::get('/orders/{order_id}/oneDesaprove', [OrderController::class, 'desapproveOneOrder'])->name('admin.orders.Onedesapprove');
-        Route::delete('/order/{order_id}/destroy', [OrderController::class, 'destroyOrder'])->name('admin.order.destroy');
-        Route::get('orderedit/{order_id}/edit', [OrderController::class, 'editOrder'])->name('order.edit');
-        Route::patch('orderedit/{order_id}', [OrderController::class, 'updateOrder'])->name('order.update');
+        Route::get('orders/{order_id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+        Route::patch('orders/{order_id}', [OrderController::class, 'update'])->name('orders.update');
+        Route::delete('/orders/{ordergroup_id}/destroy', [OrderController::class, 'destroy'])->name('orders.destroy');
+        Route::get('/orders/{order_id}/destroy', [OrderController::class, 'destrLineOrder'])->name('lineOrder.destroy');
+
+        /* Route order administrateur */
+        Route::delete('admin/order/{ordergroup_id}/destroy', [OrderController::class, 'destroyOrder'])->name('admin.order.destroy');
+        Route::get('admin/order/{order_id}/destroy', [OrderController::class, 'destroyLineOrder'])->name('admin.lineOrder.destroy');
+        Route::get('admin/orderedit/{order_id}/edit', [OrderController::class, 'editOrder'])->name('order.edit');
+        Route::patch('admin/orderedit/{order_id}', [OrderController::class, 'updateOrder'])->name('order.update');
     });
 
+    Route::middleware(['magasinier'])->group(function () {
+        Route::get('/manager', [MagasinierController::class, 'manager'])->name('manager');
+        Route::get('manager/order-approved', [MagasinierController::class, 'order'])->name('order.approved.index');
+        Route::get('/orders/{order_id}/execute', [MagasinierController::class, 'execute'])->name('manager.orders.execute');
+        Route::get('/orders/{order_id}/unExecute', [MagasinierController::class, 'unExecute'])->name('manager.orders.unExecute');
+    });
 });

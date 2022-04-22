@@ -19,14 +19,15 @@ class UserManagementController extends Controller
         $enterprises = Enterprise::with('users')
         ->where('id', '>', 1)
         ->get();
-
+        $u = User::all();
+        $count_user = count($u);
         $users = DB::table('users')
         ->join('enterprises', 'enterprises.id', 'users.enterprise_id')
         ->select('users.*', 'enterprises.designation AS enterprise', 'users.code', 'enterprises.id')
         ->where('is_admin', '<>', 1)
         ->get();
 
-        return view('usermanagement.index', compact('users', 'enterprises'));
+        return view('usermanagement.index', compact('users', 'enterprises', 'count_user', 'u'));
     }
 
     public function network()
@@ -162,9 +163,11 @@ class UserManagementController extends Controller
             'prenom' => $request->prenom,
             'email' => $request->email,
             'adresse' => $request->adresse,
+            'enterprise_id' => $request->enterprise_id,
             'tel' => $request->tel,
             'status' => '1',
             'is_admin' => '0',
+            'is_magasinier' => '0',
             'password' => Hash::make($request->password),
         ]);
         toastr()->success('Utilisateur modifié avec succès.', 'Succès');

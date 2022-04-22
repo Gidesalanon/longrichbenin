@@ -53,8 +53,11 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			<div class="main-page">
 				<div class="tables">
 					<h3 class="title1">Nos Produits/Stocks</h3>
+                    @if ($count_product == 0)
+                        @include('product.ElseFile')
+                    @endif
                     @forelse($stocks as $stock)
-					<div class="table-responsive bs-example widget-shadow">
+					<div class="table-responsive bs-example widget-shadow" id="table-id{{$stock->id}}">
 						<h4>{{ $stock->libelle }}</h4>
 
 						<table class="table table-bordered">
@@ -76,8 +79,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th scope="row">{{ $product->id }}</th>
                                     <td>{{ $product->nomprod }}</td>
                                     <td>{{ $product->nbpv }}</td>
-                                    <td>{{ $product->prixpartenaire }}</td>
-                                    <td>{{ $product->prixclient }}</td>
+                                    <td class="myDIV">{{ $product->prixpartenaire }}</td>
+                                    <td class="myDIV">{{ $product->prixclient }}</td>
                                     <td>{{ $product->qte }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>
@@ -98,9 +101,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </tr>
                             </tbody>
                             @empty
-                                <tr>
-                                    <td colspan="4">Aucun Produit dans {{ $stock->libelle }}.</td>
-                                </tr>
+                                <style>
+                                        #table-id{{$stock->id}} {
+                                            visibility:hidden;
+                                            margin-top:-165px;
+                                        }
+                                    </style>
                             @endforelse
                         </table>
 
@@ -114,6 +120,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		@include('layouts.footer')
         <!--//footer-->
 	</div>
+    <script>
+                let x = document.querySelectorAll(".myDIV");
+                for (let i = 0, len = x.length; i < len; i++) {
+                let num = Number(x[i].innerHTML)
+                    .toLocaleString('de-DE');
+                    x[i].innerHTML = num;
+                    x[i].classList.add("currSign");
+                }
+        </script>
 	<!-- Classie -->
 		<script src="{{asset('js_admin/classie.js')}}"></script>
 		<script>

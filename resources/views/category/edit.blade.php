@@ -63,19 +63,19 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 							<h4>Modifier cette catégorie de produits:</h4>
 						</div>
 						<div class="form-body">
-						 <form method="POST" action="{{ route('categories.update', $category->id)}}">
-                            @csrf
-                            {{ method_field('PATCH') }}
-                            <div class="form-group">
-                                <label for="">Libellé</label>
-                                <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Description</label>
-                                <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
-                            </div>
-                            <button type="submit" class="btn btn-default">Modifier</button>
-                        </form>
+                            <form method="POST" action="{{ route('categories.update', $category->id)}}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                                <div class="form-group">
+                                    <label for="">Libellé</label>
+                                    <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Description</label>
+                                    <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
+                                </div>
+                                <button type="submit" class="btn btn-default">Modifier</button>
+                            </form>
 						</div>
 					</div>
 				</div>

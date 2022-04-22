@@ -97,5 +97,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
    <script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+
 </body>
 </html>

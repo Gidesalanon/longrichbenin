@@ -3,9 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class CheckApproved
+class IsMagasinier
 {
     /**
      * Handle an incoming request.
@@ -16,10 +17,12 @@ class CheckApproved
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->user()->status) {
-            return redirect()->route('approval');
+        if ( Auth::check() && Auth::user()->is_admin == 2 )
+        {
+            return $next($request);
+        }elseif (Auth::user() &&  Auth::user()->is_admin == 1) {
+             return redirect('/admin');
         }
-
-        return $next($request);
+        return redirect('/home');
     }
 }
