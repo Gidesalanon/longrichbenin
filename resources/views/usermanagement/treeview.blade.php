@@ -32,14 +32,25 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
 <script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
-<link rel='stylesheet' href='https://fperucic.github.io/treant-js/Treant.css'>
 
 <style>
 	
-/* optional Container STYLES */
-.chart { height: 159px; width: 332px; margin: 5px; margin: 5px auto; border: 3px solid #DDD; border-radius: 3px; }
-.node { color: #9CB5ED; border: 2px solid #C8C8C8; border-radius: 3px; }
-.node p { font-size: 20px; line-height: 20px; height: 20px; font-weight: bold; padding: 3px; margin: 0; }
+.node {
+    cursor: pointer;
+}
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+.node text {
+    font: 10px sans-serif;
+}
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+}
 
 </style>
 
@@ -77,7 +88,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray; width: 100%;">
 						<h4>{{$enterprise->designation}}</h4>
                 
-						<div id="treegraph" style="height: 100vh; width: 100%"> </div>
+						<div id="treegraph"> </div>
 
 					</div>
                     @empty
@@ -99,51 +110,204 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
 	<script src="{{asset('js_admin/bootstrap.js')}}"> </script>
-  <script src='https://fperucic.github.io/treant-js/Treant.js'></script>
-<script src='https://fperucic.github.io/treant-js/vendor/raphael.js'></script><script  src="./script.js"></script>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
 <script>
-simple_chart_config = {
-    chart: {
-		container: "#treegraph",
-		
+	var margin = {
+		top: 20,
+		right: 120,
+		bottom: 20,
+		left: 120
 	},
-    
-    nodeStructure: <?php echo json_encode($users) ?>
-	//  {
-    //     text: { name: "Parent node" },
-    //     children: [
-	// 		{	
-	// 			HTMLclass: "main-date",
-				
-	// 			text:{
-	// 				name: "Ron Blomquist",
-	// 				title: "Chief Information Security Officer"
-	// 			},
-	// 			HTMLclass: 'light-gray',
-	// 			image: "../headshots/8.jpg",
-	// 			children: [
-	// 				{
-	// 					text: { name: "Event 1" },
-	// 					children: [
-	// 						{
-	// 							text: { name: "Event 1" },
-	// 						},
-	// 						{
-	// 							text: { name: "Event 2" }
-	// 						}
-	// 					]
-	// 				},
-	// 				{
-	// 					text: { name: "Event 2" }
-	// 				}
-	// 			]
-	// 		},
-	// 	]
-    // }
-};
+	width = 960 - margin.right - margin.left,
+	height = 800 - margin.top - margin.bottom;
 
-var my_chart = new Treant(simple_chart_config);
+	var root = <?php echo json_encode($users) ?>
+	;
+
+	var i = 0,
+		duration = 750,
+		rectW = 60,
+		rectH = 30;
+
+	var tree = d3.layout.tree().nodeSize([70, 40]);
+	var diagonal = d3.svg.diagonal()
+		.projection(function (d) {
+		return [d.x + rectW / 2, d.y + rectH / 2];
+	});
+
+	var svg = d3.select("#treegraph").append("svg").attr("width", 1000).attr("height", 1000)
+		.call(zm = d3.behavior.zoom().scaleExtent([1,3]).on("zoom", redraw)).append("g")
+		.attr("transform", "translate(" + 350 + "," + 20 + ")");
+
+	//necessary so that zoom knows where to zoom and unzoom from
+	zm.translate([350, 20]);
+
+	root.x0 = 0;
+	root.y0 = height / 2;
+
+	function collapse(d) {
+		if (d.children) {
+			d._children = d.children;
+			d._children.forEach(collapse);
+			d.children = null;
+		}
+	}
+
+	root.children.forEach(collapse);
+	update(root);
+
+	d3.select("#treegraph").style("height", "800px");
+
+	function update(source) {
+
+		// Compute the new tree layout.
+		var nodes = tree.nodes(root).reverse(),
+			links = tree.links(nodes);
+
+		// Normalize for fixed-depth.
+		nodes.forEach(function (d) {
+			d.y = d.depth * 180;
+		});
+
+		// Update the nodes…
+		var node = svg.selectAll("g.node")
+			.data(nodes, function (d) {
+			return d.id || (d.id = ++i);
+		});
+
+		// Enter any new nodes at the parent's previous position.
+		var nodeEnter = node.enter().append("g")
+			.attr("class", "node")
+			.attr("transform", function (d) {
+			return "translate(" + source.x0 + "," + source.y0 + ")";
+		})
+			.on("click", click);
+
+		nodeEnter.append("rect")
+			.attr("width", rectW)
+			.attr("height", rectH)
+			.attr("stroke", "black")
+			.attr("stroke-width", 1)
+			.style("fill", function (d) {
+			return d._children ? "lightsteelblue" : "#fff";
+		});
+
+		nodeEnter.append("text")
+			.attr("x", rectW / 2)
+			.attr("y", rectH / 2)
+			.attr("dy", ".35em")
+			.attr("text-anchor", "middle")
+			.text(function (d) {
+			return d.code;
+		});
+
+		// Transition nodes to their new position.
+		var nodeUpdate = node.transition()
+			.duration(duration)
+			.attr("transform", function (d) {
+			return "translate(" + d.x + "," + d.y + ")";
+		});
+
+		nodeUpdate.select("rect")
+			.attr("width", rectW)
+			.attr("height", rectH)
+			.attr("stroke", "black")
+			.attr("stroke-width", 1)
+			.style("fill", function (d) {
+			return d._children ? "lightsteelblue" : "#fff";
+		});
+
+		nodeUpdate.select("text")
+			.style("fill-opacity", 1);
+
+		// Transition exiting nodes to the parent's new position.
+		var nodeExit = node.exit().transition()
+			.duration(duration)
+			.attr("transform", function (d) {
+			return "translate(" + source.x + "," + source.y + ")";
+		})
+			.remove();
+
+		nodeExit.select("rect")
+			.attr("width", rectW)
+			.attr("height", rectH)
+		//.attr("width", bbox.getBBox().width)""
+		//.attr("height", bbox.getBBox().height)
+		.attr("stroke", "black")
+			.attr("stroke-width", 1);
+
+		nodeExit.select("text");
+
+		// Update the links…
+		var link = svg.selectAll("path.link")
+			.data(links, function (d) {
+			return d.target.id;
+		});
+
+		// Enter any new links at the parent's previous position.
+		link.enter().insert("path", "g")
+			.attr("class", "link")
+			.attr("x", rectW / 2)
+			.attr("y", rectH / 2)
+			.attr("d", function (d) {
+			var o = {
+				x: source.x0,
+				y: source.y0
+			};
+			return diagonal({
+				source: o,
+				target: o
+			});
+		});
+
+		// Transition links to their new position.
+		link.transition()
+			.duration(duration)
+			.attr("d", diagonal);
+
+		// Transition exiting nodes to the parent's new position.
+		link.exit().transition()
+			.duration(duration)
+			.attr("d", function (d) {
+			var o = {
+				x: source.x,
+				y: source.y
+			};
+			return diagonal({
+				source: o,
+				target: o
+			});
+		})
+			.remove();
+
+		// Stash the old positions for transition.
+		nodes.forEach(function (d) {
+			d.x0 = d.x;
+			d.y0 = d.y;
+		});
+	}
+
+	// Toggle children on click.
+	function click(d) {
+		if (d.children) {
+			d._children = d.children;
+			d.children = null;
+		} else {
+			d.children = d._children;
+			d._children = null;
+		}
+		update(d);
+	}
+
+	//Redraw for zoom
+	function redraw() {
+	//console.log("here", d3.event.translate, d3.event.scale);
+	svg.attr("transform",
+		"translate(" + d3.event.translate + ")"
+		+ " scale(" + d3.event.scale + ")");
+	}
+
 </script>
 </body>
 </html>
