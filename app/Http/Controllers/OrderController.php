@@ -21,28 +21,25 @@ class OrderController extends Controller
      */
     public function index()
     {
-       $users = User::with('ordergroups')
+        $users = User::with('ordergroups')
         ->get();
+        $user = User::all();
+                foreach($user as $user) :
+                    $users[$user->id] = $user->nom.' '.$user->prenom;
+                endforeach;
 
         $ordergroups = Ordergroup::with('orders')
         ->where('user_id', '=', Auth::user()->id)
         ->get();
 
-        $user = User::all();
-        foreach($user as $user) :
-            $users[$user->id] = $user->nom.' '.$user->prenom;
-        endforeach;
-
         $products = Product::all();
-
+        $p = Product::all();
+                foreach($p as $product) :
+                    $products[$product->id] = $product->nomprod;
+                endforeach;
         $orders = Product::with('orders')
         ->get();
         $count = count($orders);
-
-        $p = Product::all();
-        foreach($p as $product) :
-            $products[$product->id] = $product->nomprod;
-        endforeach;
 
         return view('order.index', compact('orders', 'products', 'ordergroups', 'users', 'count'));
     }
@@ -155,7 +152,6 @@ class OrderController extends Controller
         foreach($user as $user) :
             $users[$user->id] = $user->nom.' '.$user->prenom;
         endforeach;
-
 
         $orders = Order::all()
         ->where('execute', '=', '1')

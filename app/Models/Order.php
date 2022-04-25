@@ -25,4 +25,9 @@ class Order extends Model
     {
         return $this->hasMany('App\Models\User');
     }
+
+    public function sellings()
+    {
+        return $this->hasOne('App\Models\selling');
+    }
 }

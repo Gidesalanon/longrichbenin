@@ -23,8 +23,10 @@ class CreateSellingsTable extends Migration
             $table->string('status');  //il y a ecart ou non
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
             $table->foreign('order_id')->references('id')->on('orders')->onUpdate('cascade') ->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade') ->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade') ->onDelete('cascade');
             $table->timestamps();
         });
     }

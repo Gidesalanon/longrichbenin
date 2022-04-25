@@ -59,13 +59,13 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->belongsTo('App\Models\Order');
-    }  
-    
+    }
+
     public function ordergroups()
     {
         return $this->hasMany('App\Models\Ordergroup');
-    }   
-    
+    }
+
     public function parents()
     {
         return $this->belongsTo(User::class, 'parent_id');
@@ -82,6 +82,10 @@ class User extends Authenticatable
     public function allParents()
     {
         return $this->parents()->with('children', 'parents');
+    }
+    public function sellings()
+    {
+        return $this->hasOne('App\Models\Selling');
     }
 
 }

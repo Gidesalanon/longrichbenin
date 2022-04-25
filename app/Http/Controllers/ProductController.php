@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Stock;
 use App\Models\Ordergroup;
+use App\Models\InputProduct;
 use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
@@ -160,5 +161,28 @@ class ProductController extends Controller
         Product::where('id', $id)->delete();
         toastr()->success('Produit supprimé avec succès.', 'PRODUIT');
         return redirect()->route('products.index');
+    }
+
+    //ajouter du produit en stock
+    public function addStock(Request $request, $id)
+    {
+         $product = Product::findOrFail($id);
+            $product->update([
+                'qte' => $request->qte + $product->qte
+            ]);
+
+        InputProduct::create([
+            'newqty' => $request->qte,
+            'prev_value' => $product->qte - $request->qte,
+            'product_id' => $product->id,
+        ])->id;
+    
+        toastr()->success('Nouveau Stock Ajouté avec succès', 'Succès');
+        return redirect()->route('products.index');
+    }
+
+    //afficher les entrées en stock dans le modal inputProduct
+    public function inputProduct(){
+        inputProduct::all();
     }
 }

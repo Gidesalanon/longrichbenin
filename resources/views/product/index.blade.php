@@ -1,9 +1,3 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -38,6 +32,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
 <script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
+
+<link rel="stylesheet" href="{{asset('stylebutton.css')}}">
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -50,15 +46,28 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
+            
 			<div class="main-page">
 				<div class="tables">
-					<h3 class="title1">Nos Produits/Stocks</h3>
+				    <h3 class="title1">Nos Produits/Stocks</h3>
+                    
                     @if ($count_product == 0)
                         @include('product.ElseFile')
                     @endif
                     @forelse($stocks as $stock)
 					<div class="table-responsive bs-example widget-shadow" id="table-id{{$stock->id}}">
-						<h4>{{ $stock->libelle }}</h4>
+                            <h4>{{ $stock->libelle }}</h4>
+                        <!-- <span class="col-md-4" style="text-align: right;">
+                            <div class="btn-wrapper">
+                                <button type="button" class="btn" data-toggle="modal" data-target="#gridSystemModal"><i class="fa fa-arrow-circle-left"></i> SUIVIE D'ENTRÉE</button>
+                            </div>
+                            
+                        </span>
+                        <span class="col-md-2" style="text-align: right;">
+                            <div class="btn-wrapper">
+                                <button type="button" class="btn"><i class="fa fa-arrow-circle-right"></i> SUIVIE DE SORTIE</button>
+                            </div>
+                        </span> -->
 
 						<table class="table table-bordered">
                             <thead>
@@ -69,7 +78,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>Prix Partenaire</th>
                                     <th>Prix Client</th>
                                     <th>Quantité</th>
-                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -82,22 +90,37 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td class="myDIV">{{ $product->prixpartenaire }}</td>
                                     <td class="myDIV">{{ $product->prixclient }}</td>
                                     <td>{{ $product->qte }}</td>
-                                    <td>{{ $product->description }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('products.edit', $product->id) }}">
-                                                <button type="button" class="btn btn-primary" title="Modifier">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                            </a>
-                                            <a href="#" data-toggle="modal" data-target="#modalDeleteProduct{{ $product->id}}">
-                                                <button type="button" class="btn btn-danger" title="Supprimer">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </button>
-                                            </a>
+                                                <div class="follow">
+                                                    <a href="{{ route('products.edit', $product->id) }}">
+                                                        <div class="icon first" title="Modifier" style="background-color:#2e6da4;"><i class="fa fa-edit"></i></div>
+                                                    </a>
+
+                                                    <a href="#" data-toggle="modal" data-target="#modalDeleteProduct{{ $product->id}}">
+                                                        <div class="icon" title="Supprimer" style="background-color:#d43f3a;"><i class="fa fa-trash-o"></i></div>
+                                                    </a>
+
+                                                    <a href="#" data-toggle="modal" data-target="#modalAddProduct{{ $product->id}}">
+                                                        <div class="icon" title="Ajout de {{ $product->nomprod }}" style="background-color:#4cae4c;"><i class="fa fa-plus-circle"></i></div>
+                                                    </a>
+
+                                                    <a href="#" data-toggle="modal" data-target="#modalInputProduct{{ $product->id}}">
+                                                        <div class="icon icon" title="Suivie d'Entrée" style="background-color:#e94e02;"><i class="fa fa-arrow-circle-left"></i></div>
+                                                    </a>
+
+                                                    <a href="#" data-toggle="modal" data-target="#modalAddProduct{{ $product->id}}">
+                                                        <div class="icon last" title="Suivie de Sortie" style="background-color:#F2B33F;"><i class="fa fa-arrow-circle-right"></i></div>
+                                                    </a>
+                                                    
+                                                    <div class=""></div>
+                                                </div>  
+
                                         </div>
                                     </td>
                                     @include('product.delete')
+                                    @include('product.add-stock')
+                                    @include('product.inputProduct')
                                 </tr>
                             </tbody>
                             @empty

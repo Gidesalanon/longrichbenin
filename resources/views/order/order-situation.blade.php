@@ -108,6 +108,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <form method="POST" action="{{ route('sellings.store')}}">
                                         @csrf
                                         <input type="hidden" name="order_id" value="{{ $order->id }}" />
+                                        <input type="hidden" name="product_id" value="{{ $order->product_id }}" />
                                         <input type="hidden" name="prixclient" value="{{ $produits[$order->product_id] }}" />
 
                                         <td style="color:#fff; width:20%;">

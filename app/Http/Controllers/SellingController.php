@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Selling;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 class SellingController extends Controller
 {
@@ -16,7 +17,21 @@ class SellingController extends Controller
      */
     public function index()
     {
-        //
+        $sellings = Selling::all();
+        $orders = Order::with('sellings')
+        ->get();
+        $order = Order::all();
+                foreach($order as $order) :
+                    $orders[$order->id] = $order->qte;
+                endforeach;
+
+        $products = Product::all();
+        $p = Product::all();
+                foreach($p as $product) :
+                    $products[$product->id] = $product->nomprod;
+                endforeach;
+
+        return view('selling.index', compact('sellings', 'orders', 'products'));
     }
 
     /**
@@ -51,6 +66,7 @@ class SellingController extends Controller
                         'ecart' => $order[0]->prix - ($request->qte_vendu * $product->prixclient), //ecart: montant total de cmde - chiffre d'affaire du client
                         'status' => "1", //status=1 -> vente enregistrée, status=0 -> non enregistrée
                         'order_id'=> $order[0]->id,
+                        'product_id'=> $request->product_id,
                         'user_id'=> Auth::user()->id]);
 
         toastr()->success('Votre vente a été enregistrée avec succès', 'Succès');
