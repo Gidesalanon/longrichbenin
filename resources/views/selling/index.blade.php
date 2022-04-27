@@ -89,16 +89,20 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td class="myDIV" >{{ $selling->ca }}</td>
                                     <td class="myDIV" @if ($selling->ecart > "0")style="background-color:orange; font-weight:bold;" @else {{ $selling->ecart }} @endif>{{ $selling->ecart }}</td>
                                     <td>@if ($selling->paiement == "0") <span style="color:red; font-weight:bold;">Non payer</span> @else Payer @endif</td>
-                                        
-                                    
+
+
                                     <td>{{ \Carbon\Carbon::parse($selling->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            @if ($selling->paiement == "0") 
-                                                <a href="" class="nav-badge-btm" title="Payer">
+                                            @if ($selling->paiement == "0")
+                                                <a href="#" onclick="openKkiapayWidget({
+                                                    amount:{{$selling->ecart}},
+                                                    sandbox:true,
+                  key:'3b2969e02c7f11ea86dcdfac38167264'})" class="nav-badge-btm" title="Payer">
                                                     <img src="{{asset('icons8-argent.gif')}}" style="width:40px; height:30px;">
+
                                                 </a>
-                                            @else 
+                                            @else
                                                 <img src="icons8-bon-code-pin-48.png" style="box-shadow: 5px 5px 5px gray; border-radius:20%"/>
                                             @endif
                                         </div>
@@ -158,5 +162,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
 	<script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+    <script src="https://cdn.kkiapay.me/k.js"></script>
 </body>
 </html>
