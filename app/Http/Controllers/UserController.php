@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Enterprise;
+use App\Models\Selling;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 class UserController extends Controller
 {
     public function index()
@@ -47,7 +50,35 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function administration(){
-        return view('admin');
+    public function administration()
+    {
+        $sellings = Selling::all();
+        $users = User::with('sellings')
+        ->get();
+        $user = User::all();
+                foreach($user as $user) :
+                    $users[$user->id] = $user->nom.' '.$user->prenom;
+                endforeach;
+
+        $products = Product::with('sellings')
+        ->get();
+        $product = Product::all();
+                foreach($product as $product) :
+                    $products[$product->id] = $product->nom.' '.$product->prenom;
+                endforeach;
+
+        $non_execute = count(Order::whereDay('created_at', today()->day)->where('execute', '=', 0)->where('approve', '=', 1)->get());
+        $execute = count(Order::whereDay('created_at', today()->day)->where('execute', '=', 1)->where('approve', '=', 1)->get());
+
+        $non_approve = count(Order::whereDay('created_at', today()->day)->where('approve', '=', 0)->get());
+        $approve = count(Order::whereDay('created_at', today()->day)->where('approve', '=', 1)->get());
+
+        $vente_non_declare= count(Order::whereDay('created_at', today()->day)->where('status', '=', 0)->where('approve', '=', 1)->where('execute', '=', 1)->get());
+        $vente_declare = count(Order::whereDay('created_at', today()->day)->where('status', '=', 1)->where('approve', '=', 1)->where('execute', '=', 1)->get());
+
+        return view('admin', ['sellings' => $sellings],compact('non_execute', 'execute', 
+                                             'non_approve', 'approve', 
+                                             'vente_non_declare', 'vente_declare', 
+                                             'users', 'products'));
     }
 }

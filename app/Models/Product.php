@@ -34,4 +34,9 @@ class Product extends Model
     {
         return $this->hasOne('App\Models\Selling');
     }
+
+    public function inputProducts()
+    {
+        return $this->hasOne('App\Models\InputProduct');
+    }
 }

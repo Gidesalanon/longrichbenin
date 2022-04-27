@@ -104,10 +104,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <label for="">Prix Client</label>
                                 <input type="number" class="form-control" id="prixclient" name="prixclient" required value="{{ $product['prixclient']}}">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="">Quantité</label>
                                 <input type="number" class="form-control" id="qte" name="qte" required value="{{ $product['qte']}}">
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description</label>
                                 <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :">{{ $product['description']}}</textarea>

@@ -9,4 +9,9 @@ class InputProduct extends Model
 {
     use HasFactory;
     protected $fillable = ['newqty', 'product_id', 'prev_value'];
+
+    public function products()
+    {
+        return $this->hasOne('App\Models\Product');
+    }
 }

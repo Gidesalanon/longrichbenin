@@ -72,7 +72,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>Produit</th>
                                     <th>Qté Obtenue</th>
                                     <th>Qté Vendue</th>
-                                    <th>Ecart</th>
+                                    <th>CA</th>
+                                    <th>Écart</th>
+                                    <th>Status</th>
                                     <th>Date & Heure</th>
                                     <th>Action</th>
                                 </tr>
@@ -84,13 +86,21 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $products[$selling->product_id] }}</td>
                                     <td>{{ $orders[$selling->order_id] }}</td>
                                     <td>{{ $selling->qte_vendu }}</td>
-                                    <td class="myDIV">{{ $selling->ecart }}</td>
+                                    <td class="myDIV" >{{ $selling->ca }}</td>
+                                    <td class="myDIV" @if ($selling->ecart > "0")style="background-color:orange; font-weight:bold;" @else {{ $selling->ecart }} @endif>{{ $selling->ecart }}</td>
+                                    <td>@if ($selling->paiement == "0") <span style="color:red; font-weight:bold;">Non payer</span> @else Payer @endif</td>
+                                        
+                                    
                                     <td>{{ \Carbon\Carbon::parse($selling->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="" class="nav-badge-btm" title="Payer">
-                                                <img src="https://img.icons8.com/external-anggara-flat-anggara-putra/19/000000/external-edit-user-interface-anggara-flat-anggara-putra-3.png" style="box-shadow: 5px 5px 5px gray; border-radius:20%"/>
-                                            </a>
+                                            @if ($selling->paiement == "0") 
+                                                <a href="" class="nav-badge-btm" title="Payer">
+                                                    <img src="{{asset('icons8-argent.gif')}}" style="width:40px; height:30px;">
+                                                </a>
+                                            @else 
+                                                <img src="icons8-bon-code-pin-48.png" style="box-shadow: 5px 5px 5px gray; border-radius:20%"/>
+                                            @endif
                                         </div>
                                     </td>
                                     @include('selling.payement')

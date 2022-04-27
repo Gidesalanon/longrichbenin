@@ -140,7 +140,6 @@ class ProductController extends Controller
             'prixpartenaire' => $request->prixpartenaire,
             'prixclient' => $request->prixclient,
             'prixclient' => $request->prixclient,
-            'qte' => $request->qte,
             'image' => $name,
             'description' => $request->description,
             'categorie_id' => $request->categorie_id,
@@ -182,7 +181,18 @@ class ProductController extends Controller
     }
 
     //afficher les entrées en stock dans le modal inputProduct
-    public function inputProduct(){
-        inputProduct::all();
+    public function inputProduct($id)
+    {
+        $count_input = (inputProduct::all());
+        /* $inputproducts = inputProduct::find($id); */
+        $inputproducts = inputProduct::where('product_id', $id)->pluck('id');
+        
+        $products = Product::all();
+        $p = Product::all();
+        foreach($p as $product) :
+            $products[$product->id] = $product->nomprod;
+        endforeach;
+
+        return view('product.inputProduct', compact('inputproducts', 'count_input', 'products'));
     }
 }

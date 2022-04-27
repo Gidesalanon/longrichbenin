@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::resource('admin/enterprises', EnterpriseController::class);
         Route::resource('admin/products', ProductController::class);
         Route::patch('admin/product/{id}', [ProductController::class, 'addStock'])->name('product.addstock');
+        Route::get('/input/product/{id}', [ProductController::class, 'inputProduct'])->name('admin.input.product');
         /* Route::resource('admin/stocks', StockController::class); */
 
         Route::get('/order', [OrderController::class, 'orderIndex'])->name('admin.order.index');

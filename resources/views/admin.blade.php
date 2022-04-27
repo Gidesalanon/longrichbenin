@@ -42,6 +42,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
 <script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -56,38 +57,77 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="row-one">
-					<div class="col-md-4 widget">
+					<div class="col-md-4 widget" title="Commande Non Exécutée">
 						<div class="stats-left ">
-							<h5>Today</h5>
-							<h4>Sales</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>CNE</h4>
 						</div>
 						<div class="stats-right">
-							<label> 45</label>
+							<label>{{($non_execute)}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
-					<div class="col-md-4 widget states-mdl">
+					<div class="col-md-4 widget states-mdl" title="Commande Non Approuvée">
 						<div class="stats-left">
-							<h5>Today</h5>
-							<h4>Visitors</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>CNA</h4>
 						</div>
 						<div class="stats-right">
-							<label> 80</label>
+							<label>{{$non_approve}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
-					<div class="col-md-4 widget states-last">
+					<div class="col-md-4 widget states-last" title="Vente Non Déclarée">
 						<div class="stats-left">
-							<h5>Today</h5>
-							<h4>Orders</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>VND</h4>
 						</div>
 						<div class="stats-right">
-							<label>51</label>
+							<label>{{$vente_non_declare}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
 					<div class="clearfix"> </div>
+
+                    
 				</div>
+
+                <div class="row-one">
+					<div class="col-md-4 widget" title="Commande Exécutée">
+						<div class="stats-left ">
+							<h5>Aujourd'hui</h5>
+							<h4>CE</h4>
+						</div>
+						<div class="stats-right">
+							<label>{{($execute)}}</label>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="col-md-4 widget states-mdl" title="Commande Approuvée">
+						<div class="stats-left">
+							<h5>Aujourd'hui</h5>
+							<h4>CA</h4>
+						</div>
+						<div class="stats-right">
+							<label>{{$approve}}</label>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="col-md-4 widget states-last" title="Vente Déclarée">
+						<div class="stats-left">
+							<h5>Aujourd'hui</h5>
+							<h4>VD</h4>
+						</div>
+						<div class="stats-right">
+							<label>{{$vente_declare}}</label>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="clearfix"> </div>
+
+                    
+				</div>
+                
 				<div class="charts">
 					<div class="col-md-4 charts-grids widget">
 						<h4 class="title">Bar Chart Example</h4>
@@ -430,5 +470,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
    <script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js" charset="utf-8"></script>
 </body>
 </html>

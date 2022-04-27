@@ -64,7 +64,8 @@ class SellingController extends Controller
                         'srd' => $order[0]->qte - $request->qte_vendu,       //srd:stock restant du = stock obtenu-stock vendu
                         'vs' => $request->qte_vendu * $product->prixclient, //vs:valeur du stock client= srd*prix client produit
                         'ecart' => $order[0]->prix - ($request->qte_vendu * $product->prixclient), //ecart: montant total de cmde - chiffre d'affaire du client
-                        'status' => "1", //status=1 -> vente enregistrée, status=0 -> non enregistrée
+                        'status' => "1",                                   //status=1 -> vente enregistrée, status=0 -> non enregistrée
+                        'paiement' => "0",                                //paiement=1 -> effectué, paiement=0 -> non effectué
                         'order_id'=> $order[0]->id,
                         'product_id'=> $request->product_id,
                         'user_id'=> Auth::user()->id]);

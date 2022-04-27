@@ -20,7 +20,8 @@ class CreateSellingsTable extends Migration
             $table->string('srd'); //stock restant du
             $table->string('vs');  //valeur du stock
             $table->string('ecart');  //ecart (ca - montant total de cmde obtenue)
-            $table->string('status');  //il y a ecart ou non
+            $table->string('status');  //il y a vente ou non
+            $table->string('paiement');  //il y a paiement ou non
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');

@@ -55,19 +55,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         @include('product.ElseFile')
                     @endif
                     @forelse($stocks as $stock)
-					<div class="table-responsive bs-example widget-shadow" id="table-id{{$stock->id}}">
+					<div class="table-responsive bs-example widget-shadow" id="table">
                             <h4>{{ $stock->libelle }}</h4>
-                        <!-- <span class="col-md-4" style="text-align: right;">
-                            <div class="btn-wrapper">
-                                <button type="button" class="btn" data-toggle="modal" data-target="#gridSystemModal"><i class="fa fa-arrow-circle-left"></i> SUIVIE D'ENTRÉE</button>
-                            </div>
-                            
-                        </span>
-                        <span class="col-md-2" style="text-align: right;">
-                            <div class="btn-wrapper">
-                                <button type="button" class="btn"><i class="fa fa-arrow-circle-right"></i> SUIVIE DE SORTIE</button>
-                            </div>
-                        </span> -->
 
 						<table class="table table-bordered">
                             <thead>
@@ -97,20 +86,20 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                                         <div class="icon first" title="Modifier" style="background-color:#2e6da4;"><i class="fa fa-edit"></i></div>
                                                     </a>
 
-                                                    <a href="#" data-toggle="modal" data-target="#modalDeleteProduct{{ $product->id}}">
+                                                    <!-- <a href="#" data-toggle="modal" data-target="#modalDeleteProduct{{ $product->id}}">
                                                         <div class="icon" title="Supprimer" style="background-color:#d43f3a;"><i class="fa fa-trash-o"></i></div>
-                                                    </a>
+                                                    </a> -->
 
                                                     <a href="#" data-toggle="modal" data-target="#modalAddProduct{{ $product->id}}">
                                                         <div class="icon" title="Ajout de {{ $product->nomprod }}" style="background-color:#4cae4c;"><i class="fa fa-plus-circle"></i></div>
                                                     </a>
 
-                                                    <a href="#" data-toggle="modal" data-target="#modalInputProduct{{ $product->id}}">
-                                                        <div class="icon icon" title="Suivie d'Entrée" style="background-color:#e94e02;"><i class="fa fa-arrow-circle-left"></i></div>
+                                                    <a href="{{ route('admin.input.product', $product->id) }}">
+                                                        <div class="icon icon" title="Suivie des Entrées" style="background-color:#e94e02;"><i class="fa fa-arrow-circle-left"></i></div>
                                                     </a>
 
-                                                    <a href="#" data-toggle="modal" data-target="#modalAddProduct{{ $product->id}}">
-                                                        <div class="icon last" title="Suivie de Sortie" style="background-color:#F2B33F;"><i class="fa fa-arrow-circle-right"></i></div>
+                                                    <a href="{{ route('admin.input.product', $product->id) }}">
+                                                        <div class="icon last" title="Suivie des Sorties" style="background-color:#F2B33F;"><i class="fa fa-arrow-circle-right"></i></div>
                                                     </a>
                                                     
                                                     <div class=""></div>
@@ -120,7 +109,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     </td>
                                     @include('product.delete')
                                     @include('product.add-stock')
-                                    @include('product.inputProduct')
                                 </tr>
                             </tbody>
                             @empty
