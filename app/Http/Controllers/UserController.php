@@ -76,9 +76,9 @@ class UserController extends Controller
         $vente_non_declare= count(Order::whereDay('created_at', today()->day)->where('status', '=', 0)->where('approve', '=', 1)->where('execute', '=', 1)->get());
         $vente_declare = count(Order::whereDay('created_at', today()->day)->where('status', '=', 1)->where('approve', '=', 1)->where('execute', '=', 1)->get());
 
-        return view('admin', ['sellings' => $sellings],compact('non_execute', 'execute', 
-                                             'non_approve', 'approve', 
-                                             'vente_non_declare', 'vente_declare', 
+        return view('admin', ['sellings' => $sellings],compact('non_execute', 'execute',
+                                             'non_approve', 'approve',
+                                             'vente_non_declare', 'vente_declare',
                                              'users', 'products'));
     }
 }

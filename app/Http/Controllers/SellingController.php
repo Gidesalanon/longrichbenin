@@ -7,6 +7,7 @@ use App\Models\Selling;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Ordergroup;
 use Illuminate\Support\Facades\Auth;
 class SellingController extends Controller
 {
@@ -55,23 +56,39 @@ class SellingController extends Controller
         $order = Order::where('id', $request->order_id)->get();
         $getIdOrder = Order::findOrFail($request->order_id);
         $getIdOrder->update(['status' => 1]);
-        /* dd($order[0]); */
+
+
+        $ordergroup_id = Ordergroup::findOrFail($request->ordergroup_id);
+        $ordergroup_id->update(['close' => 1]);
+
+        /* dd($order[0]); */    
         $product = Product::findOrFail($order[0]->product_id);
 
-       Selling::create([
+        Selling::create([
                         'qte_vendu' => $request->qte_vendu,
                         'ca' => $request->qte_vendu * $product->prixclient,   //ca:chiffre d'affaire =qte vendu*prix client produit
                         'srd' => $order[0]->qte - $request->qte_vendu,       //srd:stock restant du = stock obtenu-stock vendu
                         'vs' => $request->qte_vendu * $product->prixclient, //vs:valeur du stock client= srd*prix client produit
                         'ecart' => $order[0]->prix - ($request->qte_vendu * $product->prixclient), //ecart: montant total de cmde - chiffre d'affaire du client
                         'status' => "1",                                   //status=1 -> vente enregistrée, status=0 -> non enregistrée
-                        'paiement' => "0",                                //paiement=1 -> effectué, paiement=0 -> non effectué
+                        'paiement' => "1",                                //paiement=1 -> effectué, paiement=0 -> non effectué
                         'order_id'=> $order[0]->id,
                         'product_id'=> $request->product_id,
                         'user_id'=> Auth::user()->id]);
 
-        toastr()->success('Votre vente a été enregistrée avec succès', 'Succès');
+        toastr()->success('Votre vente a été payée avec succès', 'Succès');
         return redirect()->route('orders.situation');
+    }
+
+    public function ecartPaie(Request $request, $id)
+    {
+         $selling = Selling::findOrFail($id);
+            $selling->update([
+                'ecart' => 0,
+            ]);
+
+        toastr()->success('Écart payé avec succès', 'Succès');
+        return redirect()->route('sellings.index');
     }
 
     /**

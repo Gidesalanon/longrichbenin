@@ -26,6 +26,7 @@ class MagasinierController extends Controller
         ->get();
 
         $ordergroups = Ordergroup::with('orders')
+        ->where('close', '=', '0')
         ->get();
 
         $user_nom = User::all();
@@ -44,7 +45,13 @@ class MagasinierController extends Controller
             $products[$product->id] = $product->nomprod;
         endforeach;
 
-        return view('magasinier.order.orderApprove', compact( 'products', 'ordergroups', 'users'));
+        $produits = Product::all();
+        $pr = Product::all();
+        foreach($pr as $produit) :
+            $produits[$produit->id] = $produit->qte;
+        endforeach;
+
+        return view('magasinier.order.orderApprove', compact( 'products', 'ordergroups', 'users', 'produits'));
     }
 
     //exécuter une seule ligne order

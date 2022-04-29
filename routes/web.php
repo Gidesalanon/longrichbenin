@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::resource('/orders', OrderController::class);
         Route::get('/order/situation', [OrderController::class, 'orderSituation'])->name('orders.situation');
         Route::resource('sellings', SellingController::class);
+        Route::get('/selling/{id}/ecart', [SellingController::class, 'ecartPaie'])->name('ecart.paie');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');

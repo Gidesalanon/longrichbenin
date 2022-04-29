@@ -30,6 +30,7 @@ class OrderController extends Controller
 
         $ordergroups = Ordergroup::with('orders')
         ->where('user_id', '=', Auth::user()->id)
+        ->where('close', '=', '0')
         ->get();
 
         $products = Product::all();
@@ -41,7 +42,13 @@ class OrderController extends Controller
         ->get();
         $count = count($orders);
 
-        return view('order.index', compact('orders', 'products', 'ordergroups', 'users', 'count'));
+        $produits = Product::all();
+        $pr = Product::all();
+        foreach($pr as $produit) :
+            $produits[$produit->id] = $produit->prixclient;
+        endforeach;
+
+        return view('order.index', compact('orders', 'products', 'ordergroups', 'users', 'count', 'produits'));
     }
     /**
      * Show the form for creating a new resource.
@@ -50,8 +57,14 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $produits = Product::all();
+        $pr = Product::all();
+        foreach($pr as $produit) :
+            $produits[$produit->id] = $produit->prixclient;
+        endforeach;
+
         $products = Product::all()->toArray();
-        return view('order.create', compact( 'products'));
+        return view('order.create', compact( 'products', 'produits'));
     }
 
     /**
@@ -169,7 +182,6 @@ class OrderController extends Controller
             $products[$product->id] = $product->nomprod;
         endforeach;
 
-
         $produits = Product::all();
         $pr = Product::all();
         foreach($pr as $produit) :
@@ -194,6 +206,7 @@ class OrderController extends Controller
         ->get();
 
         $ordergroups = Ordergroup::with('orders')
+        ->where('close', '=', '0')
         ->get();
 
         $orderss = Order::with('ordergroups')
@@ -216,7 +229,13 @@ class OrderController extends Controller
             $products[$product->id] = $product->nomprod;
         endforeach;
 
-        return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count', 'orderss', 'count_order'));
+        $qte_prod = Product::all();
+        $pr = Product::all();
+        foreach($pr as $produit) :
+            $qte_prod[$produit->id] = $produit->qte;
+        endforeach;
+
+        return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count', 'orderss', 'count_order', 'qte_prod'));
 
     }
 
@@ -269,23 +288,21 @@ class OrderController extends Controller
             'qte' => $request->qte,
             'prix' => $request->prix,
         ]);
-
-        toastr()->success('Ligne de commande modifiée avec succès.', 'Succès');
+        toastr()->success('Commande modifiée avec succès.', 'Succès');
         return redirect()->route('admin.order.index');
     }
 
     public function destroyOrder($id)
     {
         Ordergroup::where('id', $id)->delete();
-        toastr()->success('Cette commande a été supprimée avec succès.', 'Succès');
+        toastr()->success('Commande supprimée avec succès.', 'Succès');
         return redirect()->route('admin.order.index');
     }
 
     public function destroyLineOrder($id)
     {
         Order::where('id', $id)->delete();
-        toastr()->success('Cette ligne de commande a été supprimée avec succès.', 'Succès');
+        toastr()->success('Ligne de commande supprimée avec succès.', 'Succès');
         return redirect()->route('admin.order.index');
     }
-
 }

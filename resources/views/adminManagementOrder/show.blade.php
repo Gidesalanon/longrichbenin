@@ -14,7 +14,6 @@
                         <a href="{{ route('order.edit', $order->id) }}">
                             <i class="fa fa-pencil" title="Modifier"></i>
                         </a>
-
                             <a onclick="return confirm('Êtes vous sûr de vouloir supprimer cette ligne?')" href="{{ route('admin.lineOrder.destroy', $order->id)}}">
                                     <i class="fa fa-trash-o" style="color:red;" title="Supprimer"></i>
                             </a>
@@ -27,23 +26,28 @@
                         Nom du Produit: {{ $products[$order->product_id] }}</br>
                         Quantité: {{ $order->qte }}</br>
                         Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
-                        Status:
 
-                        @if ($order->approve == "0")
-                                                        <a href="{{ route('admin.orders.Oneapprove', $order->id) }}">
-                                                            <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Non Approuvée</span>
-                                                        </a>
-                                                @else
-                                                    @if ($order->execute == "1")
-                                                        <span class="badge badge-success" title="Désapprouver cette commande">
-                                                            Approuvée | Exécutée
-                                                        </span>
-                                                    @else
-                                                            <a href="{{ route('admin.orders.Onedesapprove', $order->id) }}">
-                                                                <span class="badge badge-success" title="Désapprouver cette commande">Approuvée</span></a>
+
+                        @if ($qte_prod[$order->product_id] < $order->qte)
+                            <span style="color:red;"> Impossible d'approuver cette commande, car sa quantité dépasse le stock initial. </br> Modifier sa quantité pour l'approuver.</span>
+
+                            @elseif ($order->approve == "0")
+                                                    Status:
+                                                            <a href="{{ route('admin.orders.Oneapprove', $order->id) }}">
+                                                                <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Non Approuvée</span>
                                                             </a>
-                                                @endif @endif</br></br>
-                        @endforeach
+                                                            @else
+                                                                @if ($order->execute == "1")
+                                                                    <span class="badge badge-success" title="Désapprouver cette commande">
+                                                                        Approuvée | Exécutée
+                                                                    </span>
+                                                                @else
+                                                                    <a href="{{ route('admin.orders.Onedesapprove', $order->id) }}">
+                                                                        <span class="badge badge-success" title="Désapprouver cette commande">Approuvée</span></a>
+                                                                    </a>
+                                                                @endif @endif</br></br>
+                                                    @endforeach
+
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -70,7 +70,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             <thead>
                                 <tr>
                                     <th>Commande du</th>
-                                    <th>Information du Demandeur</th>
+                                    <th>Demandeur</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

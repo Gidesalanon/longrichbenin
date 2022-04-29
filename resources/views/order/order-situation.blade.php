@@ -73,7 +73,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <h4>
+                        <h4>Payez vos ventes
                         </h4>
                         <table class="table table-bordered">
                             <thead>
@@ -105,18 +105,28 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 <tr class="collapse row{{ $order->id }}" style="background-color:dimgray;">
                                 <td style="color:#fff; font-weight: bold;">VENTE</td>
 
-                                    <form method="POST" action="{{ route('sellings.store')}}">
+                                    <form method="POST" action="{{ route('sellings.store')}}" onsubmit="
+                                    event.preventDefault();
+                                    openKkiapayWidget({
+                                                amount: document.getElementById('qte-<?=$i?>').value * Number({{ $produits[$order->product_id] }}),
+                                                sandbox:true,
+                                                key:'3b2969e02c7f11ea86dcdfac38167264'});
+                                                   addSuccessListener(response => {
+                                                        this.submit();
+                                                    });
+                                                " class="nav-badge-btm">
                                         @csrf
                                         <input type="hidden" name="order_id" value="{{ $order->id }}" />
+                                        <input type="hidden" name="ordergroup_id" value="{{ $order->ordergroup_id }}" />
                                         <input type="hidden" name="product_id" value="{{ $order->product_id }}" />
                                         <input type="hidden" name="prixclient" value="{{ $produits[$order->product_id] }}" />
 
                                         <td style="color:#fff; width:20%;">
                                             <input type="number" min="0" max="{{ $order->qte }}"
-                                            onKeyUp="if(this.value > {{ $order->qte }}){this.value='';}else if(this.value<0){this.value='';}"
+                                            onKeyUp="if(this.value > {{ $order->qte }}){this.value='';} else if(this.value<0){this.value='';}"
                                                     style="border-radius: 30px;"
                                                     class="form-control"
-                                                    id="qte_vendu"
+                                                    id="qte-<?=$i?>"
                                                     name="qte_vendu"
                                                     placeholder="Tapez la Quantité Vendue"
                                                     oninput="document.getElementById('ca-<?=$i?>').innerHTML = this.value * Number({{ $produits[$order->product_id] }});
@@ -134,14 +144,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                             <span>ECART: <span id="ecart-<?=$i?>">0</span> </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-info"><i class="fa fa-check"></i></button>
+                                            <button type="submit" class="btn btn-warning" title="Payer Maintenant">
+                                                <i class="fa fa-money"></i>
+                                            </button>
                                         </td>
                                     </form>
                                 </tr>
                             </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="4">Aucune Commande ajoutée pour le moment.</td>
+                                    <td colspan="4">Aucune vente non enregistrée pour le moment.</td>
                                 </tr>
                             @endforelse
                         </table>
@@ -188,5 +200,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
 	<script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+    <script src="https://cdn.kkiapay.me/k.js"></script>
 </body>
 </html>

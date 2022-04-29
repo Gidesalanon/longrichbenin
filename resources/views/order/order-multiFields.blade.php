@@ -58,7 +58,7 @@ td{
                                 </td>
                                 <td>
                                     <input type="number" min="0"
-                                    onKeyUp="if(this.value<0){this.value='';}"
+                                    onKeyUp="if(this.value<1){this.value='';}"
                                     id="input_qte_0" oninput="
                                     document.getElementById('input_p_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]"
                                     document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]

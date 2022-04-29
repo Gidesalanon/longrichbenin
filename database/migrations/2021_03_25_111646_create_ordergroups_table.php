@@ -15,6 +15,7 @@ class CreateOrdergroupsTable extends Migration
     {
         Schema::create('ordergroups', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('close')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade') ->onDelete('cascade');
             $table->timestamps();

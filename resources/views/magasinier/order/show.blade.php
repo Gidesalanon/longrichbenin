@@ -20,6 +20,8 @@
                             <a href="{{ route('manager.orders.execute', $order->id) }}">
                                 <span class="label label-default" title="Exécuter cette commande"><i class="fa fa-stop"></i> Commande Inexécutée</span>
                             </a>
+                        @elseif ($order->status == "1")
+                            <span class="label label-success">Vendu <i class="fa fa-check"></i></span>
                         @else
                             <a href="{{ route('manager.orders.unExecute', $order->id) }}">
                                 <span class="badge badge-success" title="Annuler cette commande"><i class="fa fa-play-circle"></i> Commande Exécutée</span></a>

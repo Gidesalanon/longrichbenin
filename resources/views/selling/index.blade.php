@@ -49,11 +49,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 <h3 class="title1">Mes Ventes</h3>
             </span>
             <span class="col-md-2" style="text-align: right;">
-                <a href="" class="nav-badge-btm" title="Arbre généalogique">
-                    <img src="{{asset('img/icons8-tree.png')}}" style="box-shadow: 5px 5px 5px gray; margin:0 5px; background-color: #fff; width: 30px; border-radius:20%"/>
-                </a>
-                <a href="" class="nav-badge-btm" title="Ajouter un utilisateur">
-                    <img src="{{asset('img/icons8-add.gif')}}" style="box-shadow: 5px 5px 5px gray; margin:0 5px; background-color: #fff; width: 30px; border-radius:20%"/>
+                <a href="{{route('orders.situation')}}" class="nav-badge-btm" title="Payer mes ventes">
+                    <img src="{{asset('arg.png')}}" style="box-shadow: 5px 5px 5px gray; margin:0 5px; background-color: transparent; width: 40px; border-radius:20%"/>
                 </a>
             </span>
 			<div class="main-page">
@@ -87,26 +84,37 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $orders[$selling->order_id] }}</td>
                                     <td>{{ $selling->qte_vendu }}</td>
                                     <td class="myDIV" >{{ $selling->ca }}</td>
-                                    <td class="myDIV" @if ($selling->ecart > "0")style="background-color:orange; font-weight:bold;" @else {{ $selling->ecart }} @endif>{{ $selling->ecart }}</td>
-                                    <td>@if ($selling->paiement == "0") <span style="color:red; font-weight:bold;">Non payer</span> @else Payer @endif</td>
+                                    <td class="myDIV" @if ($selling->ecart > "0") style="background-color:orange; font-weight:bold;" @else {{ $selling->ecart }} @endif>{{ $selling->ecart }}</td>
+                                    <td>@if ($selling->ecart > "0") <span style="color:red; font-weight:bold;">Non payer</span> @else <span style="color:green; font-weight:bold;">Payer</span> @endif</td>
 
 
                                     <td>{{ \Carbon\Carbon::parse($selling->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</td>
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            @if ($selling->paiement == "0")
-                                                <a href="#" onclick="openKkiapayWidget({
-                                                    amount:{{$selling->ecart}},
-                                                    sandbox:true,
-                  key:'3b2969e02c7f11ea86dcdfac38167264'})" class="nav-badge-btm" title="Payer">
-                                                    <img src="{{asset('icons8-argent.gif')}}" style="width:40px; height:30px;">
 
-                                                </a>
-                                            @else
-                                                <img src="icons8-bon-code-pin-48.png" style="box-shadow: 5px 5px 5px gray; border-radius:20%"/>
-                                            @endif
-                                        </div>
-                                    </td>
+                                    <form method="PUT" action="{{ route('ecart.paie', $selling->id)}}" onsubmit="
+                                    event.preventDefault();
+                                    openKkiapayWidget({
+                                                amount: {{$selling->ecart}},
+                                                sandbox:true,
+                                                key:'3b2969e02c7f11ea86dcdfac38167264'});
+                                                   addSuccessListener(response => {
+                                                        this.submit();
+                                                    });">
+                                            @csrf
+                                            {{ method_field('PATCH') }}
+
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                @if ($selling->ecart > "0")
+
+                                                    <button href="#" type="submit" class="nav-badge-btm" style="border-color:transparent; background-color:transparent" title="Payer">
+                                                        <img src="{{asset('icons8-argent.gif')}}" style="width:40px; height:30px;">
+                                                    </button>
+                                                @else
+                                                    <img src="succezz.png" style="width:30px; height:30px; position:center;"/>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </form>
                                     @include('selling.payement')
                                 </tr>
                             </tbody>
