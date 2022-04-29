@@ -29,7 +29,7 @@
                         Status:
                         @if ($order->approve == "0")
                             <span class="label label-default" title="Approuver cette commande">
-                                <i class="fa fa-check-circle"></i>Non Approuvée
+                                <i class="fa fa-check-circle"></i>En attente d'Approbation...
                             </span>
                         @else
                             <span class="badge badge-success" title="Désapprouver cette commande">

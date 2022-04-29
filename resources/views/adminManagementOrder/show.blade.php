@@ -21,12 +21,10 @@
                                 @csrf
                                 {{ method_field('delete') }}
                             </form>
-                        </br>
 
-                        Nom du Produit: {{ $products[$order->product_id] }}</br>
-                        Quantité: {{ $order->qte }}</br>
+                        <span title="Qté: {{$qte_prod[$order->product_id]}}">Nom du Produit:</span> <span title="Qté: {{$qte_prod[$order->product_id]}}">{{ $products[$order->product_id] }}</span></br>
+                        <span>Quantité: {{ $order->qte }}</span> </br>
                         Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
-
 
                         @if ($qte_prod[$order->product_id] < $order->qte)
                             <span style="color:red;"> Impossible d'approuver cette commande, car sa quantité dépasse le stock initial. </br> Modifier sa quantité pour l'approuver.</span>

@@ -51,7 +51,6 @@
                             {{ Auth::user()->nom }} {{ Auth::user()->prenom }}
                         </a>
                     </li>
-
             @endguest
         </ul>
       </div>

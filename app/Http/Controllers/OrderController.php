@@ -40,6 +40,7 @@ class OrderController extends Controller
                 endforeach;
         $orders = Product::with('orders')
         ->get();
+
         $count = count($orders);
 
         $produits = Product::all();
@@ -63,7 +64,8 @@ class OrderController extends Controller
             $produits[$produit->id] = $produit->prixclient;
         endforeach;
 
-        $products = Product::all()->toArray();
+        $products = Product::all()->where('status', '=', 'Actif')
+        ->toArray();
         return view('order.create', compact( 'products', 'produits'));
     }
 
@@ -122,7 +124,9 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $products = Product::all()->toArray();
+        $products = Product::all()->where('status', '=', 'Actif')
+        ->toArray();
+
         $order = Order::find($id);
         return view('order.edit', compact('order', 'products'));
     }

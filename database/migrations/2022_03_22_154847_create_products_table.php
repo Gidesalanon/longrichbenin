@@ -21,13 +21,13 @@ class CreateProductsTable extends Migration
             $table->string('prixclient');
             $table->string('qte');
             $table->string('image');
+            $table->string('status');
             $table->string('description')->nullable();
             $table->unsignedBigInteger('categorie_id');
             $table->unsignedBigInteger('stock_id');
             $table->softDeletes();
             $table->timestamps();
         });
-
 
         Schema::table('products', function (Blueprint $table) {
             $table->foreign('categorie_id')->references('id')->on('categories')->onUpdate('cascade') ->onDelete('cascade');

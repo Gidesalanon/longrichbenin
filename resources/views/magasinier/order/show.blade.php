@@ -16,7 +16,10 @@
                         Quantité: {{ $order->qte }}</br>
                         Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
                         Status:
-                        @if ($order->execute == "0")
+
+                        @if ($order->approve == 0)
+                            <span class="label label-default">Encours d'Approbation...</span>
+                        @elseif ($order->execute == "0")
                             <a href="{{ route('manager.orders.execute', $order->id) }}">
                                 <span class="label label-default" title="Exécuter cette commande"><i class="fa fa-stop"></i> Commande Inexécutée</span>
                             </a>

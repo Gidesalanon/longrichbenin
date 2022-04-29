@@ -99,7 +99,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                             <div class="form-group">
                                 <label for="">Quantité</label>
-                                <input type="number" class="form-control" id="qte" name="qte" required>
+                                <input type="number" class="form-control" id="qte" name="qte" min="0" onKeyUp="if(this.value<0){this.value='';}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Status</label>
+                                <select class="form-control" name="status" required>
+                                    <option selected hidden></option>
+                                    <option value="Actif">Actif</option>
+                                    <option value="Inactif">Inactif</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description</label>

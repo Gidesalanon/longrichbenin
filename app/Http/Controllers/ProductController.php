@@ -78,6 +78,7 @@ class ProductController extends Controller
             'qte' => $request->qte,
             'image' => $name,
             'description' => $request->description,
+            'status' => $request->status,
             'categorie_id' => $request->categorie_id,
             'stock_id' => $request->stock_id,
 
@@ -175,7 +176,7 @@ class ProductController extends Controller
             'prev_value' => $product->qte - $request->qte,
             'product_id' => $product->id,
         ])->id;
-    
+
         toastr()->success('Nouveau Stock Ajouté avec succès', 'Succès');
         return redirect()->route('products.index');
     }
@@ -186,7 +187,7 @@ class ProductController extends Controller
         $count_input = (inputProduct::all());
         /* $inputproducts = inputProduct::find($id); */
         $inputproducts = inputProduct::where('product_id', $id)->pluck('id');
-        
+
         $products = Product::all();
         $p = Product::all();
         foreach($p as $product) :

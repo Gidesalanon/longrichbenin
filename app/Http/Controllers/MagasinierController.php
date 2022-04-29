@@ -45,13 +45,13 @@ class MagasinierController extends Controller
             $products[$product->id] = $product->nomprod;
         endforeach;
 
-        $produits = Product::all();
+        $qte_prod = Product::all();
         $pr = Product::all();
         foreach($pr as $produit) :
-            $produits[$produit->id] = $produit->qte;
+            $qte_prod[$produit->id] = $produit->qte;
         endforeach;
 
-        return view('magasinier.order.orderApprove', compact( 'products', 'ordergroups', 'users', 'produits'));
+        return view('magasinier.order.orderApprove', compact( 'products', 'ordergroups', 'users', 'qte_prod'));
     }
 
     //exécuter une seule ligne order

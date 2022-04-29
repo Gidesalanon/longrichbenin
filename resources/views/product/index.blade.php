@@ -46,11 +46,11 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
-            
+
 			<div class="main-page">
 				<div class="tables">
 				    <h3 class="title1">Nos Produits/Stocks</h3>
-                    
+
                     @if ($count_product == 0)
                         @include('product.ElseFile')
                     @endif
@@ -67,6 +67,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>Prix Partenaire</th>
                                     <th>Prix Client</th>
                                     <th>Quantité</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -79,16 +80,13 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td class="myDIV">{{ $product->prixpartenaire }}</td>
                                     <td class="myDIV">{{ $product->prixclient }}</td>
                                     <td>{{ $product->qte }}</td>
+                                    <td>{{ $product->status }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
                                                 <div class="follow">
                                                     <a href="{{ route('products.edit', $product->id) }}">
                                                         <div class="icon first" title="Modifier" style="background-color:#2e6da4;"><i class="fa fa-edit"></i></div>
                                                     </a>
-
-                                                    <!-- <a href="#" data-toggle="modal" data-target="#modalDeleteProduct{{ $product->id}}">
-                                                        <div class="icon" title="Supprimer" style="background-color:#d43f3a;"><i class="fa fa-trash-o"></i></div>
-                                                    </a> -->
 
                                                     <a href="#" data-toggle="modal" data-target="#modalAddProduct{{ $product->id}}">
                                                         <div class="icon" title="Ajout de {{ $product->nomprod }}" style="background-color:#4cae4c;"><i class="fa fa-plus-circle"></i></div>
@@ -101,9 +99,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                                     <a href="{{ route('admin.input.product', $product->id) }}">
                                                         <div class="icon last" title="Suivie des Sorties" style="background-color:#F2B33F;"><i class="fa fa-arrow-circle-right"></i></div>
                                                     </a>
-                                                    
+
                                                     <div class=""></div>
-                                                </div>  
+                                                </div>
 
                                         </div>
                                     </td>

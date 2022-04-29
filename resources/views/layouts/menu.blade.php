@@ -6,7 +6,7 @@
 							<a href="{{route('admin.home')}}" class="active"><i class="fa fa-home nav_icon"></i>Tableau de board</a>
 						</li>
 						<li>
-							<a href="{{route('categories.index')}}"><i class="fa fa-list-alt nav_icon"></i>Nos Catégories <span class="nav-badge">12</span> <span class="fa arrow"></span></a>
+							<a href="{{route('categories.index')}}"><i class="fa fa-list-alt nav_icon"></i>Catégories <span class="nav-badge">12</span> <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
 									<a href="{{route('categories.index')}}">Liste des Catégories</a>
@@ -21,6 +21,7 @@
 							</ul>
 							<!-- /nav-second-level -->
 						</li>
+
 						<li class="">
 							<a href="{{route('products.index')}}"><i class="fa fa-book nav_icon"></i>Nos Produits <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
