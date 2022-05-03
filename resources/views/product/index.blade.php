@@ -49,15 +49,31 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 
 			<div class="main-page">
 				<div class="tables">
-				    <h3 class="title1">Nos Produits/Stocks</h3>
-
+				        <h3 class="title1">Nos Produits/Stocks</h3>
                     @if ($count_product == 0)
                         @include('product.ElseFile')
                     @endif
                     @forelse($stocks as $stock)
 					<div class="table-responsive bs-example widget-shadow" id="table">
+                        <span class="col-md-3">
                             <h4>{{ $stock->libelle }}</h4>
+                        </span>
+                        <span class="col-md-3" style="text-align: right;">
+                            <a href="{{ route('admin.input.product') }}" class="nav-badge-btm">
+                                <button type="submit" class="btn btn-primary" style="box-shadow: 5px 5px 5px gray; margin:0 5px;">Suivie des entrées <i class="fa fa-arrow-circle-right"></i></button>
+                            </a>
+                        </span>
 
+                        <span class="col-md-3" style="text-align: right;">
+                            <a href="{{ route('admin.output.product') }}" class="nav-badge-btm">
+                                <button type="submit" class="btn btn-success" style="box-shadow: 5px 5px 5px gray; margin:0 5px;">Suivie des sorties <i class="fa fa-arrow-circle-right"></i></button>
+                            </a>
+                        </span>
+                        <span class="col-md-3" style="text-align: right;">
+                            <a href="{{ route('products.create') }}" class="nav-badge-btm">
+                                <button type="submit" class="btn btn-info" style="box-shadow: 5px 5px 5px gray; margin:0 5px;">Nouveau produit <i class="fa fa-plus-circle"></i></button>
+                            </a>
+                        </span>
 						<table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -89,16 +105,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                                     </a>
 
                                                     <a href="#" data-toggle="modal" data-target="#modalAddProduct{{ $product->id}}">
-                                                        <div class="icon" title="Ajout de {{ $product->nomprod }}" style="background-color:#4cae4c;"><i class="fa fa-plus-circle"></i></div>
+                                                        <div class="icon last" title="Ajout de {{ $product->nomprod }}" style="background-color:#4cae4c;"><i class="fa fa-plus-circle"></i></div>
                                                     </a>
 
-                                                    <a href="{{ route('admin.input.product', $product->id) }}">
+                                                    <!-- <a href="">
                                                         <div class="icon icon" title="Suivie des Entrées" style="background-color:#e94e02;"><i class="fa fa-arrow-circle-left"></i></div>
                                                     </a>
 
-                                                    <a href="{{ route('admin.input.product', $product->id) }}">
+                                                    <a href="">
                                                         <div class="icon last" title="Suivie des Sorties" style="background-color:#F2B33F;"><i class="fa fa-arrow-circle-right"></i></div>
-                                                    </a>
+                                                    </a> -->
 
                                                     <div class=""></div>
                                                 </div>

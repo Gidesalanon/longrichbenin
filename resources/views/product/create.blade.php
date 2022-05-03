@@ -87,7 +87,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                             <div class="form-group">
                                 <label for="">Nombre de PV</label>
-                                <input type="number" class="form-control" id="nbpv" name="nbpv" required>
+                                <input type="text" class="form-control" id="nbpv" name="nbpv" required>
                             </div>
                             <div class="form-group">
                                 <label for="">Prix Partenaire</label>

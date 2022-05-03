@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdergroupsTable extends Migration
+class CreateOutputProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateOrdergroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ordergroups', function (Blueprint $table) {
+        Schema::create('output_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->tinyInteger('close')->default('0');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade') ->onDelete('cascade');
+            $table->string('output_qty');
+            $table->string('prev_value');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade') ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateOrdergroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ordergroups');
+        Schema::dropIfExists('output_products');
     }
 }

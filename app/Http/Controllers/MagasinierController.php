@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Ordergroup;
 use App\Models\Order;
+use App\Models\OutputProduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class MagasinierController extends Controller
@@ -26,7 +27,7 @@ class MagasinierController extends Controller
         ->get();
 
         $ordergroups = Ordergroup::with('orders')
-        ->where('close', '=', '0')
+        ->where('close', '=', 0)
         ->get();
 
         $user_nom = User::all();
@@ -61,6 +62,13 @@ class MagasinierController extends Controller
         $product = Product::findOrFail($order->product_id);
         $order->update(['execute' => 1]);
         $product->update(['qte' => $product->qte - $order->qte]);
+
+
+        OutputProduct::create([
+            'output_qty' => $order->qte,
+            'prev_value' => $product->qte + $order->qte,
+            'product_id' => $order->product_id,
+        ])->id;
 
         toastr()->success('Commande exécutée avec succès', 'Succès');
         return redirect()->route('order.approved.index');

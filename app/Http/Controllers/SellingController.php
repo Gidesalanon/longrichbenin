@@ -31,7 +31,6 @@ class SellingController extends Controller
                 foreach($p as $product) :
                     $products[$product->id] = $product->nomprod;
                 endforeach;
-
         return view('selling.index', compact('sellings', 'orders', 'products'));
     }
 
@@ -61,7 +60,7 @@ class SellingController extends Controller
         $ordergroup_id = Ordergroup::findOrFail($request->ordergroup_id);
         $ordergroup_id->update(['close' => 1]);
 
-        /* dd($order[0]); */    
+        /* dd($order[0]); */
         $product = Product::findOrFail($order[0]->product_id);
 
         Selling::create([
@@ -74,6 +73,8 @@ class SellingController extends Controller
                         'paiement' => "1",                                //paiement=1 -> effectué, paiement=0 -> non effectué
                         'order_id'=> $order[0]->id,
                         'product_id'=> $request->product_id,
+                        'benefice'=> $product->prixclient - $product->prixpartenaire,
+                        'pv'=> $product->nbpv,
                         'user_id'=> Auth::user()->id]);
 
         toastr()->success('Votre vente a été payée avec succès', 'Succès');

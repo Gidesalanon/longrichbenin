@@ -39,4 +39,9 @@ class Product extends Model
     {
         return $this->hasOne('App\Models\InputProduct');
     }
+
+    public function outputProducts()
+    {
+        return $this->hasOne('App\Models\OutputProduct');
+    }
 }

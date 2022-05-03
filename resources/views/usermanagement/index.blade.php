@@ -66,7 +66,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                     @forelse($enterprises as $enterprise)
 					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray; width: 100%;">
 						<h4>{{$enterprise->designation}}</h4>
-                        
+
                             <table class="table table-bordered">
                             <thead style="box-shadow: 5px 5px 5px gray; ">
                                 <tr>

@@ -185,8 +185,8 @@
 								</div>
 							</a>
 							<ul class="dropdown-menu drp-mnu">
+                                <li> <a href="{{route('profiles.index')}}"><i class="fa fa-user"></i> Profil</a> </li>
 								<li> <a href="#"><i class="fa fa-cog"></i> Paramètres</a> </li>
-								<li> <a href="#"><i class="fa fa-user"></i> Profil</a> </li>
 								<li> <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                    document.getElementById('logout-form').submit();" class="dropdown-item"><i class="fa fa-sign-out dropdown-toggle"></i> Se Déconnecter</a>
                                 </li>

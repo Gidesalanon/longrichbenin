@@ -1,7 +1,13 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Modifier une categorie :: Admin</title>
+<title>Longrich Bénin | Profil :: Gestion de profil</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -36,43 +42,45 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 </head>
 <body class="cbp-spmenu-push">
 	<div class="main-content">
-		<!--left-fixed -navigation-->
-		@include('layouts.menu')
-		<!--left-fixed -navigation-->
-		<!-- header-starts -->
-		@include('layouts.header')
+        @include('layouts.menu')
+        @include('layouts.header')
+
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
-			<div class="main-page">
-				<div class="forms">
-					<h3 class="title1">Modifier Catégorie</h3>
-					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
-                        @if (session('message'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('message') }}
-                            </div>
-                        @endif
-						<div class="form-title">
-							<h4>Modifier cette catégorie de produits:</h4>
+			<div class="main-page compose">
+				@include('profile.menu')
+				<div class="col-md-8 compose-right widget-shadow">
+					<div class="panel-default">
+						<div class="panel-heading">
+							Détails Personnels
 						</div>
-						<div class="form-body">
-                            <form method="POST" action="{{ route('categories.update', $category->id)}}">
-                                @csrf
-                                {{ method_field('PATCH') }}
-                                <div class="form-group">
-                                    <label for="">Libellé</label>
-                                    <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Description</label>
-                                    <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
-                                </div>
-                                <button type="submit" class="btn btn-default">Modifier</button>
-                            </form>
+						<div class="panel-body">
+							<div class="alert alert-info">
+								Modifier ici votre mot de passe svp
+							</div>
+                            @foreach ($users as $user)
+                                <form method="POST" action="{{ route('pwd.update')}}">
+                                    @csrf
+                                    {{ method_field('PATCH') }}
+                                    <input id="password" type="password" class="form-control1 control3" name="password" placeholder="Nouveau mot de passe" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control1 control3" name="password_confirmation" placeholder="Confirmer votre mot de passe" required autocomplete="new-password">
+                                    <!-- <div class="form-group">
+                                        <div class="btn btn-default btn-file">
+                                            <i class="fa fa-paperclip"></i> Attachment
+                                            <input type="file" name="attachment">
+                                        </div>
+                                        <p class="help-block">Max. 32MB</p>
+                                    </div> -->
+
+                                    <input type="submit" value="Modifier">
+							    </form>
+                            @endforeach
+
 						</div>
 					</div>
 				</div>
+				<div class="clearfix"> </div>
 			</div>
 		</div>
 		<!--footer-->

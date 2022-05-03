@@ -1,7 +1,13 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Modifier une categorie :: Admin</title>
+<title>Longrich Bénin | Suivie des sorties :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -45,33 +51,53 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- main content start-->
 		<div id="page-wrapper">
 			<div class="main-page">
-				<div class="forms">
-					<h3 class="title1">Modifier Catégorie</h3>
-					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+				<div class="tables">
+                            <h3 class="title1">Suivie des sorties</h3>
+					<div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
-						<div class="form-title">
-							<h4>Modifier cette catégorie de produits:</h4>
-						</div>
-						<div class="form-body">
-                            <form method="POST" action="{{ route('categories.update', $category->id)}}">
-                                @csrf
-                                {{ method_field('PATCH') }}
-                                <div class="form-group">
-                                    <label for="">Libellé</label>
-                                    <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Description</label>
-                                    <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
-                                </div>
-                                <button type="submit" class="btn btn-default">Modifier</button>
-                            </form>
-						</div>
+                        <span class="col-md-6">
+                            <h4>La liste des sorties de stock</h4>
+                        </span>
+                        <span class="col-md-6" style="text-align: right;">
+                            <a href="{{ route('products.index') }}" class="nav-badge-btm">
+                                <button type="submit" class="btn btn-primary" style="box-shadow: 5px 5px 5px gray; margin:0 5px;"><i class="fa fa-arrow-circle-left"></i> LISTE DES PRODUITS</button>
+                            </a>
+                        </span>
+						<table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Produit</th>
+                                    <th>Stock Initial</th>
+                                    <th>Sortie</th>
+                                    <th>Stock Disponible</th>
+                                    <th>Date & Heure</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($outputs as $output)
+                                <tr>
+                                    <th scope="row">{{ $output->id }}</th>
+                                    <td>{{ $products[$output->product_id] }}</td>
+                                    <td>{{ $output->prev_value }}</td>
+                                    <td>{{ $output->output_qty }}</td>
+                                    <td>{{ $output->prev_value - $output->output_qty }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($output->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</td>
+                                </tr>
+                            </tbody>
+                            @empty
+                                <tr>
+                                    <td colspan="4">Aucune sortie éffectuée pour le moment.</td>
+                                </tr>
+                            @endforelse
+                        </table>
+
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -104,6 +130,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<script src="{{asset('js_admin/scripts.js')}}"></script>
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
-   <script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+	<script src="{{asset('js_admin/bootstrap.js')}}"> </script>
 </body>
 </html>

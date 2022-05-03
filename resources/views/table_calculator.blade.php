@@ -17,20 +17,21 @@
       </div>
 
       <!-- Product #1 -->
-      <div class="item">
+
+    @foreach ($products as $product)
+        <div class="item">
         <div class="buttons">
           <span class="delete-btn"></span>
-          <span class="like-btn"></span>
         </div>
 
         <div class="image">
-          <img src="item-1.png" alt="" />
+          <img src="{{ asset('imgprod/'.$product->image) }}" style="width:120px; height:92px;" class="img-responsive" alt="">
         </div>
 
         <div class="description">
-          <span>Common Projects</span>
-          <span>Bball High</span>
-          <span>White</span>
+          <span>{{$product->nomprod}}</span>
+          <span>{{$product->nbpv}}</span>
+          <span>{{$product->prixpartenaire}}</span>
         </div>
 
         <div class="quantity">
@@ -43,68 +44,11 @@
           </button>
         </div>
 
-        <div class="total-price">5000fcfa</div>
+        <div class="total-price">{{$product->prixclient}}</div>
       </div>
 
-      <!-- Product #2 -->
-      <div class="item">
-        <div class="buttons">
-          <span class="delete-btn"></span>
-          <span class="like-btn"></span>
-        </div>
+    @endforeach
 
-        <div class="image">
-          <img src="item-2.png" alt=""/>
-        </div>
-
-        <div class="description">
-          <span>Maison Margiela</span>
-          <span>Future Sneakers</span>
-          <span>White</span>
-        </div>
-
-        <div class="quantity">
-          <button class="plus-btn" type="button" name="button">
-            <img src="plus.svg" alt="" />
-          </button>
-          <input type="text" name="name" value="1">
-          <button class="minus-btn" type="button" name="button">
-            <img src="minus.svg" alt="" />
-          </button>
-        </div>
-
-        <div class="total-price">8700fcfa</div>
-      </div>
-
-      <!-- Product #3 -->
-      <div class="item">
-        <div class="buttons">
-          <span class="delete-btn"></span>
-          <span class="like-btn"></span>
-        </div>
-
-        <div class="image">
-          <img src="item-3.png" alt="" />
-        </div>
-
-        <div class="description">
-          <span>Our Legacy</span>
-          <span>Brushed Scarf</span>
-          <span>Brown</span>
-        </div>
-
-        <div class="quantity">
-          <button class="plus-btn" type="button" name="button">
-            <img src="plus.svg" alt="" />
-          </button>
-          <input type="text" name="name" value="1">
-          <button class="minus-btn" type="button" name="button">
-            <img src="minus.svg" alt="" />
-          </button>
-        </div>
-
-        <div class="total-price">3490fcfa</div>
-      </div>
 
       <div class="title">
         Total:...FCFA

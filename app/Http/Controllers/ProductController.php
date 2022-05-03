@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Stock;
 use App\Models\Ordergroup;
 use App\Models\InputProduct;
+use App\Models\OutputProduct;
 use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
@@ -181,19 +182,36 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 
-    //afficher les entrées en stock dans le modal inputProduct
-    public function inputProduct($id)
+    //afficher les entrées en stock dans la vue inputProduct
+
+    public function inputProduct()
     {
-        $count_input = (inputProduct::all());
-        /* $inputproducts = inputProduct::find($id); */
-        $inputproducts = inputProduct::where('product_id', $id)->pluck('id');
+        /*$count_input = (inputProduct::all());
+         $inputproducts = inputProduct::find($id);
+        $inputproducts = inputProduct::where('product_id', $id)->pluck('id');*/
+
+        $inputs = InputProduct::all();
 
         $products = Product::all();
         $p = Product::all();
-        foreach($p as $product) :
-            $products[$product->id] = $product->nomprod;
-        endforeach;
+                foreach($p as $product) :
+                    $products[$product->id] = $product->nomprod;
+                endforeach;
 
-        return view('product.inputProduct', compact('inputproducts', 'count_input', 'products'));
+        return view('product.inputProduct', compact( 'inputs', 'products'));
+    }
+
+    //afficher les sorties en stock dans la vue outputProduct
+    public function outputProduct()
+    {
+        $outputs = OutputProduct::all();
+
+        $products = Product::all();
+        $p = Product::all();
+                foreach($p as $product) :
+                    $products[$product->id] = $product->nomprod;
+                endforeach;
+
+        return view('product.outputProduct', compact( 'outputs', 'products'));
     }
 }

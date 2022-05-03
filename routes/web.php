@@ -11,6 +11,8 @@ use App\http\controllers\UserManagementController;
 use App\http\controllers\EnterpriseController;
 use App\http\controllers\MagasinierController;
 use App\http\controllers\SellingController;
+use App\http\controllers\ProfileController;
+use App\http\controllers\WelcomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +24,10 @@ use App\http\controllers\SellingController;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
+Route::resource('/', WelcomeController::class);
 
 Auth::routes();
 
@@ -34,8 +37,15 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/order/situation', [OrderController::class, 'orderSituation'])->name('orders.situation');
         Route::resource('sellings', SellingController::class);
         Route::get('/selling/{id}/ecart', [SellingController::class, 'ecartPaie'])->name('ecart.paie');
+        Route::resource('profiles', ProfileController::class);
 
-    Route::middleware(['admin'])->group(function () {
+        Route::get('profile/personnal/details', [ProfileController::class, 'editDetail'])->name('details.edit');
+        Route::patch('profile/personnal/details', [ProfileController::class, 'updateDetail'])->name('details.update');
+
+        Route::get('profile/password/edit', [ProfileController::class, 'editPassword'])->name('pwd.edit');
+        Route::patch('profile/password/edit', [ProfileController::class, 'updatePassword'])->name('pwd.update');
+
+        Route::middleware(['admin'])->group(function () {
         Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');
 
         Route::resource('users', UserController::class);
@@ -47,7 +57,8 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::resource('admin/enterprises', EnterpriseController::class);
         Route::resource('admin/products', ProductController::class);
         Route::patch('admin/product/{id}', [ProductController::class, 'addStock'])->name('product.addstock');
-        Route::get('/input/product/{id}', [ProductController::class, 'inputProduct'])->name('admin.input.product');
+        Route::get('/input/product/', [ProductController::class, 'inputProduct'])->name('admin.input.product');
+        Route::get('/output/product/', [ProductController::class, 'outputProduct'])->name('admin.output.product');
         /* Route::resource('admin/stocks', StockController::class); */
 
         Route::get('/order', [OrderController::class, 'orderIndex'])->name('admin.order.index');

@@ -30,7 +30,7 @@ class OrderController extends Controller
 
         $ordergroups = Ordergroup::with('orders')
         ->where('user_id', '=', Auth::user()->id)
-        ->where('close', '=', '0')
+        ->where('close', '=', 0)
         ->get();
 
         $products = Product::all();
@@ -210,7 +210,7 @@ class OrderController extends Controller
         ->get();
 
         $ordergroups = Ordergroup::with('orders')
-        ->where('close', '=', '0')
+        ->where('close', '=', 0)
         ->get();
 
         $orderss = Order::with('ordergroups')

@@ -10,10 +10,14 @@
                 <div class="modal-body">
                     <div class="table-responsive bs-example widget-shadow">
                         @foreach ($ordergroup->orders as $order)
-                        N°: <strong>{{ $order->id }} </strong>
-                        <a href="{{ route('order.edit', $order->id) }}">
-                            <i class="fa fa-pencil" title="Modifier"></i>
-                        </a>
+                        <span>N°: <strong>{{ $order->id }} </strong></span>
+
+                        @if ($qte_prod[$order->product_id] < $order->qte && $order->execute == "1" && $order->approve == "1")
+                            <span class="badge badge-success">Approuvée | Exécutée</span>
+                        @else
+                            <a href="{{ route('order.edit', $order->id) }}">
+                                <i class="fa fa-pencil" title="Modifier"></i>
+                            </a>
                             <a onclick="return confirm('Êtes vous sûr de vouloir supprimer cette ligne?')" href="{{ route('admin.lineOrder.destroy', $order->id)}}">
                                     <i class="fa fa-trash-o" style="color:red;" title="Supprimer"></i>
                             </a>
@@ -21,18 +25,29 @@
                                 @csrf
                                 {{ method_field('delete') }}
                             </form>
+                        @endif
 
-                        <span title="Qté: {{$qte_prod[$order->product_id]}}">Nom du Produit:</span> <span title="Qté: {{$qte_prod[$order->product_id]}}">{{ $products[$order->product_id] }}</span></br>
+
+
+                            </br><span data-toggle="tooltip" data-placement="right" title="" data-original-title="Stock: {{$qte_prod[$order->product_id]}}">Nom du Produit: {{ $products[$order->product_id] }}</span></br>
+                                <script>$(function () {
+                                    $('[data-toggle="tooltip"]').tooltip()
+                                    })
+                                </script>
+
                         <span>Quantité: {{ $order->qte }}</span> </br>
                         Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
 
-                        @if ($qte_prod[$order->product_id] < $order->qte)
-                            <span style="color:red;"> Impossible d'approuver cette commande, car sa quantité dépasse le stock initial. </br> Modifier sa quantité pour l'approuver.</span>
+                        @if ($qte_prod[$order->product_id] < $order->qte && $order->execute == "1" && $order->approve == "1")
+                                    </br><span style="color:red; font-family:italic;"> Rupture de stock après l'exécution de cette commande, pensez à le renouveller!</span>
+                            @elseif ($qte_prod[$order->product_id] < $order->qte)
+                                </br><span style="color:red; font-family:italic;"> Impossible d'approuver cette commande, car sa quantité dépasse le stock initial. Modifier la quantité du stock ou de cette commande pour l'approuver.</span>
+
 
                             @elseif ($order->approve == "0")
                                                     Status:
                                                             <a href="{{ route('admin.orders.Oneapprove', $order->id) }}">
-                                                                <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i>Non Approuvée</span>
+                                                                <span class="label label-default" title="Approuver cette commande"><i class="fa fa-check-circle"></i> Non Approuvée</span>
                                                             </a>
                                                             @else
                                                                 @if ($order->execute == "1")
@@ -41,7 +56,7 @@
                                                                     </span>
                                                                 @else
                                                                     <a href="{{ route('admin.orders.Onedesapprove', $order->id) }}">
-                                                                        <span class="badge badge-success" title="Désapprouver cette commande">Approuvée</span></a>
+                                                                        <span class="badge badge-success" title="Désapprouver cette commande"> Approuvée</span></a>
                                                                     </a>
                                                                 @endif @endif</br></br>
                                                     @endforeach
