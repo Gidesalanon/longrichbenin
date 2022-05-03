@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Nouvelle entreprise :: Admin</title>
+<title>Longrich Bénin | Liste des catégories :: Manager</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -51,33 +51,40 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- main content start-->
 		<div id="page-wrapper">
 			<div class="main-page">
-				<div class="forms">
-					<h3 class="title1">Nouvelle Entreprise</h3>
-					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+				<div class="tables">
+					<h3 class="title1">Nos Catégories</h3>
+					<div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
-						<div class="form-title">
-							<h4>Créer une nouvelle entreprise:</h4>
-						</div>
-						<div class="form-body">
-						 <form method="POST" action="{{ route('enterprises.store')}}">
-                            @csrf
+						<h4>Les catégories de produits</h4>
+						<table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Libellé</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($categories as $category)
+                                <tr>
+                                    <th scope="row">{{ $category['id'] }}</th>
+                                    <td>{{ $category['libelle'] }}</td>
+                                    <td>{{ $category['description'] }}</td>
+                                </tr>
+                            </tbody>
+                            @empty
+                                <tr>
+                                    <td colspan="4">Aucune Catégorie ajoutée pour le moment.</td>
+                                </tr>
+                            @endforelse
+                        </table>
 
-                            <div class="form-group">
-                                <label for="">Désignation</label>
-                                <input type="text" class="form-control" id="designation" name="designation" placeholder="Désignation" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Adresse</label>
-                                <input type="text" class="form-control" id="adresse" name="adresse" placeholder="adresse">
-                            </div>
-                            <button type="submit" class="btn btn-default">Créer</button>
-                        </form>
-						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -91,12 +98,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 				showLeftPush = document.getElementById( 'showLeftPush' ),
 				body = document.body;
+
 			showLeftPush.onclick = function() {
 				classie.toggle( this, 'active' );
 				classie.toggle( body, 'cbp-spmenu-push-toright' );
 				classie.toggle( menuLeft, 'cbp-spmenu-open' );
 				disableOther( 'showLeftPush' );
 			};
+
 			function disableOther( button ) {
 				if( button !== 'showLeftPush' ) {
 					classie.toggle( showLeftPush, 'disabled' );
@@ -108,6 +117,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<script src="{{asset('js_admin/scripts.js')}}"></script>
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
-   <script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+	<script src="{{asset('js_admin/bootstrap.js')}}"> </script>
 </body>
 </html>

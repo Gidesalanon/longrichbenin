@@ -89,7 +89,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="clearfix"> </div>
 
-                    
+
 				</div>
 
                 <div class="row-one">
@@ -125,9 +125,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="clearfix"> </div>
 
-                    
+
 				</div>
-                
+
 				<div class="charts">
 					<div class="col-md-4 charts-grids widget">
 						<h4 class="title">Bar Chart Example</h4>

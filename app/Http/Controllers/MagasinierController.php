@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\Ordergroup;
 use App\Models\Order;
 use App\Models\OutputProduct;
+use App\Models\Category;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class MagasinierController extends Controller
@@ -84,6 +86,32 @@ class MagasinierController extends Controller
 
         toastr()->success('Commande annulée avec succès', 'Succès');
         return redirect()->route('order.approved.index');
+    }
+
+    public function categories()
+    {
+        $categories = Category::all()->toArray();
+
+        return view('magasinier.category', compact('categories'));
+    }
+
+    public function products()
+    {
+        $stocks = Stock::with('products')
+        ->where('id', '>', 1)
+        ->get();
+        $p = Product::all();
+        $count_product = count($p);
+
+        $categories = Category::all();
+
+        $products = DB::table('products')
+        ->join('categories', 'categories.id', 'products.categorie_id')
+        ->join('stocks', 'stocks.id', 'products.stock_id')
+        ->select('products.*', 'categories.libelle AS nom_categorie', 'stocks.libelle AS nom_stock')
+        ->orderBy('stock_id', 'asc')->get();
+
+        return view('magasinier.product', compact('products', 'stocks', 'categories', 'count_product', 'p'));
     }
 
     /**

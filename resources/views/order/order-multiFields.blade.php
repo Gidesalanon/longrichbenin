@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
@@ -124,7 +121,6 @@ td{
             });
         </script>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script>
 			$(document).ready(function(){
 				$('#menu').on('change', function(){

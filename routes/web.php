@@ -33,6 +33,8 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
+        Route::get('category-list', [MagasinierController::class, 'categories'])->name('category.index');
+        Route::get('product-list', [MagasinierController::class, 'products'])->name('product.index');
         Route::resource('/orders', OrderController::class);
         Route::get('/order/situation', [OrderController::class, 'orderSituation'])->name('orders.situation');
         Route::resource('sellings', SellingController::class);
