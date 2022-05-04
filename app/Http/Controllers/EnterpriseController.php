@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Enterprise;
 use App\Models\Stock;
+use App\Models\Selling;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class EnterpriseController extends Controller
@@ -21,7 +23,11 @@ class EnterpriseController extends Controller
         ->select('enterprises.*', 'stocks.libelle AS nom_stock')
         ->where('enterprises.id', '>', 1)
         ->get();
-        return view('enterprise.index', compact('enterprises'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('enterprise.index', compact('enterprises', 'count_ecart'));
     }
 
     /**
@@ -35,7 +41,11 @@ class EnterpriseController extends Controller
         $stocks = Stock::all()
         ->where('id', '>', 1)
         ->toArray();
-        return view('enterprise.create', compact('enterprises', 'stocks'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('enterprise.create', compact('enterprises', 'stocks', 'count_ecart'));
     }
 
     /**
@@ -56,7 +66,7 @@ class EnterpriseController extends Controller
             'designation' => $request->designation,
             'adresse' => $request->adresse,
         ]);
-        return redirect()->back()->withMessage('Entreprise enregistrée avec succès.');
+        return redirect()->route('enterprises.index')->withMessage('Entreprise enregistrée avec succès.');
     }
 
     /**

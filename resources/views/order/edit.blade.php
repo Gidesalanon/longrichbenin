@@ -67,7 +67,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             @csrf
                             {{ method_field('PATCH') }}
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Nom du Produit</label>
+                                <label for="exampleInputPassword1">Produit</label>
                                     <select name="product_id" class="form-control b" disabled
                                             oninput="
                                             document.getElementById('input_p_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];

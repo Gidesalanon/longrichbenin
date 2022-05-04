@@ -20,7 +20,11 @@ class UserController extends Controller
 
         $enterprises = Enterprise::where('id', '>', 1)->get();
 
-        return view('approvUser.users', compact('users', 'nbUserNotApproved', 'enterprises'));
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('approvUser.users', compact('users', 'nbUserNotApproved', 'enterprises', 'count_ecart'));
     }
 
     public function create(){
@@ -76,9 +80,13 @@ class UserController extends Controller
         $vente_non_declare= count(Order::whereDay('created_at', today()->day)->where('status', '=', 0)->where('approve', '=', 1)->where('execute', '=', 1)->get());
         $vente_declare = count(Order::whereDay('created_at', today()->day)->where('status', '=', 1)->where('approve', '=', 1)->where('execute', '=', 1)->get());
 
+         $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
         return view('admin', ['sellings' => $sellings],compact('non_execute', 'execute',
                                              'non_approve', 'approve',
                                              'vente_non_declare', 'vente_declare',
-                                             'users', 'products'));
+                                             'users', 'products', 'count_ecart'));
     }
 }

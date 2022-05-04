@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Liste de produits :: Manager</title>
+<title>Longrich Bénin | Liste des écarts :: Utilisateur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -33,7 +33,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
 
-<link rel="stylesheet" href="{{asset('stylebutton.css')}}">
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -46,62 +45,66 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
-
+            <span class="col-md-10">
+                <h3 class="title1">Mes Écarts</h3>
+            </span>
+            <span class="col-md-2" style="text-align: right;">
+                <a href="{{route('sellings.index')}}" class="nav-badge-btm" title="Voir mes ventes">
+                    <img src="{{asset('arg.png')}}" style="box-shadow: 5px 5px 5px gray; margin:0 5px; background-color: transparent; width: 40px; border-radius:20%"/>
+                </a>
+            </span>
 			<div class="main-page">
-				<div class="tables">
-				        <h3 class="title1">Nos Produits/Stocks</h3>
-                    @if ($count_product == 0)
-                        @include('product.ElseFile')
+                <div class="tables">
+                    @if (session('message'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('message') }}
+                            </div>
                     @endif
-                    @forelse($stocks as $stock)
-					<div class="table-responsive bs-example widget-shadow" id="table">
-                        <span class="col-md-3">
-                            <h4>Liste de nos produits</h4>
-                        </span>
-						<table class="table table-bordered">
-                            <thead>
+					<div class="table-responsive bs-example widget-shadow" style="box-shadow: 5px 10px 10px gray; width: 100%;">
+						<h4> Payer vos Écarts ici</h4>
+                            <table class="table table-bordered">
+                            <thead style="box-shadow: 5px 5px 5px gray; ">
                                 <tr>
-                                    <th>#</th>
-                                    <th>Nom</th>
-                                    <th>PV</th>
-                                    <th>Prix Partenaire</th>
-                                    <th>Prix Client</th>
-                                    @if (@if (Auth::user()->is_admin == 2))
-                                        <th>Quantité</th>
-                                    @else
-                                    @endif
-                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Montant</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($stock->products as $product)
+                                @forelse ($sellings as $selling)
                                 <tr>
-                                    <th scope="row">{{ $product->id }}</th>
-                                    <td>{{ $product->nomprod }}</td>
-                                    <td>{{ $product->nbpv }}</td>
-                                    <td class="myDIV">{{ $product->prixpartenaire }}</td>
-                                    <td class="myDIV">{{ $product->prixclient }}</td>
-                                    @if (@if (Auth::user()->is_admin == 2))
-                                        <td>{{ $product->qte }}</td>
-                                    @else
-                                    @endif
+                                    <td>{{ \Carbon\Carbon::parse($selling->created_at)->setTimezone('Africa/Porto-Novo')->format('d/m/y à H:i:s')}}</td>
+                                    <td class="myDIV">{{ $selling->ecart }}</td>
 
-                                    <td>{{ $product->status }}</td>
+                                    <form method="PUT" action="{{ route('ecart.paiement', $selling->id)}}" onsubmit="
+                                    event.preventDefault();
+                                    openKkiapayWidget({
+                                                amount: {{$selling->ecart}},
+                                                sandbox:true,
+                                                key:'3b2969e02c7f11ea86dcdfac38167264'});
+                                                   addSuccessListener(response => {
+                                                        this.submit();
+                                                    });">
+                                            @csrf
+                                            {{ method_field('PATCH') }}
+
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                    <button href="#" type="submit" class="nav-badge-btm" style="border-color:transparent; background-color:transparent" title="Payer">
+                                                        <img src="{{asset('icons8-argent.gif')}}" style="width:40px; height:30px;">
+                                                    </button>
+                                            </div>
+                                        </td>
+                                    </form>
                                 </tr>
                             </tbody>
                             @empty
-                                <style>
-                                        #table-id{{$stock->id}} {
-                                            visibility:hidden;
-                                            margin-top:-165px;
-                                        }
-                                    </style>
+                                <tr>
+                                    <td colspan="4">Vous ne restez devoir aucun écart.</td>
+                                </tr>
                             @endforelse
                         </table>
-
 					</div>
-                    @empty
-                    @endforelse
 				</div>
 			</div>
 		</div>
@@ -144,5 +147,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
 	<script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+    <script src="https://cdn.kkiapay.me/k.js"></script>
 </body>
 </html>

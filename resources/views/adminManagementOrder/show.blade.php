@@ -29,7 +29,7 @@
 
 
 
-                            </br><span data-toggle="tooltip" data-placement="right" title="" data-original-title="Stock: {{$qte_prod[$order->product_id]}}">Nom du Produit: {{ $products[$order->product_id] }}</span></br>
+                            </br><span data-toggle="tooltip" data-placement="right" title="" data-original-title="Stock: {{$qte_prod[$order->product_id]}}">Produit: {{ $products[$order->product_id] }}</span></br>
                                 <script>$(function () {
                                     $('[data-toggle="tooltip"]').tooltip()
                                     })
@@ -37,12 +37,11 @@
 
                         <span>Quantité: {{ $order->qte }}</span> </br>
                         Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
-
+                        Status:
                         @if ($qte_prod[$order->product_id] < $order->qte && $order->execute == "1" && $order->approve == "1")
                                     </br><span style="color:red; font-family:italic;"> Rupture de stock après l'exécution de cette commande, pensez à le renouveller!</span>
                             @elseif ($qte_prod[$order->product_id] < $order->qte)
                                 </br><span style="color:red; font-family:italic;"> Impossible d'approuver cette commande, car sa quantité dépasse le stock initial. Modifier la quantité du stock ou de cette commande pour l'approuver.</span>
-
 
                             @elseif ($order->approve == "0")
                                                     Status:
@@ -56,7 +55,7 @@
                                                                     </span>
                                                                 @else
                                                                     <a href="{{ route('admin.orders.Onedesapprove', $order->id) }}">
-                                                                        <span class="badge badge-success" title="Désapprouver cette commande"> Approuvée</span></a>
+                                                                        <span class="badge badge-success" title="Désapprouver cette commande"><i class="fa fa-check-circle"></i> Approuvée</span></a>
                                                                     </a>
                                                                 @endif @endif</br></br>
                                                     @endforeach

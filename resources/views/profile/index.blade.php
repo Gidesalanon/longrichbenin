@@ -111,7 +111,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     </li>
                                     <li>
                                         <h4>{{$sum_benefice}}</h4>
-                                        <h5>Bénéfices</h5>
+                                        <h5>Commission</h5>
                                     </li>
                                 </ul>
                             </div>

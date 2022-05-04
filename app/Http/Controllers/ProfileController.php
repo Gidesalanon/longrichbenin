@@ -24,7 +24,13 @@ class ProfileController extends Controller
         $count_sellings = count(Selling::all()->where('user_id', '=', Auth::user()->id));
         $sum_pv= Selling::where('user_id', Auth::user()->id)->sum('pv');
         $sum_benefice= Selling::where('user_id', Auth::user()->id)->where('ecart', 0)->sum('benefice');
-        return view('profile.index', compact('profiles', 'count_sellings','sum_pv', 'sum_benefice'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('profile.index', compact('profiles', 'count_sellings','sum_pv',
+        'sum_benefice', 'count_ecart'));
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Ordergroup;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class SellingController extends Controller
 {
     /**
@@ -31,7 +32,12 @@ class SellingController extends Controller
                 foreach($p as $product) :
                     $products[$product->id] = $product->nomprod;
                 endforeach;
-        return view('selling.index', compact('sellings', 'orders', 'products'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('selling.index', compact('sellings', 'orders',
+         'products', 'count_ecart'));
     }
 
     /**
@@ -90,6 +96,47 @@ class SellingController extends Controller
 
         toastr()->success('Écart payé avec succès', 'Succès');
         return redirect()->route('sellings.index');
+    }
+
+    public function ecart()
+    {
+        $sellings = Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0);
+
+        $count_ecart = count($sellings);
+        return view('selling.ecart', compact('sellings', 'count_ecart'));
+    }
+
+    public function ecartPaiement(Request $request, $id)
+    {
+         $selling = Selling::findOrFail($id);
+            $selling->update([
+                'ecart' => 0,
+            ]);
+
+        toastr()->success('Cet écart a été payé avec succès', 'Succès');
+        return redirect()->route('selling.ecart');
+    }
+
+    //tous les écarts afficher sur l'espace admin
+    public function ecartAll()
+    {
+        $sellings = Selling::Where('ecart', '>', 0)
+            ->select('sellings.user_id')
+            ->selectRaw("SUM(ecart) as total_ecart")
+            ->groupBy('user_id')
+            ->get();
+
+        $users = User::with('sellings')
+        ->get();
+        $user_nom = User::all();
+        foreach($user_nom as $user) :
+            $users[$user->id] = $user->nom.' '.$user->prenom;
+        endforeach;
+
+        $count_ecart= count($sellings);
+        return view('selling.ecart_all', compact('sellings', 'count_ecart', 'users'));
     }
 
     /**

@@ -23,7 +23,7 @@
                             {{ method_field('delete') }}
                         </form></br>
 
-                        Nom du Produit: {{ $products[$order->product_id] }}</br>
+                        Produit: {{ $products[$order->product_id] }}</br>
                         Quantité: {{ $order->qte }}</br>
                         Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
                         Status:
@@ -32,8 +32,8 @@
                                 <i class="fa fa-check-circle"></i>En attente d'Approbation...
                             </span>
                         @else
-                            <span class="badge badge-success" title="Désapprouver cette commande">
-                                Approuvée
+                            <span class="badge badge-success">
+                                <i class="fa fa-check-circle"></i> Approuvée
                             </span>
                         @endif
                             </br></br>

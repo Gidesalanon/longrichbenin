@@ -3,7 +3,7 @@
         <table class="table table-bordered">
             <thead style="box-shadow: 5px 5px 5px gray;">
                 <tr>
-                    <th>Nom du Produit</th>
+                    <th>Produit</th>
                     <th>Quantité</th>
                     <th>Prix</th>
                     <th>Action</th>

@@ -59,7 +59,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {{ session('message') }}
                             </div>
                         @endif
-						<h4>Les catégories de produits</h4>
+
+                        <span class="col-md-6">
+                            <h4>Nos catégories de produits</h4>
+                        </span>
+                        <span class="col-md-6" style="text-align: right;">
+                            <a href="{{ route('categories.create') }}" class="nav-badge-btm">
+                                <button type="submit" class="btn btn-info" style="box-shadow: 5px 5px 5px gray; margin:0 5px;">Nouvelle catégorie <i class="fa fa-plus-circle"></i></button>
+                            </a>
+                        </span>
 						<table class="table table-bordered">
                             <thead>
                                 <tr>

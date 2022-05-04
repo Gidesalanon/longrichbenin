@@ -49,7 +49,12 @@ class OrderController extends Controller
             $produits[$produit->id] = $produit->prixclient;
         endforeach;
 
-        return view('order.index', compact('orders', 'products', 'ordergroups', 'users', 'count', 'produits'));
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('order.index', compact('orders', 'products', 'ordergroups',
+        'users', 'count', 'produits', 'count_ecart'));
     }
     /**
      * Show the form for creating a new resource.
@@ -66,7 +71,11 @@ class OrderController extends Controller
 
         $products = Product::all()->where('status', '=', 'Actif')
         ->toArray();
-        return view('order.create', compact( 'products', 'produits'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('order.create', compact( 'products', 'produits', 'count_ecart'));
     }
 
     /**
@@ -102,7 +111,7 @@ class OrderController extends Controller
             Order::create($value);
         }
         toastr()->success('Votre Commande a été enregistrée avec succès, veuillez attendre la validation de l\'administrateur.', 'Succès');
-        return back();
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -128,7 +137,11 @@ class OrderController extends Controller
         ->toArray();
 
         $order = Order::find($id);
-        return view('order.edit', compact('order', 'products'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('order.edit', compact('order', 'products', 'count_ecart'));
     }
 
     public function update(Request $request, $id)
@@ -192,7 +205,12 @@ class OrderController extends Controller
             $produits[$produit->id] = $produit->prixclient;
         endforeach;
 
-        return view('order.order-situation', compact('orders', 'products', 'ordergroups', 'users', 'produits'));
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('order.order-situation', compact('orders', 'products',
+        'ordergroups', 'users', 'produits', 'count_ecart'));
     }
 
     public function destrLineOrder($id)
@@ -239,7 +257,13 @@ class OrderController extends Controller
             $qte_prod[$produit->id] = $produit->qte;
         endforeach;
 
-        return view('adminManagementOrder.orderApprove', compact('orders', 'products', 'ordergroups', 'users', 'count', 'orderss', 'count_order', 'qte_prod'));
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('adminManagementOrder.orderApprove', compact('orders', 'products',
+        'ordergroups', 'users', 'count',
+        'orderss', 'count_order', 'qte_prod', 'count_ecart'));
 
     }
 
@@ -283,7 +307,11 @@ class OrderController extends Controller
     {
         $products = Product::all()->toArray();
         $order = Order::find($id);
-        return view('adminManagementOrder.edit', compact('order', 'products'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('adminManagementOrder.edit', compact('order', 'products', 'count_ecart'));
     }
 
     public function updateOrder(Request $request, $id)

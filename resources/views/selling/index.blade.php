@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Liste des Ecarts :: Utilisateur</title>
+<title>Longrich Bénin | Liste des ventes :: Utilisateur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -49,7 +49,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                 <h3 class="title1">Mes Ventes</h3>
             </span>
             <span class="col-md-2" style="text-align: right;">
-                <a href="{{route('orders.situation')}}" class="nav-badge-btm" title="Payer mes ventes">
+                <a href="{{route('orders.situation')}}" class="nav-badge-btm" title="Régler mes ventes">
                     <img src="{{asset('arg.png')}}" style="box-shadow: 5px 5px 5px gray; margin:0 5px; background-color: transparent; width: 40px; border-radius:20%"/>
                 </a>
             </span>
@@ -119,12 +119,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </tr>
                             </tbody>
                             @empty
-                                <style>
-                                        #table-id {
-                                            visibility:hidden;
-                                            margin-top:-165px;
-                                        }
-                                    </style>
+                                <tr>
+                                    <td colspan="4">Vous n'aviez encore éffectué aucune vente pour le moment.</td>
+                                </tr>
                             @endforelse
                         </table>
 					</div>

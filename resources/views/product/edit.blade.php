@@ -67,8 +67,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             @csrf
                             {{ method_field('PATCH') }}
                             <div class="form-group">
-                                <label for="">Nom du Produit</label>
-                                <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper le nom du produit" required value="{{ $product['nomprod']}}">
+                                <label for="">Produit</label>
+                                <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper la désignation du produit" required value="{{ $product['nomprod']}}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Stock</label>

@@ -35,12 +35,16 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('category-list', [MagasinierController::class, 'categories'])->name('category.index');
         Route::get('product-list', [MagasinierController::class, 'products'])->name('product.index');
+        Route::get('statistic', [MagasinierController::class, 'statistics'])->name('statistic');
         Route::resource('/orders', OrderController::class);
         Route::get('/order/situation', [OrderController::class, 'orderSituation'])->name('orders.situation');
         Route::resource('sellings', SellingController::class);
         Route::get('/selling/{id}/ecart', [SellingController::class, 'ecartPaie'])->name('ecart.paie');
-        Route::resource('profiles', ProfileController::class);
 
+        Route::get('selling/ecart', [SellingController::class, 'ecart'])->name('selling.ecart');
+        Route::get('ecart/{id}/paiement', [SellingController::class, 'ecartPaiement'])->name('ecart.paiement');
+
+        Route::resource('profiles', ProfileController::class);
         Route::get('profile/personnal/details', [ProfileController::class, 'editDetail'])->name('details.edit');
         Route::patch('profile/personnal/details', [ProfileController::class, 'updateDetail'])->name('details.update');
 
@@ -48,19 +52,20 @@ Route::group(['middleware' => ['auth','isUser']], function () {
         Route::patch('profile/password/edit', [ProfileController::class, 'updatePassword'])->name('pwd.update');
 
         Route::middleware(['admin'])->group(function () {
-        Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');
+            Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');
 
-        Route::resource('users', UserController::class);
-        Route::resource('usermanagements', UserManagementController::class);
-        Route::get('/usermanagement/network', [UserManagementController::class, 'network'])->name('admin.users.network');
-        Route::get('/usermanagements/{user_id}/disable', [UserManagementController::class, 'isNotBan'])->name('admin.users.disable');
-        Route::get('/usermanagements/{user_id}/enable', [UserManagementController::class, 'isBan'])->name('admin.users.enable');
-        Route::resource('admin/categories', CategoryController::class);
-        Route::resource('admin/enterprises', EnterpriseController::class);
-        Route::resource('admin/products', ProductController::class);
-        Route::patch('admin/product/{id}', [ProductController::class, 'addStock'])->name('product.addstock');
-        Route::get('/input/product/', [ProductController::class, 'inputProduct'])->name('admin.input.product');
-        Route::get('/output/product/', [ProductController::class, 'outputProduct'])->name('admin.output.product');
+            Route::resource('users', UserController::class);
+            Route::resource('usermanagements', UserManagementController::class);
+            Route::get('/usermanagement/network', [UserManagementController::class, 'network'])->name('admin.users.network');
+            Route::get('/usermanagements/{user_id}/disable', [UserManagementController::class, 'isNotBan'])->name('admin.users.disable');
+            Route::get('/usermanagements/{user_id}/enable', [UserManagementController::class, 'isBan'])->name('admin.users.enable');
+            Route::resource('admin/categories', CategoryController::class);
+            Route::resource('admin/enterprises', EnterpriseController::class);
+            Route::resource('admin/products', ProductController::class);
+            Route::patch('admin/product/{id}', [ProductController::class, 'addStock'])->name('product.addstock');
+            Route::get('/input/product/', [ProductController::class, 'inputProduct'])->name('admin.input.product');
+            Route::get('/output/product/', [ProductController::class, 'outputProduct'])->name('admin.output.product');
+            Route::get('user/all/ecart', [SellingController::class, 'ecartAll'])->name('user.all.ecart');
         /* Route::resource('admin/stocks', StockController::class); */
 
         Route::get('/order', [OrderController::class, 'orderIndex'])->name('admin.order.index');

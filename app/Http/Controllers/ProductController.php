@@ -10,6 +10,7 @@ use App\Models\Stock;
 use App\Models\Ordergroup;
 use App\Models\InputProduct;
 use App\Models\OutputProduct;
+use App\Models\Selling;
 use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
@@ -34,7 +35,13 @@ class ProductController extends Controller
         ->select('products.*', 'categories.libelle AS nom_categorie', 'stocks.libelle AS nom_stock')
         ->orderBy('stock_id', 'asc')->get();
 
-        return view('product.index', compact('products', 'stocks', 'categories', 'count_product', 'p'));
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('product.index', compact('products',
+        'stocks', 'categories',
+        'count_product', 'p', 'count_ecart'));
     }
 
     /**
@@ -49,7 +56,12 @@ class ProductController extends Controller
         $stocks = Stock::all()
         ->where('id', '>', 1)
         ->toArray();
-        return view('product.create', compact( 'categories', 'stocks', 'products'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('product.create', compact( 'categories', 'stocks',
+         'products', 'count_ecart'));
     }
 
     /**
@@ -85,7 +97,7 @@ class ProductController extends Controller
 
         ]);
         toastr()->success('Produit enregistré avec succès.', 'PRODUIT');
-        return redirect()->back();
+        return redirect()->route('products.index');
 
     }
 
@@ -98,7 +110,11 @@ class ProductController extends Controller
     public function show($id)
     {
         $product_details = Product::find($id);
-        return view('product.edit',compact('product_details'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('product.edit',compact('product_details', 'count_ecart'));
     }
 
     /**
@@ -114,7 +130,11 @@ class ProductController extends Controller
         ->where('id', '>', 1)
         ->toArray();
         $product = Product::findOrFail($product->id);
-        return view('product.edit', compact('product', 'categories', 'stocks'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('product.edit', compact('product', 'categories', 'stocks', 'count_ecart'));
     }
 
     /**
@@ -198,7 +218,11 @@ class ProductController extends Controller
                     $products[$product->id] = $product->nomprod;
                 endforeach;
 
-        return view('product.inputProduct', compact( 'inputs', 'products'));
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('product.inputProduct', compact( 'inputs', 'products', 'count_ecart'));
     }
 
     //afficher les sorties en stock dans la vue outputProduct
@@ -212,6 +236,10 @@ class ProductController extends Controller
                     $products[$product->id] = $product->nomprod;
                 endforeach;
 
-        return view('product.outputProduct', compact( 'outputs', 'products'));
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('product.outputProduct', compact( 'outputs', 'products', 'count_ecart'));
     }
 }

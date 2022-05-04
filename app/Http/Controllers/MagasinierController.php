@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\OutputProduct;
 use App\Models\Category;
 use App\Models\Stock;
+use App\Models\Selling;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class MagasinierController extends Controller
@@ -21,7 +22,11 @@ class MagasinierController extends Controller
      */
     public function manager()
     {
-        return view('magasinier.index');
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('magasinier.index', compact('count_ecart'));
     }
 
     public function order(){
@@ -54,7 +59,13 @@ class MagasinierController extends Controller
             $qte_prod[$produit->id] = $produit->qte;
         endforeach;
 
-        return view('magasinier.order.orderApprove', compact( 'products', 'ordergroups', 'users', 'qte_prod'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('magasinier.order.orderApprove', compact( 'products', 'ordergroups',
+        'users', 'qte_prod', 'count_ecart'));
     }
 
     //exécuter une seule ligne order
@@ -112,6 +123,11 @@ class MagasinierController extends Controller
         ->orderBy('stock_id', 'asc')->get();
 
         return view('magasinier.product', compact('products', 'stocks', 'categories', 'count_product', 'p'));
+    }
+
+    public function statistics()
+    {
+
     }
 
     /**

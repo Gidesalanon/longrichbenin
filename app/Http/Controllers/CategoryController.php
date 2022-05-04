@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-
+use App\Models\Selling;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class CategoryController extends Controller
 {
     /**
@@ -15,8 +17,11 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all()->toArray();
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
 
-        return view('category.index', compact('categories'));
+        return view('category.index', compact('categories', 'count_ecart'));
     }
 
     /**
@@ -27,7 +32,11 @@ class CategoryController extends Controller
     public function create()
     {
         $category = Category::all()->toArray();
-        return view('category.create');
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('category.create', compact('count_ecart'));
     }
 
     /**
@@ -42,8 +51,7 @@ class CategoryController extends Controller
             'libelle' => $request->libelle,
             'description' => $request->description,
         ]);
-
-        return redirect()->back()->withMessage('Catégorie enregistrée avec succès.');
+        return redirect()->route('categories.index')->withMessage('Catégorie enregistrée avec succès.');
 
     }
 
@@ -67,7 +75,11 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $category = Category::findOrFail($category->id);
-        return view('category.edit', compact('category'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('category.edit', compact('category', 'count_ecart'));
     }
 
     /**

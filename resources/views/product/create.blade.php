@@ -46,22 +46,24 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="forms">
-					<h3 class="title1">Créer ou Ajouter du Produit</h3>
+					    <h3 class="title1">Ajouter un Nouveau Produit</h3>
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
-						<div class="form-title">
-							<h4>Renseigner les détails du produit:</h4>
-						</div>
+
+                            <div class="form-title">
+                                <h4>Renseigner les détails du produit:</h4>
+                            </div>
+
 						<div class="form-body">
 						 <form method="POST" action="{{ route('products.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="">Nom du Produit</label>
-                                <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper le nom du produit" required>
+                                <label for="">Désignation</label>
+                                <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper la désignation du produit" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Stock</label>

@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Point des commandes :: Utilisateur</title>
+<title>Longrich Bénin | Règlement des ventes :: Utilisateur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -66,14 +66,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 			<div class="tables">
-					<h3 class="title1">Point des Ventes</h3>
+					<h3 class="title1">Réglement des ventes</h3>
                     <div class="table-responsive bs-example widget-shadow">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <h4>Payez vos ventes
+                        <h4>Payez vos ventes ici
                         </h4>
                         <table class="table table-bordered">
                             <thead>
@@ -153,7 +153,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </tbody>
                             @empty
                                 <tr>
-                                    <td colspan="4">Aucune vente non enregistrée pour le moment.</td>
+                                    <td colspan="4">Aucune commande éffectuée pour le moment.</td>
                                 </tr>
                             @endforelse
                         </table>

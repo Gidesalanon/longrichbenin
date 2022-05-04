@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Enterprise;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Models\Selling;
+use Illuminate\Support\Facades\Auth;
 class UserManagementController extends Controller
 {
     /**
@@ -27,7 +29,12 @@ class UserManagementController extends Controller
         ->where('is_admin', '<>', 1)
         ->get();
 
-        return view('usermanagement.index', compact('users', 'enterprises', 'count_user', 'u'));
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('usermanagement.index', compact('users', 'enterprises',
+        'count_user', 'u', 'count_ecart'));
     }
 
     public function network()
@@ -35,6 +42,10 @@ class UserManagementController extends Controller
         $enterprises = Enterprise::with('users')
         ->where('id', '>', 1)
         ->get();
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
 
         $load = ['allChildren'];
 
@@ -59,10 +70,10 @@ class UserManagementController extends Controller
             $users = $users[0];
 //             echo '<pre>';
 // echo json_encode($users);die;
-            return view('usermanagement.treeview', compact('users', 'enterprises'),);
+            return view('usermanagement.treeview', compact('users', 'enterprises', 'count_ecart'));
     }
 
-    
+
     function buildTreeView($arr,$parent,$level = 0,$prelevel = -1){
         foreach($arr as $id=>$data){
             if($parent==$data['parent_id']){
@@ -78,7 +89,7 @@ class UserManagementController extends Controller
                 }
                 $level++;
                 buildTreeView($arr,$id,$level,$prelevel);
-                $level--;	
+                $level--;
             }
         }
         if($level==$prelevel){
@@ -95,7 +106,11 @@ class UserManagementController extends Controller
         $enterprises = Enterprise::all()
         ->where('id', '>', 1)
         ->toArray();
-        return view('usermanagement.create', compact('enterprises'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('usermanagement.create', compact('enterprises', 'count_ecart'));
     }
 
     /**
@@ -145,7 +160,11 @@ class UserManagementController extends Controller
         ->where('id', '>', 1)
         ->toArray();
         $user = User::findOrFail($user_id);
-        return view('usermanagement.edit', compact('user', 'enterprises'));
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+        return view('usermanagement.edit', compact('user', 'enterprises', 'count_ecart'));
     }
 
     /**

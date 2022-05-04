@@ -12,7 +12,7 @@
                         @foreach ($ordergroup->orders as $order)
                         N°: <strong>{{ $order->id }} </strong>
                         </br>
-                        Nom du Produit: {{ $products[$order->product_id] }}</br>
+                        Produit: {{ $products[$order->product_id] }}</br>
                         Quantité: {{ $order->qte }}</br>
                         Prix: <span class="myDIV">{{ $order->prix }}</span> </br>
                         Status:
