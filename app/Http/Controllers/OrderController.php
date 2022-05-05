@@ -53,8 +53,11 @@ class OrderController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('order.index', compact('orders', 'products', 'ordergroups',
-        'users', 'count', 'produits', 'count_ecart'));
+        'users', 'count', 'produits',
+            'count_ecart', 'nbUserNotApproved'));
     }
     /**
      * Show the form for creating a new resource.
@@ -75,7 +78,10 @@ class OrderController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('order.create', compact( 'products', 'produits', 'count_ecart'));
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('order.create', compact( 'products', 'produits',
+            'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -141,7 +147,10 @@ class OrderController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('order.edit', compact('order', 'products', 'count_ecart'));
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('order.edit', compact('order', 'products',
+            'count_ecart', 'nbUserNotApproved'));
     }
 
     public function update(Request $request, $id)
@@ -208,9 +217,11 @@ class OrderController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
 
         return view('order.order-situation', compact('orders', 'products',
-        'ordergroups', 'users', 'produits', 'count_ecart'));
+        'ordergroups', 'users', 'produits',
+            'count_ecart', 'nbUserNotApproved'));
     }
 
     public function destrLineOrder($id)
@@ -261,9 +272,12 @@ class OrderController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('adminManagementOrder.orderApprove', compact('orders', 'products',
         'ordergroups', 'users', 'count',
-        'orderss', 'count_order', 'qte_prod', 'count_ecart'));
+        'orderss', 'count_order', 'qte_prod',
+        'count_ecart', 'nbUserNotApproved'));
 
     }
 
@@ -311,7 +325,10 @@ class OrderController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('adminManagementOrder.edit', compact('order', 'products', 'count_ecart'));
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('adminManagementOrder.edit', compact('order', 'products',
+        'count_ecart', 'nbUserNotApproved'));
     }
 
     public function updateOrder(Request $request, $id)

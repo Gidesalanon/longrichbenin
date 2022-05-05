@@ -84,9 +84,11 @@ class UserController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('admin', ['sellings' => $sellings],compact('non_execute', 'execute',
                                              'non_approve', 'approve',
                                              'vente_non_declare', 'vente_declare',
-                                             'users', 'products', 'count_ecart'));
+                                             'users', 'products', 'count_ecart', 'nbUserNotApproved'));
     }
 }

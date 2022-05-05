@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Enterprise;
 use App\Models\Stock;
 use App\Models\Selling;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +28,10 @@ class EnterpriseController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('enterprise.index', compact('enterprises', 'count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('enterprise.index', compact('enterprises', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -45,7 +49,9 @@ class EnterpriseController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('enterprise.create', compact('enterprises', 'stocks', 'count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+        return view('enterprise.create', compact('enterprises', 'stocks', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -92,7 +98,9 @@ class EnterpriseController extends Controller
         $stocks = Stock::all()
         ->where('id', '>', 1)
         ->toArray();
-        return view('enterprise.edit', compact('enterprise', 'stocks'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+        return view('enterprise.edit', compact('enterprise', 'stocks', 'nbUserNotApproved'));
     }
 
     /**

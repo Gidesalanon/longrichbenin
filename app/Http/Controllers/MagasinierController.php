@@ -26,7 +26,8 @@ class MagasinierController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
-        return view('magasinier.index', compact('count_ecart'));
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+        return view('magasinier.index', compact('count_ecart', 'nbUserNotApproved'));
     }
 
     public function order(){
@@ -64,8 +65,10 @@ class MagasinierController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('magasinier.order.orderApprove', compact( 'products', 'ordergroups',
-        'users', 'qte_prod', 'count_ecart'));
+        'users', 'qte_prod', 'count_ecart', 'nbUserNotApproved'));
     }
 
     //exécuter une seule ligne order
@@ -102,8 +105,9 @@ class MagasinierController extends Controller
     public function categories()
     {
         $categories = Category::all()->toArray();
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
 
-        return view('magasinier.category', compact('categories'));
+        return view('magasinier.category', compact('categories', 'nbUserNotApproved'));
     }
 
     public function products()
@@ -121,8 +125,10 @@ class MagasinierController extends Controller
         ->join('stocks', 'stocks.id', 'products.stock_id')
         ->select('products.*', 'categories.libelle AS nom_categorie', 'stocks.libelle AS nom_stock')
         ->orderBy('stock_id', 'asc')->get();
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
 
-        return view('magasinier.product', compact('products', 'stocks', 'categories', 'count_product', 'p'));
+        return view('magasinier.product', compact('products', 'stocks', 'categories',
+            'count_product', 'p', 'nbUserNotApproved'));
     }
 
     public function statistics()

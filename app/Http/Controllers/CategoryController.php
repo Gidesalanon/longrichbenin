@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Selling;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class CategoryController extends Controller
@@ -21,7 +22,8 @@ class CategoryController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
-        return view('category.index', compact('categories', 'count_ecart'));
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+        return view('category.index', compact('categories', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -36,7 +38,9 @@ class CategoryController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('category.create', compact('count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+        return view('category.create', compact('count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -79,7 +83,9 @@ class CategoryController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('category.edit', compact('category', 'count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+        return view('category.edit', compact('category', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**

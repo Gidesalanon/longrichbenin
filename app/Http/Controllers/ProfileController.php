@@ -29,8 +29,10 @@ class ProfileController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('profile.index', compact('profiles', 'count_sellings','sum_pv',
-        'sum_benefice', 'count_ecart'));
+        'sum_benefice', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -80,7 +82,10 @@ class ProfileController extends Controller
     public function editDetail()
     {
         $users = User::all()->where('id', Auth::user()->id);
-        return view('profile.detail', compact('users'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('profile.detail', compact('users', 'nbUserNotApproved'));
     }
 
     public function updateDetail(Request $request)
@@ -99,7 +104,10 @@ class ProfileController extends Controller
     public function editPassword()
     {
         $users = User::all()->where('id', Auth::user()->id);
-        return view('profile.password', compact('users'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('profile.password', compact('users', 'nbUserNotApproved'));
     }
 
     public function updatePassword(Request $request)

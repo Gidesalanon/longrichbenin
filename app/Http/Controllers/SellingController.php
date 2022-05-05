@@ -36,8 +36,11 @@ class SellingController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('selling.index', compact('sellings', 'orders',
-         'products', 'count_ecart'));
+         'products', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -80,7 +83,7 @@ class SellingController extends Controller
                         'order_id'=> $order[0]->id,
                         'product_id'=> $request->product_id,
                         'benefice'=> $product->prixclient - $product->prixpartenaire,
-                        'pv'=> $product->nbpv,
+                        'pv'=> $product->nbpv * $request->qte_vendu,
                         'user_id'=> Auth::user()->id]);
 
         toastr()->success('Votre vente a été payée avec succès', 'Succès');
@@ -89,15 +92,20 @@ class SellingController extends Controller
 
     public function ecartPaie(Request $request, $id)
     {
-         $selling = Selling::findOrFail($id);
-            $selling->update([
-                'ecart' => 0,
+        $selling = Selling::findOrFail($id);
+        $product = Product::findOrFail($selling->product_id);
+        $selling->update([
+                'ca' =>$selling->ecart + $selling->ca,
+                'pv' =>$selling->srd * $product->nbpv + $selling->pv,
+                'qte_vendu' =>$selling->srd + $selling->qte_vendu,
+                'ecart' => 0
             ]);
 
         toastr()->success('Écart payé avec succès', 'Succès');
         return redirect()->route('sellings.index');
     }
 
+    //Afficher les ecarts
     public function ecart()
     {
         $sellings = Selling::all()
@@ -105,9 +113,14 @@ class SellingController extends Controller
             ->where('ecart', '>', 0);
 
         $count_ecart = count($sellings);
-        return view('selling.ecart', compact('sellings', 'count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('selling.ecart', compact('sellings',
+        'count_ecart', 'nbUserNotApproved'));
     }
 
+    //payer les ecarts sur la page ecart
     public function ecartPaiement(Request $request, $id)
     {
          $selling = Selling::findOrFail($id);
@@ -136,7 +149,10 @@ class SellingController extends Controller
         endforeach;
 
         $count_ecart= count($sellings);
-        return view('selling.ecart_all', compact('sellings', 'count_ecart', 'users'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('selling.ecart_all', compact('sellings', 'count_ecart', 'users', 'nbUserNotApproved'));
     }
 
     /**

@@ -78,7 +78,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Nom</th>
+                                    <th>Produit</th>
                                     <th>PV</th>
                                     <th>Prix Partenaire</th>
                                     <th>Prix Client</th>

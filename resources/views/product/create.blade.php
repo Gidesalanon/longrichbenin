@@ -89,15 +89,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             </div>
                             <div class="form-group">
                                 <label for="">Nombre de PV</label>
-                                <input type="text" class="form-control" id="nbpv" name="nbpv" required>
+                                <input type="number" step="any" min="1" onKeyUp="if(this.value<1){this.value='';}" class="form-control" id="nbpv" name="nbpv" required>
                             </div>
                             <div class="form-group">
                                 <label for="">Prix Partenaire</label>
-                                <input type="number" class="form-control" id="prixpartenaire" name="prixpartenaire" required>
+                                <input type="number" class="form-control" min="1" onKeyUp="if(this.value<1){this.value='';}" id="prixpartenaire" name="prixpartenaire" required>
                             </div>
                             <div class="form-group">
                                 <label for="">Prix Client</label>
-                                <input type="number" class="form-control" id="prixclient" name="prixclient" required>
+                                <input type="number" class="form-control" min="1" onKeyUp="if(this.value<1){this.value='';}"  id="prixclient" name="prixclient" required>
                             </div>
                             <div class="form-group">
                                 <label for="">Quantité</label>
@@ -127,6 +127,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
         <!--//footer-->
 	</div>
 	<!-- Classie -->
+
 		<script src="{{asset('js_admin/classie.js')}}"></script>
 		<script>
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),

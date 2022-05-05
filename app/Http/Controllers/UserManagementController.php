@@ -33,8 +33,10 @@ class UserManagementController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('usermanagement.index', compact('users', 'enterprises',
-        'count_user', 'u', 'count_ecart'));
+        'count_user', 'u', 'count_ecart', 'nbUserNotApproved'));
     }
 
     public function network()
@@ -46,6 +48,8 @@ class UserManagementController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
 
         $load = ['allChildren'];
 
@@ -70,7 +74,8 @@ class UserManagementController extends Controller
             $users = $users[0];
 //             echo '<pre>';
 // echo json_encode($users);die;
-            return view('usermanagement.treeview', compact('users', 'enterprises', 'count_ecart'));
+            return view('usermanagement.treeview', compact('users', 'enterprises',
+            'count_ecart', 'nbUserNotApproved'));
     }
 
 
@@ -110,7 +115,10 @@ class UserManagementController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('usermanagement.create', compact('enterprises', 'count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('usermanagement.create', compact('enterprises', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -164,7 +172,11 @@ class UserManagementController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('usermanagement.edit', compact('user', 'enterprises', 'count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('usermanagement.edit', compact('user', 'enterprises',
+        'count_ecart', 'nbUserNotApproved'));
     }
 
     /**

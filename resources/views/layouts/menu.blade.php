@@ -70,7 +70,7 @@
 									<a href="{{route('usermanagements.create')}}">Ajouter un Utilisateur</a>
 								</li>
                                 <li>
-									<a href="{{route('users.index')}}">Non Approuvés <span class="nav-badge">12</span> </a>
+									<a href="{{route('users.index')}}">Non Approuvés <span class="nav-badge">{{$nbUserNotApproved}}</span> </a>
 								</li>
 							</ul>
 							<!-- //nav-second-level -->
@@ -85,7 +85,7 @@
 									<a href="{{route('orders.create')}}">Ajouter une Commande</a>
 								</li>
                                 <li>
-									<a href="{{route('orders.situation')}}">Règlement des Ventes</a>
+									<a href="{{route('orders.situation')}}">Règlement de mes Ventes</a>
 								</li>
 							</ul>
 							<!-- /nav-second-level -->
@@ -109,7 +109,7 @@
 						</li>
 
                         <li>
-							<a href="{{route('orders.situation')}}"><i class="fa fa-bar-chart nav_icon"></i>Statistique</a>
+							<a href="{{route('statistics.index')}}"><i class="fa fa-bar-chart nav_icon"></i>Statistique</a>
 						</li>
 					</ul>
 					<!-- //sidebar-collapse -->
@@ -141,7 +141,7 @@
 									<a href="{{route('orders.create')}}">Ajouter une Commande</a>
 								</li>
                                 <li>
-									<a href="{{route('orders.situation')}}">Règlement des ventes</a>
+									<a href="{{route('orders.situation')}}">Règlement de mes ventes</a>
 								</li>
 							</ul>
 							<!-- /nav-second-level -->
@@ -161,7 +161,7 @@
 						</li>
 
                         <li>
-							<a href="{{route('orders.situation')}}"><i class="fa fa-bar-chart nav_icon"></i>Statistique</a>
+							<a href="{{route('statistics.index')}}"><i class="fa fa-bar-chart nav_icon"></i>Statistique</a>
 						</li>
 					</ul>
 					<!-- //sidebar-collapse -->
@@ -192,7 +192,7 @@
 									<a href="{{route('orders.create')}}">Ajouter une Commande</a>
 								</li>
                                 <li>
-									<a href="{{route('orders.situation')}}">Règlement des Ventes</a>
+									<a href="{{route('orders.situation')}}">Règlement de mes Ventes</a>
 								</li>
 							</ul>
 							<!-- /nav-second-level -->
@@ -212,7 +212,7 @@
 						</li>
 
                         <li>
-							<a href="{{route('orders.situation')}}"><i class="fa fa-bar-chart nav_icon"></i>Statistique</a>
+							<a href="{{route('statistics.index')}}"><i class="fa fa-bar-chart nav_icon"></i>Statistique</a>
 						</li>
 					</ul>
 					<!-- //sidebar-collapse -->

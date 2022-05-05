@@ -11,6 +11,7 @@ use App\Models\Ordergroup;
 use App\Models\InputProduct;
 use App\Models\OutputProduct;
 use App\Models\Selling;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
@@ -39,9 +40,12 @@ class ProductController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('product.index', compact('products',
         'stocks', 'categories',
-        'count_product', 'p', 'count_ecart'));
+        'count_product', 'p',
+        'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -60,8 +64,11 @@ class ProductController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
         return view('product.create', compact( 'categories', 'stocks',
-         'products', 'count_ecart'));
+         'products', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -114,7 +121,10 @@ class ProductController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('product.edit',compact('product_details', 'count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('product.edit',compact('product_details', 'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -134,7 +144,11 @@ class ProductController extends Controller
         $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
-        return view('product.edit', compact('product', 'categories', 'stocks', 'count_ecart'));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('product.edit', compact('product', 'categories', 'stocks',
+        'count_ecart', 'nbUserNotApproved'));
     }
 
     /**
@@ -222,7 +236,10 @@ class ProductController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
-        return view('product.inputProduct', compact( 'inputs', 'products', 'count_ecart'));
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('product.inputProduct', compact( 'inputs', 'products',
+        'count_ecart', 'nbUserNotApproved'));
     }
 
     //afficher les sorties en stock dans la vue outputProduct
@@ -240,6 +257,9 @@ class ProductController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('ecart', '>', 0));
 
-        return view('product.outputProduct', compact( 'outputs', 'products', 'count_ecart'));
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('product.outputProduct', compact( 'outputs', 'products',
+        'count_ecart', 'nbUserNotApproved'));
     }
 }

@@ -13,6 +13,7 @@ use App\http\controllers\MagasinierController;
 use App\http\controllers\SellingController;
 use App\http\controllers\ProfileController;
 use App\http\controllers\WelcomeController;
+use App\http\controllers\StatisticController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +51,7 @@ Route::group(['middleware' => ['auth','isUser']], function () {
 
         Route::get('profile/password/edit', [ProfileController::class, 'editPassword'])->name('pwd.edit');
         Route::patch('profile/password/edit', [ProfileController::class, 'updatePassword'])->name('pwd.update');
+        Route::resource('statistics', StatisticController::class);
 
         Route::middleware(['admin'])->group(function () {
             Route::get('/admin', [UserController::class, 'administration'])->name('admin.home');
