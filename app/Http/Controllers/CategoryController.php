@@ -51,6 +51,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'libelle' => 'string|required|unique:categories',
+        ]);
+
         Category::create([
             'libelle' => $request->libelle,
             'description' => $request->description,

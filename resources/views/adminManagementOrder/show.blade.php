@@ -26,9 +26,6 @@
                                 {{ method_field('delete') }}
                             </form>
                         @endif
-
-
-
                             </br><span data-toggle="tooltip" data-placement="right" title="" data-original-title="Stock: {{$qte_prod[$order->product_id]}}">Produit: {{ $products[$order->product_id] }}</span></br>
                                 <script>$(function () {
                                     $('[data-toggle="tooltip"]').tooltip()

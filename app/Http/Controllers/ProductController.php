@@ -79,6 +79,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nomprod' => 'string|required|unique:products',
+            'nbpv' => 'required',
+            'prixpartenaire' => 'integer|required',
+            'prixclient' => 'integer|required',
+            'qte' => 'integer|required',
+            'image' => 'required',
+            'status' => 'string|required',
+            'categorie_id' => 'required',
+            'stock_id' => 'required',
+        ]);
+
         $file = $request->file('image');
         if ($file != null) {
             $image = $file->getClientOriginalExtension();
@@ -93,7 +105,6 @@ class ProductController extends Controller
             'nomprod' => $request->nomprod,
             'nbpv' => $request->nbpv,
             'prixpartenaire' => $request->prixpartenaire,
-            'prixclient' => $request->prixclient,
             'prixclient' => $request->prixclient,
             'qte' => $request->qte,
             'image' => $name,
@@ -160,6 +171,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'nomprod' => 'string|required',
+            'nbpv' => 'required',
+            'prixpartenaire' => 'integer|required',
+            'prixclient' => 'integer|required',
+            'qte' => 'integer|required',
+            'image' => 'required',
+            'status' => 'string|required',
+            'categorie_id' => 'required',
+            'stock_id' => 'required',
+        ]);
+
         $file = $request->file('image');
         if ($file != null) {
             $image = $file->getClientOriginalExtension();
@@ -201,6 +224,10 @@ class ProductController extends Controller
     //ajouter du produit en stock
     public function addStock(Request $request, $id)
     {
+        $this->validate($request, [
+            'qte' => 'integer|required',
+        ]);
+
          $product = Product::findOrFail($id);
             $product->update([
                 'qte' => $request->qte + $product->qte

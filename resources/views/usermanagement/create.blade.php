@@ -63,41 +63,81 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Code</label>
-                                <input type="text" class="form-control" name="code" id="code" value="{{ old('code') }}" placeholder="Code Longrich">
+                                <input type="text" class="form-control @error('code') is-invalid @enderror" name="code" id="code" value="{{ old('code') }}" placeholder="Code Longrich">
+                                @error('code')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nom</label>
-                                <input type="text" class="form-control" name="nom" id="nom" value="{{ old('nom') }}" placeholder="Nom">
+                                <input type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" id="nom" value="{{ old('nom') }}" placeholder="Nom">
+                                @error('nom')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Prénom</label>
-                                <input type="text" class="form-control" name="prenom" id="prenom" value="{{ old('prenom') }}" placeholder="Prénom">
+                                <input type="text" class="form-control @error('prenom') is-invalid @enderror" name="prenom" id="prenom" value="{{ old('prenom') }}" placeholder="Prénom">
+                                @error('prenom')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Adresse Email</label>
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}" id="exampleInputEmail1" placeholder="Email">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" id="exampleInputEmail1" placeholder="Email">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Adresse</label>
-                                <input type="text" class="form-control" name="adresse" id="adresse" value="{{ old('adresse') }}" placeholder="Adresse">
+                                <input type="text" class="form-control @error('adresse') is-invalid @enderror" name="adresse" id="adresse" value="{{ old('adresse') }}" placeholder="Adresse">
+                                @error('adresse')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Téléphone</label>
-                                <input type="text" class="form-control" name="tel" id="tel" value="{{ old('tel') }}" placeholder="Téléphone">
+                                <input type="text" class="form-control @error('tel') is-invalid @enderror" name="tel" id="tel" value="{{ old('tel') }}" placeholder="Téléphone">
+                                @error('tel')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Affecter une Entreprise</label>
-                                <select class="form-control" name="enterprise_id" required>
+                                <select class="form-control @error('enterprise_id') is-invalid @enderror" name="enterprise_id" required>
                                     <option selected hidden></option>
                                     @foreach($enterprises as $enterprise)
                                     <option value="{{ $enterprise['id']}}">{{ $enterprise['designation']}}</option>
                                     @endforeach
                                 </select>
+                                @error('enterprise_id')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Mot de Passe</label>
-                                <input type="text" class="form-control" name="password" id="Password" placeholder="Mot de Passe" required autocomplete="new-password">
+                                <input type="text" class="form-control @error('password') is-invalid @enderror" name="password" id="Password" placeholder="Mot de Passe" required autocomplete="new-password">
                                 <input type="button" class="button" value="Génerer" onClick="randomPassword(10);" tabindex="2">
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="checkbox">
                             <button type="submit" class="btn btn-default">Créer</button>

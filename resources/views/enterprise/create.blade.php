@@ -68,7 +68,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 
                             <div class="form-group">
                                 <label for="">Désignation</label>
-                                <input type="text" class="form-control" id="designation" name="designation" placeholder="Désignation" required>
+                                <input type="text" class="form-control @error('designation') is-invalid @enderror" id="designation" name="designation" placeholder="Désignation" required>
+                                @error('designation')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="">Adresse</label>

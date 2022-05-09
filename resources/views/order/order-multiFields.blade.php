@@ -41,7 +41,7 @@ td{
                             </tr>
                             <tr>
                                 <td>
-                                    <select name="moreFields[0][product_id]" class="form-control b"
+                                    <select name="moreFields[0][product_id]" class="form-control @error('moreFields[0][product_id]') is-invalid @enderror b"
                                         oninput="
                                         document.getElementById('input_p_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
                                         document.getElementById('input_price_0').value=document.getElementById('input_qte_0').value * document.getElementById('select_product_0').value.split('|')[1];
@@ -52,6 +52,11 @@ td{
                                             <option value="{{ $product['id']}}|{{ $product['prixclient']}}">{{ $product['nomprod']}}</option>
                                             @endforeach
                                     </select>
+                                    @error('moreFields[0][product_id]')
+                                        <span class="invalid-feedback" role="alert" style="color:red;">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </td>
                                 <td>
                                     <input type="number" min="0"
@@ -59,12 +64,23 @@ td{
                                     id="input_qte_0" oninput="
                                     document.getElementById('input_p_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]"
                                     document.getElementById('input_price_0').value=this.value * document.getElementById('select_product_0').value.split('|')[1];" name="moreFields[0][qte]
-                                    " placeholder="Taper votre Quantité" class="form-control c" />
+                                    " placeholder="Taper votre Quantité" class="form-control @error('moreFields[0][qte]') is-invalid @enderror c" />
+
+                                    @error('moreFields[0][qte]')
+                                        <span class="invalid-feedback" role="alert" style="color:red;">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </td>
 
                                 <td>
-                                    <input type="hidden" id="input_price_0" name="moreFields[0][prix]" class="form-control1 a"/>
+                                    <input type="hidden" id="input_price_0" name="moreFields[0][prix]" class="form-control1 @error('moreFields[0][prix]') is-invalid @enderror a"/>
                                     <input type="number" id="input_p_0" name="rtp" class="form-control d" disabled/>
+                                    @error('moreFields[0][prix]')
+                                        <span class="invalid-feedback" role="alert" style="color:red;">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </td>
                                 <td><button type="button" name="add" id="add-btn" class="btn btn-success"><i class="fa fa-plus"></i></button></td>
 
@@ -80,7 +96,7 @@ td{
             $("#dynamicAddRemove").append(`
             <tr>
                 <td>
-                    <select name="moreFields[`+i+`][product_id]" id="select_product_`+i+`" class="form-control e"
+                    <select name="moreFields[`+i+`][product_id]" id="select_product_`+i+`" class="form-control @error('moreFields[`+i+`][product_id]') is-invalid @enderror e"
                         oninput="
                         document.getElementById('input_p_`+i+`').value=document.getElementById('input_qte_`+i+`').value * document.getElementById('select_product_`+i+`').value.split('|')[1];
                         document.getElementById('input_price_`+i+`').value=document.getElementById('input_qte_`+i+`').value * document.getElementById('select_product_`+i+`').value.split('|')[1];
@@ -91,6 +107,11 @@ td{
                             <option value="{{ $product['id']}}|{{ $product['prixclient']}}">{{ $product['nomprod']}}</option>
                         @endforeach
                     </select>
+                    @error('moreFields[`+i+`][product_id]')
+                                        <span class="invalid-feedback" role="alert" style="color:red;">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                 </td>
 
                 <td>
@@ -101,13 +122,23 @@ td{
                     "
                     name="moreFields[`+i+`][qte]"
                     placeholder="Taper votre Quantité"
-                    class="form-control f" required>
+                    class="form-control @error('moreFields[`+i+`][qte]') is-invalid @enderror f" required>
+                    @error('moreFields[`+i+`][qte]')
+                                        <span class="invalid-feedback" role="alert" style="color:red;">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                 </td>
 
                 <td>
                     <input type="hidden" style="display:none;" id="input_price_`+i+`"
-                    name="moreFields[`+i+`][prix]" class="form-control d">
+                    name="moreFields[`+i+`][prix]" class="form-control @error('moreFields[`+i+`][prix]') is-invalid @enderror d">
                     <input type="number" id="input_p_`+i+`" name="rantanplan" name="moreFields[`+i+`][prix]" class="form-control d" disabled/>
+                    @error('moreFields[`+i+`][prix]')
+                                        <span class="invalid-feedback" role="alert" style="color:red;">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                 </td>
 
                 <td>

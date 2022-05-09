@@ -38,6 +38,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
 <script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
+
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -47,11 +51,11 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<!-- //header-ends -->
 		<!-- main content start-->
 		<div id="page-wrapper">
-            <!-- <span class="col-md-10">
-                <h3 class="title1">Statistique de nos Agents Commerciaux </h3>
-            </span> -->
+            <span class="col-md-10">
+                <h3 class="title1">Ma Statistique </h3>
+            </span>
             <div class="main-page compose">
-				<div class="col-md-4 compose-left">
+				<!-- <div class="col-md-4 compose-left">
 					<div class="folder widget-shadow">
 						<ul>
 							<li class="head">Nos Agents Commerciaux </li>
@@ -66,7 +70,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 									<div class="clearfix"> </div>
 								</a>
 							</li>
-							<!-- <li><a href="#">
+							<li><a href="#">
 									<div class="chat-left">
 										<img class="img-circle" src="images/i2.png" alt="">
 										<label class="small-badge bg-green"></label>
@@ -101,15 +105,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 									</div>
 									<div class="clearfix"> </div>
 								</a>
-							</li> -->
+							</li>
 						</ul>
 					</div>
-				</div>
-				<div class="col-md-8 compose-right widget-shadow">
-					<div class="panel-primary">
-						<div class="panel-heading">
-							Statistique de l'Agent
-						</div>
+				</div> -->
+				<div class="col-md-12">
+					<div class="panel-info">
 						@include('statistic.user_data')
 					</div>
 				</div>
@@ -120,6 +121,16 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		@include('layouts.footer')
         <!--//footer-->
 	</div>
+
+    <script>
+                    let x = document.querySelectorAll(".myDIV");
+                    for (let i = 0, len = x.length; i < len; i++) {
+                    let num = Number(x[i].innerHTML)
+                        .toLocaleString('de-DE');
+                        x[i].innerHTML = num;
+                        x[i].classList.add("currSign");
+                    }
+                </script>
 
     <script src="{{asset('js_admin/classie.js')}}"></script>
 		<script>
@@ -146,5 +157,10 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
    <script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+   <script>
+		$(document).ready( function () {
+		$('#myTable').DataTable();
+	} );
+   </script>
 </body>
 </html>

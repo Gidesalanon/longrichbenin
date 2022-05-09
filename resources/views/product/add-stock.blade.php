@@ -15,7 +15,12 @@
                         <div class="form-group">
                            <input type="number"
                            onKeyUp="if(this.value<1){this.value='';}"
-                           class="form-control" min="1" id="qte" name="qte" placeholder="Tapez la Quantité svp"required>
+                           class="form-control @error('qte') is-invalid @enderror" min="1" id="qte" name="qte" placeholder="Tapez la Quantité svp" required>
+                           @error('qte')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                         </div>
                     </p>
                 </div>

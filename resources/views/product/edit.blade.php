@@ -68,41 +68,76 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             {{ method_field('PATCH') }}
                             <div class="form-group">
                                 <label for="">Produit</label>
-                                <input type="text" class="form-control" id="nomprod" name="nomprod" placeholder="Taper la désignation du produit" required value="{{ $product['nomprod']}}">
+                                <input type="text" class="form-control @error('nomprod') is-invalid @enderror" id="nomprod" name="nomprod" placeholder="Taper la désignation du produit" required value="{{ $product['nomprod']}}">
+                                @error('nomprod')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Stock</label>
-                                <select class="form-control" name="stock_id" required>
+                                <select class="form-control @error('stock_id') is-invalid @enderror" name="stock_id" required>
                                     <option selected hidden></option>
                                     @foreach($stocks as $stock)
                                         <option value="{{ $stock['id']}}">{{ $stock['libelle']}}</option>
                                     @endforeach
                                 </select>
+                                @error('stock_id')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Catégorie</label>
-                                <select class="form-control" name="categorie_id" required>
+                                <select class="form-control @error('categorie_id') is-invalid @enderror" name="categorie_id" required>
                                     <option selected hidden></option>
                                     @foreach($categories as $categorie)
                                         <option value="{{ $categorie['id']}}">{{ $categorie['libelle']}}</option>
                                     @endforeach
                                 </select>
+                                @error('categorie_id')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="">Image du Produit</label>
-                                <input type="file" class="form-control" id="image" name="image"  accept=".jpg, .png, .jpeg" required value="{{ $product['image']}}">
+                                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image"  accept=".jpg, .png, .jpeg" required value="{{ $product['image']}}">
+                                @error('image')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="">Nombre de PV</label>
-                                <input type="text" class="form-control" id="nbpv" name="nbpv" required value="{{ $product['nbpv']}}">
+                                <input type="text" class="form-control @error('nbpv') is-invalid @enderror" id="nbpv" name="nbpv" required value="{{ $product['nbpv']}}">
+                                @error('nbpv')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="">Prix Partenaire</label>
-                                <input type="number" class="form-control" id="prixpartenaire" name="prixpartenaire" required value="{{ $product['prixpartenaire']}}">
+                                <input type="number" class="form-control @error('prixpartenaire') is-invalid @enderror" id="prixpartenaire" name="prixpartenaire" required value="{{ $product['prixpartenaire']}}">
+                                @error('prixpartenaire')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="">Prix Client</label>
-                                <input type="number" class="form-control" id="prixclient" name="prixclient" required value="{{ $product['prixclient']}}">
+                                <input type="number" class="form-control @error('prixclient') is-invalid @enderror" id="prixclient" name="prixclient" required value="{{ $product['prixclient']}}">
+                                @error('prixclient')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <!-- <div class="form-group">
                                 <label for="">Quantité</label>

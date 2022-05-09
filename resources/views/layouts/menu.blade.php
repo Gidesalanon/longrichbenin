@@ -24,7 +24,7 @@
 						</li>
 
                         <li>
-							<a href="{{route('enterprises.index')}}"><i class="fa fa-building-o nav_icon"></i>Enterprises<span class="fa arrow"></span></a>
+							<a href="{{route('enterprises.index')}}"><i class="fa fa-building-o nav_icon"></i>Entreprises<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
 									<a href="{{route('enterprises.index')}}">Liste des Entreprises</a>

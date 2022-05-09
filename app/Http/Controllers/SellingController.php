@@ -82,7 +82,7 @@ class SellingController extends Controller
                         'paiement' => "1",                                //paiement=1 -> effectué, paiement=0 -> non effectué
                         'order_id'=> $order[0]->id,
                         'product_id'=> $request->product_id,
-                        'benefice'=> $product->prixclient - $product->prixpartenaire,
+                        'benefice'=> ($product->prixclient - $product->prixpartenaire) * $request->qte_vendu,
                         'pv'=> $product->nbpv * $request->qte_vendu,
                         'user_id'=> Auth::user()->id]);
 

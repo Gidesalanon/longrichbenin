@@ -129,6 +129,18 @@ class UserManagementController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'code' => 'string|required|unique:users',
+            'nom' => 'string|required',
+            'prenom' => 'string|required',
+            'email' => 'email|required|unique:users',
+            'adresse' => 'string|required',
+            'enterprise_id' => 'required',
+            'tel' => 'integer|required',
+            'status' => 'required',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
         User::create([
             'code' => $request->code,
             'nom' => $request->nom,
@@ -188,6 +200,18 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'code' => 'string|required',
+            'nom' => 'string|required',
+            'prenom' => 'string|required',
+            'email' => 'email|required',
+            'adresse' => 'string|required',
+            'enterprise_id' => 'required',
+            'tel' => 'integer|required',
+            'status' => 'required',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
         User::where('id', $id)->update([
             'code' => $request->code,
             'nom' => $request->nom,

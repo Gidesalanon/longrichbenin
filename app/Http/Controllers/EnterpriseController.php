@@ -62,6 +62,10 @@ class EnterpriseController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'designation' => 'string|required|unique:enterprises',
+        ]);
+
         $stockId = Stock::create([
             'libelle' => $request->libelle = 'stock'.'-'.$request->designation,
             'status' => $request->status = 'Encours',
@@ -94,13 +98,17 @@ class EnterpriseController extends Controller
      */
     public function edit(Enterprise $enterprise)
     {
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
         $enterprise = Enterprise::findOrFail($enterprise->id);
         $stocks = Stock::all()
         ->where('id', '>', 1)
         ->toArray();
 
         $nbUserNotApproved = User::where('isban', '>', 0)->count();
-        return view('enterprise.edit', compact('enterprise', 'stocks', 'nbUserNotApproved'));
+        return view('enterprise.edit', compact('enterprise', 'stocks', 'nbUserNotApproved', 'count_ecart'));
     }
 
     /**
@@ -112,6 +120,10 @@ class EnterpriseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'designation' => 'string|required',
+        ]);
+
         $stockId = Stock::create([
             'libelle' => $request->libelle = 'stock'.'-'.$request->designation,
             'status' => $request->status = 'Encours',

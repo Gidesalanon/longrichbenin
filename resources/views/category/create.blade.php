@@ -67,11 +67,18 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             @csrf
                             <div class="form-group">
                                 <label for="">Libellé</label>
-                                <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required>
+                                <input type="text" class="form-control @error('libelle') is-invalid @enderror" id="libelle" name="libelle" placeholder="Libellé" required>
+
+                                @error('libelle')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description</label>
-                                <textarea rows="6" id="libelle" name="description" id="description" class="form-control" placeholder="Description :" ></textarea>
+                                <textarea rows="6" id="desc" name="description" id="description" class="form-control" placeholder="Description :" ></textarea>
                             </div>
                             <button type="submit" class="btn btn-default">Créer</button>
                         </form>
