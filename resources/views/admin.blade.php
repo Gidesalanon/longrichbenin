@@ -309,10 +309,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<div class="clearfix"> </div>
 				</div>
 				<div class="row">
-					<div class="col-md-8 map widget-shadow">
+					<!-- <div class="col-md-8 map widget-shadow">
 						<h4 class="title">Visitors Map </h4>
 						<div class="map_container"><div id="vmap" style="width: 100%; height: 354px;"></div></div>
-						<!--map js-->
 						<link href="{{asset('css_admin/jqvmap.css')}}" rel='stylesheet' type='text/css' />
 						<script src="{{asset('js_admin/jquery.vmap.js')}}"></script>
 						<script src="{{asset('js_admin/jquery.vmap.sampledata.js')}}" type="text/javascript"></script>
@@ -333,9 +332,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 								});
 							});
 						</script>
-						<!-- //map js -->
-					</div>
-					<div class="col-md-4 social-media widget-shadow">
+					</div> -->
+					<!-- <div class="col-md-4 social-media widget-shadow">
 						<div class="wid-social twitter">
 							<div class="social-icon">
 								<i class="fa fa-twitter text-light icon-xlg "></i>
@@ -427,15 +425,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 						<div class="clearfix"> </div>
-					</div>
+					</div> -->
 					<div class="clearfix"> </div>
 				</div>
-				<div class="row calender widget-shadow">
+				<!-- <div class="row calender widget-shadow">
 					<h4 class="title">Calender</h4>
 					<div class="cal1">
 
 					</div>
-				</div>
+				</div> -->
 				<div class="clearfix"> </div>
 			</div>
 		</div>

@@ -50,9 +50,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			<div class="main-page">
 				<div class="tables">
 				        <h3 class="title1">Nos Produits/Stocks</h3>
-                    @if ($count_product == 0)
-                        @include('product.ElseFile')
-                    @endif
                     @forelse($stocks as $stock)
 					<div class="table-responsive bs-example widget-shadow" id="table">
                         <span class="col-md-3">
