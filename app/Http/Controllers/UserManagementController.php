@@ -137,8 +137,7 @@ class UserManagementController extends Controller
             'adresse' => 'string|required',
             'enterprise_id' => 'required',
             'tel' => 'integer|required',
-            'status' => 'required',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|min:8',
         ]);
 
         User::create([

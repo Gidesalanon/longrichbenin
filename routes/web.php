@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth','isUser']], function () {
             Route::get('/input/product/', [ProductController::class, 'inputProduct'])->name('admin.input.product');
             Route::get('/output/product/', [ProductController::class, 'outputProduct'])->name('admin.output.product');
             Route::get('user/all/ecart', [SellingController::class, 'ecartAll'])->name('user.all.ecart');
-        /* Route::resource('admin/stocks', StockController::class); */
+            Route::get('statistic/user', [StatisticController::class, 'statistic'])->name('user.all.statistic');
 
         Route::get('/order', [OrderController::class, 'orderIndex'])->name('admin.order.index');
         Route::get('/orders/{order_id}/orderApprove', [OrderController::class, 'approveOrder'])->name('admin.orders.approve');

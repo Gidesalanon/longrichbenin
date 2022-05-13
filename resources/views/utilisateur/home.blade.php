@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Accueil :: Commercial</title>
+<title>Longrich Bénin | Accueil :: Agent Commercial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -32,16 +32,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/Chart.js')}}"></script>
 <!-- //chart -->
 <!--Calender-->
-<link rel="stylesheet" href="{{asset('css_admin/clndr.css')}}" type="text/css" />
 <script src="{{asset('js_admin/underscore-min.js')}}" type="text/javascript"></script>
 <script src= "{{asset('js_admin/moment-2.2.1.js')}}" type="text/javascript"></script>
-<script src="{{asset('js_admin/clndr.js')}}" type="text/javascript"></script>
-<script src="{{asset('js_admin/site.js')}}" type="text/javascript"></script>
 <!--End Calender-->
 <!-- Metis Menu -->
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
 <script src="{{asset('js_admin/custom.js')}}"></script>
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -56,38 +54,40 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="row-one">
-					<div class="col-md-4 widget">
+					<div class="col-md-4 widget" title="Commande Non Exécutée">
 						<div class="stats-left ">
-							<h5>Today</h5>
-							<h4>Sales</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>CNE</h4>
 						</div>
 						<div class="stats-right">
-							<label> 45</label>
+							<label>{{($non_execute)}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
-					<div class="col-md-4 widget states-mdl">
+					<div class="col-md-4 widget states-mdl" title="Commande Non Approuvée">
 						<div class="stats-left">
-							<h5>Today</h5>
-							<h4>Visitors</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>CNA</h4>
 						</div>
 						<div class="stats-right">
-							<label> 80</label>
+							<label>{{$non_approve}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
-					<div class="col-md-4 widget states-last">
+					<div class="col-md-4 widget states-last" title="Vente Non Déclarée">
 						<div class="stats-left">
-							<h5>Today</h5>
-							<h4>Orders</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>VND</h4>
 						</div>
 						<div class="stats-right">
-							<label>51</label>
+							<label>{{$vente_non_declare}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
 					<div class="clearfix"> </div>
+
 				</div>
+
 				<div class="charts">
 					<div class="col-md-4 charts-grids widget">
 						<h4 class="title">Bar Chart Example</h4>
@@ -269,10 +269,9 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<div class="clearfix"> </div>
 				</div>
 				<div class="row">
-					<div class="col-md-8 map widget-shadow">
+					<!-- <div class="col-md-8 map widget-shadow">
 						<h4 class="title">Visitors Map </h4>
 						<div class="map_container"><div id="vmap" style="width: 100%; height: 354px;"></div></div>
-						<!--map js-->
 						<link href="{{asset('css_admin/jqvmap.css')}}" rel='stylesheet' type='text/css' />
 						<script src="{{asset('js_admin/jquery.vmap.js')}}"></script>
 						<script src="{{asset('js_admin/jquery.vmap.sampledata.js')}}" type="text/javascript"></script>
@@ -293,9 +292,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 								});
 							});
 						</script>
-						<!-- //map js -->
-					</div>
-					<div class="col-md-4 social-media widget-shadow">
+					</div> -->
+					<!-- <div class="col-md-4 social-media widget-shadow">
 						<div class="wid-social twitter">
 							<div class="social-icon">
 								<i class="fa fa-twitter text-light icon-xlg "></i>
@@ -387,15 +385,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 						<div class="clearfix"> </div>
-					</div>
+					</div> -->
 					<div class="clearfix"> </div>
 				</div>
-				<div class="row calender widget-shadow">
+				<!-- <div class="row calender widget-shadow">
 					<h4 class="title">Calender</h4>
 					<div class="cal1">
 
 					</div>
-				</div>
+				</div> -->
 				<div class="clearfix"> </div>
 			</div>
 		</div>
@@ -430,5 +428,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
    <script src="{{asset('js_admin/bootstrap.js')}}"> </script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js" charset="utf-8"></script>
 </body>
 </html>

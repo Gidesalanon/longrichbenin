@@ -71,14 +71,14 @@ class UserController extends Controller
                     $products[$product->id] = $product->nom.' '.$product->prenom;
                 endforeach;
 
-        $non_execute = count(Order::whereDay('created_at', today()->day)->where('execute', '=', 0)->where('approve', '=', 1)->get());
-        $execute = count(Order::whereDay('created_at', today()->day)->where('execute', '=', 1)->where('approve', '=', 1)->get());
+        $non_execute = count(Order::where('execute', '=', 0)->where('approve', '=', 1)->get());
+        /* $execute = count(Order::whereDay('created_at', today()->day)->where('execute', '=', 1)->where('approve', '=', 1)->get()); */
 
-        $non_approve = count(Order::whereDay('created_at', today()->day)->where('approve', '=', 0)->get());
-        $approve = count(Order::whereDay('created_at', today()->day)->where('approve', '=', 1)->get());
+        $non_approve = count(Order::where('approve', '=', 0)->get());
+        /* $approve = count(Order::whereDay('created_at', today()->day)->where('approve', '=', 1)->get()); */
 
-        $vente_non_declare= count(Order::whereDay('created_at', today()->day)->where('status', '=', 0)->where('approve', '=', 1)->where('execute', '=', 1)->get());
-        $vente_declare = count(Order::whereDay('created_at', today()->day)->where('status', '=', 1)->where('approve', '=', 1)->where('execute', '=', 1)->get());
+        $vente_non_declare= count(Order::where('status', '=', 0)->where('approve', '=', 1)->where('execute', '=', 1)->get());
+        /* $vente_declare = count(Order::whereDay('created_at', today()->day)->where('status', '=', 1)->where('approve', '=', 1)->where('execute', '=', 1)->get()); */
 
          $count_ecart = count(Selling::all()
             ->where('user_id', Auth::user()->id)
@@ -86,9 +86,8 @@ class UserController extends Controller
 
         $nbUserNotApproved = User::where('isban', '>', 0)->count();
 
-        return view('admin', ['sellings' => $sellings],compact('non_execute', 'execute',
-                                             'non_approve', 'approve',
-                                             'vente_non_declare', 'vente_declare',
+        return view('admin', ['sellings' => $sellings],compact('non_execute',
+                                             'non_approve', 'vente_non_declare',
                                              'users', 'products', 'count_ecart', 'nbUserNotApproved'));
     }
 }

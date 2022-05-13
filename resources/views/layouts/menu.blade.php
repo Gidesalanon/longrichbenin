@@ -107,9 +107,8 @@
                         <li>
 							<a href="{{route('user.all.ecart')}}"><i class="fa fa-file nav_icon"></i>Tous les Écarts</a>
 						</li>
-
                         <li>
-							<a href="{{route('statistics.index')}}"><i class="fa fa-bar-chart nav_icon"></i>Statistique</a>
+							<a href="{{route('user.all.statistic')}}"><i class="fa fa-bar-chart nav_icon"></i>Statistique</a>
 						</li>
 					</ul>
 					<!-- //sidebar-collapse -->
@@ -132,7 +131,7 @@
 							<a href="{{route('product.index')}}"><i class="fa fa-dropbox nav_icon"></i>Produits</a>
 						</li>
                         <li class="">
-							<a href="{{route('admin.order.index')}}"><i class="fa fa-folder nav_icon"></i>Commandes <span class="fa arrow"></span></a>
+							<a href=""><i class="fa fa-folder nav_icon"></i>Commandes <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
                                 <li>
 									<a href="{{route('order.approved.index')}}">Commandes Approuvées</a>
@@ -148,7 +147,7 @@
 						</li>
 
                         <li class="">
-							<a href="{{route('products.index')}}"><i class="fa fa-money nav_icon"></i>Ventes <span class="fa arrow"></span></a>
+							<a href="{{route('sellings.index')}}"><i class="fa fa-money nav_icon"></i>Ventes <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
 									<a href="{{route('sellings.index')}}">Mes Ventes</a>
@@ -174,7 +173,7 @@
 				<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
 					<ul class="nav" id="side-menu">
 						<li>
-							<a href="{{route('manager')}}" class="active"><i class="fa fa-home nav_icon"></i>Tableau de board</a>
+							<a href="{{route('home')}}" class="active"><i class="fa fa-home nav_icon"></i>Tableau de board</a>
 						</li>
                         <li>
 							<a href="{{route('category.index')}}"><i class="fa fa-list-alt nav_icon"></i>Catégories</a>
@@ -183,7 +182,7 @@
 							<a href="{{route('product.index')}}"><i class="fa fa-dropbox nav_icon"></i>Produits</a>
 						</li>
                         <li class="">
-							<a href="{{route('admin.order.index')}}"><i class="fa fa-folder nav_icon"></i>Commandes <span class="fa arrow"></span></a>
+							<a href="{{route('orders.index')}}"><i class="fa fa-folder nav_icon"></i>Commandes <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
                                 <li>
 									<a href="{{route('orders.index')}}">Mes Commandes</a>
@@ -199,7 +198,7 @@
 						</li>
 
                         <li class="">
-							<a href="{{route('products.index')}}"><i class="fa fa-money nav_icon"></i>Ventes <span class="fa arrow"></span></a>
+							<a href="{{route('sellings.index')}}"><i class="fa fa-money nav_icon"></i>Ventes <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
 									<a href="{{route('sellings.index')}}">Mes Ventes</a>

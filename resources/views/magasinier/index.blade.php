@@ -32,11 +32,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/Chart.js')}}"></script>
 <!-- //chart -->
 <!--Calender-->
-<link rel="stylesheet" href="{{asset('css_admin/clndr.css')}}" type="text/css" />
 <script src="{{asset('js_admin/underscore-min.js')}}" type="text/javascript"></script>
 <script src= "{{asset('js_admin/moment-2.2.1.js')}}" type="text/javascript"></script>
-<script src="{{asset('js_admin/clndr.js')}}" type="text/javascript"></script>
-<script src="{{asset('js_admin/site.js')}}" type="text/javascript"></script>
 <!--End Calender-->
 <!-- Metis Menu -->
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
@@ -56,38 +53,40 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 		<div id="page-wrapper">
 			<div class="main-page">
 				<div class="row-one">
-					<div class="col-md-4 widget">
+					<div class="col-md-4 widget" title="Commande Non Exécutée">
 						<div class="stats-left ">
-							<h5>Today</h5>
-							<h4>Sales</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>CNE</h4>
 						</div>
 						<div class="stats-right">
-							<label> 45</label>
+							<label>{{($non_execute)}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
-					<div class="col-md-4 widget states-mdl">
+					<div class="col-md-4 widget states-mdl" title="Commande Non Approuvée">
 						<div class="stats-left">
-							<h5>Today</h5>
-							<h4>Visitors</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>CNA</h4>
 						</div>
 						<div class="stats-right">
-							<label> 80</label>
+							<label>{{$non_approve}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
-					<div class="col-md-4 widget states-last">
+					<div class="col-md-4 widget states-last" title="Vente Non Déclarée">
 						<div class="stats-left">
-							<h5>Today</h5>
-							<h4>Orders</h4>
+							<h5>Aujourd'hui</h5>
+							<h4>VND</h4>
 						</div>
 						<div class="stats-right">
-							<label>51</label>
+							<label>{{$vente_non_declare}}</label>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
 					<div class="clearfix"> </div>
+
 				</div>
+
 				<div class="charts">
 					<div class="col-md-4 charts-grids widget">
 						<h4 class="title">Bar Chart Example</h4>
@@ -269,133 +268,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<div class="clearfix"> </div>
 				</div>
 				<div class="row">
-					<div class="col-md-8 map widget-shadow">
-						<h4 class="title">Visitors Map </h4>
-						<div class="map_container"><div id="vmap" style="width: 100%; height: 354px;"></div></div>
-						<!--map js-->
-						<link href="{{asset('css_admin/jqvmap.css')}}" rel='stylesheet' type='text/css' />
-						<script src="{{asset('js_admin/jquery.vmap.js')}}"></script>
-						<script src="{{asset('js_admin/jquery.vmap.sampledata.js')}}" type="text/javascript"></script>
-						<script src="{{asset('js_admin/jquery.vmap.world.js')}}" type="text/javascript"></script>
-						<script type="text/javascript">
-							jQuery(document).ready(function() {
-								jQuery('#vmap').vectorMap({
-									map: 'world_en',
-									backgroundColor: '#fff',
-									color: '#696565',
-									hoverOpacity: 0.8,
-									selectedColor: '#696565',
-									enableZoom: true,
-									showTooltip: true,
-									values: sample_data,
-									scaleColors: ['#585858', '#696565'],
-									normalizeFunction: 'polynomial'
-								});
-							});
-						</script>
-						<!-- //map js -->
-					</div>
-					<div class="col-md-4 social-media widget-shadow">
-						<div class="wid-social twitter">
-							<div class="social-icon">
-								<i class="fa fa-twitter text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">3.1 K</h3>
-								<h4 class="counttype text-light">Tweets</h4>
-							</div>
-						</div>
-						<div class="wid-social google-plus">
-							<div class="social-icon">
-								<i class="fa fa-google-plus text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">523</h3>
-								<h4 class="counttype text-light">Circles</h4>
-							</div>
-						</div>
-						<div class="wid-social facebook">
-							<div class="social-icon">
-								<i class="fa fa-facebook text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1.06K</h3>
-								<h4 class="counttype text-light">Likes</h4>
-							</div>
-						</div>
-						<div class="wid-social dribbble">
-							<div class="social-icon">
-								<i class="fa fa-dribbble text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1.6 K</h3>
-								<h4 class="counttype text-light">Subscribers</h4>
-							</div>
-						</div>
-						<div class="wid-social vimeo">
-							<div class="social-icon">
-								<i class="fa fa-vimeo-square text-light icon-xlg"> </i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">2.1 m</h3>
-								<h4 class="counttype text-light">Contacts</h4>
-							</div>
-						</div>
-						<div class="wid-social xing">
-							<div class="social-icon">
-								<i class="fa fa-xing text-light icon-xlg "></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">2525</h3>
-								<h4 class="counttype text-light">Connections</h4>
-							</div>
-						</div>
-						<div class="wid-social flickr">
-							<div class="social-icon">
-								<i class="fa fa-android text-light icon-xlg"></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1221</h3>
-								<h4 class="counttype text-light">Media</h4>
-							</div>
-						</div>
-						<div class="wid-social yahoo">
-							<div class="social-icon">
-								<i class="fa fa-yahoo text-light icon-xlg"> Y!</i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">2525</h3>
-								<h4 class="counttype text-light">Connections</h4>
-							</div>
-						</div>
-						<div class="wid-social rss">
-							<div class="social-icon">
-								<i class="fa fa-rss text-light icon-xlg"></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1523</h3>
-								<h4 class="counttype text-light">Subscribers</h4>
-							</div>
-						</div>
-						<div class="wid-social youtube">
-							<div class="social-icon">
-								<i class="fa fa-youtube text-light icon-xlg"></i>
-							</div>
-							<div class="social-info">
-								<h3 class="number_counter bold count text-light start_timer counted">1523</h3>
-								<h4 class="counttype text-light">Subscribers</h4>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
 					<div class="clearfix"> </div>
 				</div>
-				<div class="row calender widget-shadow">
+				<!-- <div class="row calender widget-shadow">
 					<h4 class="title">Calender</h4>
 					<div class="cal1">
 
 					</div>
-				</div>
+				</div> -->
 				<div class="clearfix"> </div>
 			</div>
 		</div>
@@ -416,6 +296,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 				classie.toggle( menuLeft, 'cbp-spmenu-open' );
 				disableOther( 'showLeftPush' );
 			};
+
 
 			function disableOther( button ) {
 				if( button !== 'showLeftPush' ) {

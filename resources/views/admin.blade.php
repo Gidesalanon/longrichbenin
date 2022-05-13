@@ -32,11 +32,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('js_admin/Chart.js')}}"></script>
 <!-- //chart -->
 <!--Calender-->
-<link rel="stylesheet" href="{{asset('css_admin/clndr.css')}}" type="text/css" />
 <script src="{{asset('js_admin/underscore-min.js')}}" type="text/javascript"></script>
 <script src= "{{asset('js_admin/moment-2.2.1.js')}}" type="text/javascript"></script>
-<script src="{{asset('js_admin/clndr.js')}}" type="text/javascript"></script>
-<script src="{{asset('js_admin/site.js')}}" type="text/javascript"></script>
 <!--End Calender-->
 <!-- Metis Menu -->
 <script src="{{asset('js_admin/metisMenu.min.js')}}"></script>
@@ -88,43 +85,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 						<div class="clearfix"> </div>
 					</div>
 					<div class="clearfix"> </div>
-
-
-				</div>
-
-                <div class="row-one">
-					<div class="col-md-4 widget" title="Commande Exécutée">
-						<div class="stats-left ">
-							<h5>Aujourd'hui</h5>
-							<h4>CE</h4>
-						</div>
-						<div class="stats-right">
-							<label>{{($execute)}}</label>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-					<div class="col-md-4 widget states-mdl" title="Commande Approuvée">
-						<div class="stats-left">
-							<h5>Aujourd'hui</h5>
-							<h4>CA</h4>
-						</div>
-						<div class="stats-right">
-							<label>{{$approve}}</label>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-					<div class="col-md-4 widget states-last" title="Vente Déclarée">
-						<div class="stats-left">
-							<h5>Aujourd'hui</h5>
-							<h4>VD</h4>
-						</div>
-						<div class="stats-right">
-							<label>{{$vente_declare}}</label>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-					<div class="clearfix"> </div>
-
 
 				</div>
 

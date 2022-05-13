@@ -77,7 +77,7 @@
 						<span class="label-input100">Email</span>
 						<input class="input100 @error('email') is-invalid @enderror" type="email" id="email" name="email" placeholder="Entrer votre email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                         @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -88,7 +88,7 @@
 						<span class="label-input100">Password</span>
 						<input class="input100 @error('password') is-invalid @enderror"  id="password" type="password" name="password" required autocomplete="current-password" placeholder="Entrer password">
                         @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

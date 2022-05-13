@@ -176,7 +176,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
             infoPostFix:    "",
             loadingRecords: "Chargement en cours...",
             zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-            emptyTable:     "Aucune donnÃ©e disponible dans le tableau",
+            emptyTable:     "Aucune donnée disponible pour le moment",
             paginate: {
                 first:      "<<",
                 previous:   "<",

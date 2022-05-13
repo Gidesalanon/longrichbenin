@@ -62,22 +62,21 @@
 
 				<form class="login100-form validate-form" method="POST" action="{{ route('register') }}">
                     @csrf
-
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Code is required">
 						<span class="label-input100">Code</span>
 						<input class="input100 @error('code') is-invalid @enderror" type="text" id="code" name="code" placeholder="Entrer votre code" value="{{ old('code') }}" required autocomplete="code" autofocus>
-                        @error('code')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                            @error('code')
+                                <span class="invalid-feedback" role="alert" style="color:red;">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
 						<span class="focus-input100"></span>
 					</div>
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Nom is required">
 						<span class="label-input100">Nom</span>
 						<input class="input100 @error('nom') is-invalid @enderror" type="text" id="nom" name="nom" placeholder="Entrer votre nom" value="{{ old('nom') }}" required autocomplete="nom" autofocus>
                         @error('nom')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert" style="color:red;">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -87,7 +86,7 @@
 						<span class="label-input100">Prénom</span>
 						<input class="input100 @error('prenom') is-invalid @enderror" type="text" id="prenom" name="prenom" placeholder="Entrer votre Prénom" value="{{ old('prenom') }}" required autocomplete="prenom" autofocus>
                         @error('prenom')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert" style="color:red;">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -97,7 +96,7 @@
 						<span class="label-input100">Email</span>
 						<input class="input100 @error('email') is-invalid @enderror" type="email" id="email" name="email" placeholder="Entrer votre email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                         @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -107,7 +106,7 @@
 						<span class="label-input100">Adresse</span>
 						<input class="input100 @error('adresse') is-invalid @enderror" type="text" id="adresse" name="adresse" placeholder="Entrer votre adresse" value="{{ old('adresse') }}" required autocomplete="adresse" autofocus>
                         @error('adresse')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert" style="color:red;">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -120,7 +119,7 @@
 						<span class="label-input100">Téléphone</span>
 						<input class="input100 @error('tel') is-invalid @enderror" type="number" id="tel" name="tel" placeholder="Entrer votre téléphone" value="{{ old('tel') }}" required autocomplete="tel" autofocus>
                         @error('tel')
-                            <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert" style="color:red;">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -130,7 +129,7 @@
 						<span class="label-input100">Mot de passe</span>
 						<input class="input100 @error('password') is-invalid @enderror" id="password" type="password" name="password" placeholder="Entrer votre mot de passe" required autocomplete="new-password">
                         @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

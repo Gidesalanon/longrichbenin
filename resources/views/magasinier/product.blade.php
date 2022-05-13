@@ -16,7 +16,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <link href="{{asset('css_admin/font-awesome.css')}}" rel="stylesheet">
 <!-- //font-awesome icons -->
  <!-- js-->
-<script src="{{asset('js_admin/jquery-1.11.1.min.js')}}"></script>
 <script src="{{asset('js_admin/modernizr.custom.js')}}"></script>
 <!--webfonts-->
 <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
@@ -34,10 +33,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 <link href="{{asset('css_admin/custom.css')}}" rel="stylesheet">
 
 <link rel="stylesheet" href="{{asset('stylebutton.css')}}">
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css"/>
-
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
 <!--//Metis Menu -->
 </head>
 <body class="cbp-spmenu-push">
@@ -58,7 +53,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         @include('product.ElseFile')
                     @endif
                     @forelse($stocks as $stock)
-					<div class="table table-bordered table-striped no-margin grd_tble" id="myTable">
+					<div class="table-responsive bs-example widget-shadow">
                         <span class="col-md-3">
                             <h4>Liste de nos produits</h4>
                         </span>
@@ -70,7 +65,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <th>PV</th>
                                     <th>Prix Partenaire</th>
                                     <th>Prix Client</th>
-                                    @if (@if (Auth::user()->is_admin == 2))
+                                    @if (Auth::user()->is_admin == 2)
                                         <th>Quantité</th>
                                     @else
                                     @endif
@@ -85,7 +80,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     <td>{{ $product->nbpv }}</td>
                                     <td class="myDIV">{{ $product->prixpartenaire }}</td>
                                     <td class="myDIV">{{ $product->prixclient }}</td>
-                                    @if (@if (Auth::user()->is_admin == 2))
+                                    @if (Auth::user()->is_admin == 2)
                                         <td>{{ $product->qte }}</td>
                                     @else
                                     @endif
@@ -148,58 +143,6 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 	<!--//scrolling js-->
 	<!-- Bootstrap Core JavaScript -->
 	<script src="{{asset('js_admin/bootstrap.js')}}"> </script>
-    <script>
 
-        $.fn.dataTable.ext.errMode = 'none';
-
-	$('#example').on( 'error.dt', function ( e, settings, techNote, message ) {
-		console.log( 'An error has been reported by DataTables: ', message );
-	});
-
-	let table = $('#myTable').DataTable( {
-        language: {
-            processing:     "Traitement en cours...",
-            search:         "Rechercher&nbsp;:",
-            lengthMenu:     "MENU &eacute;l&eacute;ments",
-            info:           "Affichage des &eacute;l&eacute;ments START &agrave; END sur TOTAL",
-            infoEmpty:      "Aucun &eacute;lement trouv&eacute;",
-            infoFiltered:   "(filtr&eacute; de MAX &eacute;l&eacute;ments au total)",
-            infoPostFix:    "",
-            loadingRecords: "Chargement en cours...",
-            zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-            emptyTable:     "Aucune donnÃ©e disponible dans le tableau",
-            paginate: {
-                first:      "<<",
-                previous:   "<",
-                next:       ">",
-                last:       ">>"
-            },
-            aria: {
-                sortAscending:  ": activer pour trier la colonne par ordre croissant",
-                sortDescending: ": activer pour trier la colonne par ordre dÃ©croissant"
-            }
-        },
-        // pagingType: "full_numbers",
-            lengthMenu: [ 10, 25, 50, 75, 100 ],
-
-        dom: '<"top">Brt<"buttom"p><"clear">',
-        processing: true,
-		retrieve: true,
-
-		columnDefs: [
-			{
-				targets: [0,-1], //first column / numbering column
-				orderable: false, //set not orderable
-			},
-		],
-		//dom: 'Bfrtip',
-
-    });
-
-    $('#search').on('keyup', function(){
-      table.search(($(this).val()).trim()).draw();
-    });
-
-   </script>
 </body>
 </html>
