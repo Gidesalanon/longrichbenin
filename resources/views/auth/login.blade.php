@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V15</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -25,26 +24,60 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css_login/util.css">
 	<link rel="stylesheet" type="text/css" href="css_login/main.css">
+    <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 <!--===============================================================================================-->
 </head>
 <body>
-
+@jquery
+@toastr_css
+@toastr_js
+@toastr_render
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
+
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <!-- <a class="navbar-brand" href="index.html">Men<span>tor</span></a> -->
+                    <a class="logo" href="{{url('/')}}">
+                        <img src="img/logo.png" alt="" title="longrich-benin" style="height:52px;" />
+                    </a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <a href="{{route('register')}}">
+                            <li><img src="{{asset('ajouteruser.png')}}" title="S'inscrire" style="box-shadow: 5px 5px 5px gray; margin:0 5px; width: 40px; border-radius:20%"/></li>
+                        </a>
+                    </ul>
+                </div>
+                </div>
+            </nav>
+
+                @if (session('status'))
+                    <div class="alert alert-danger">{{ session('status') }}</div>
+                @endif
+
+
 				<div class="login100-form-title" style="background-image: url(images_login/bg-01.jpg);">
 					<span class="login100-form-title-1">
 						Se connecter
 					</span>
 				</div>
-
 				<form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                     @csrf
 					<div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
 						<span class="label-input100">Email</span>
 						<input class="input100 @error('email') is-invalid @enderror" type="email" id="email" name="email" placeholder="Entrer votre email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                         @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -55,7 +88,7 @@
 						<span class="label-input100">Password</span>
 						<input class="input100 @error('password') is-invalid @enderror"  id="password" type="password" name="password" required autocomplete="current-password" placeholder="Entrer password">
                         @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

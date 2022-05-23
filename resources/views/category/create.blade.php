@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Nouvelle categories :: Admin</title>
+<title>Longrich Bénin | Nouvelle categorie :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -56,7 +56,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
-                                Nouvelle catégorie ajoutée avec succès.
+                                {{ session('message') }}
                             </div>
                         @endif
 						<div class="form-title">
@@ -67,11 +67,18 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                             @csrf
                             <div class="form-group">
                                 <label for="">Libellé</label>
-                                <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required>
+                                <input type="text" class="form-control @error('libelle') is-invalid @enderror" id="libelle" name="libelle" placeholder="Libellé" required>
+
+                                @error('libelle')
+                                    <span class="invalid-feedback" role="alert" style="color:red;">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Description</label>
-                                <textarea rows="6" id="libelle" name="description" id="description" class="form-control" placeholder="Description :" ></textarea>
+                                <textarea rows="6" id="desc" name="description" id="description" class="form-control" placeholder="Description :" ></textarea>
                             </div>
                             <button type="submit" class="btn btn-default">Créer</button>
                         </form>
@@ -90,14 +97,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 				showLeftPush = document.getElementById( 'showLeftPush' ),
 				body = document.body;
-
 			showLeftPush.onclick = function() {
 				classie.toggle( this, 'active' );
 				classie.toggle( body, 'cbp-spmenu-push-toright' );
 				classie.toggle( menuLeft, 'cbp-spmenu-open' );
 				disableOther( 'showLeftPush' );
 			};
-
 			function disableOther( button ) {
 				if( button !== 'showLeftPush' ) {
 					classie.toggle( showLeftPush, 'disabled' );

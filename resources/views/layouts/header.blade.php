@@ -1,3 +1,22 @@
+@toastr_css
+@toastr_js
+@toastr_render
+
+<style>
+    @media (max-width: 768px)
+{
+    .profile_details {
+        position: absolute;
+        right: 0;
+        top: 10px;
+    }
+    .user-name, .profile_details_left, .logo {
+        display: none;
+    }
+    
+}
+</style>
+
 <div class="sticky-header header-section ">
 			<div class="header-left">
 				<!--toggle button start-->
@@ -7,15 +26,15 @@
 				<div class="logo">
 					<a href="{{url('/')}}">
 						<h1>Longrich Bénin</h1>
-						<span>Administration</span>
+						 <span>Dashboard</span>
 					</a>
 				</div>
 				<!--//logo-->
 				<!--search-box-->
 				<div class="search-box">
 					<form class="input">
-						<input class="sb-search-input input__field--madoka" placeholder="Recherche..." type="search" id="input-31" />
-						<label class="input__label" for="input-31">
+						<input class="sb-search-input input__field--madoka" placeholder="Recherche..." type="search" id="search" />
+						<label class="input__label" for="search">
 							<svg class="graphic" width="100%" height="100%" viewBox="0 0 404 77" preserveAspectRatio="none">
 								<path d="m0,0l404,0l0,77l-404,0l0,-77z"/>
 							</svg>
@@ -168,7 +187,12 @@
 									<span class="prfil-img"><img src="{{asset('images_admin/a.png')}}" alt=""> </span>
 									<div class="user-name">
 										<p>{{ Auth::user()->nom }}</p>
-										<span>Admin</span>
+										@if (Auth::user()->is_admin ==1)
+                                            <span>Administration</span>
+                                        @elseif (Auth::user()->is_admin ==2)
+                                            <span>Manager</span>
+                                        @else <span>Commercial</span>
+                                        @endif
 									</div>
 									<i class="fa fa-angle-down lnr"></i>
 									<i class="fa fa-angle-up lnr"></i>
@@ -176,8 +200,8 @@
 								</div>
 							</a>
 							<ul class="dropdown-menu drp-mnu">
+                                <li> <a href="{{route('profiles.index')}}"><i class="fa fa-user"></i> Profil</a> </li>
 								<li> <a href="#"><i class="fa fa-cog"></i> Paramètres</a> </li>
-								<li> <a href="#"><i class="fa fa-user"></i> Profil</a> </li>
 								<li> <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                    document.getElementById('logout-form').submit();" class="dropdown-item"><i class="fa fa-sign-out dropdown-toggle"></i> Se Déconnecter</a>
                                 </li>

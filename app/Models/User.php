@@ -27,6 +27,9 @@ class User extends Authenticatable
         'status',
         'password',
         'is_admin',
+        'is_magasinier',
+        'isban',
+        'enterprise_id',
     ];
 
     /**
@@ -47,4 +50,42 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function enterprise()
+    {
+        return $this->belongsTo('App\Models\Enterprise');
+    }
+
+    public function orders()
+    {
+        return $this->belongsTo('App\Models\Order');
+    }
+
+    public function ordergroups()
+    {
+        return $this->hasMany('App\Models\Ordergroup');
+    }
+
+    public function parents()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+    public function allChildren()
+    {
+        return $this->children()->with('children');
+    }
+    public function allParents()
+    {
+        return $this->parents()->with('children', 'parents');
+    }
+    public function sellings()
+    {
+        return $this->hasOne('App\Models\Selling');
+    }
+
 }

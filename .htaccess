@@ -13,9 +13,15 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
-
-    # Send Requests To Front Controller...
+    
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} business.longrich-benin\.com [NC]
+    RewriteCond %{SERVER_PORT} 80
+    
+    # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+

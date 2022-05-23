@@ -51,12 +51,14 @@ class LoginController extends Controller
         {
             if (auth()->user()->is_admin == 1) {
                 return redirect()->route('admin.home');
+            }elseif (auth()->user()->is_admin == 2) {
+                return redirect()->route('manager');
             }else{
                 return redirect()->route('home');
             }
         }else{
-            return redirect()->route('login')
-                ->with('error','Adresse Email Ou Mot de Passe erroné.');
+            return redirect()->route('login');
+            toastr()->info('Adresse Email Ou Mot de Passe erroné.');
         }
 
     }

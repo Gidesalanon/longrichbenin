@@ -1,9 +1,3 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -56,26 +50,26 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
 					<div class="form-grids row widget-shadow" data-example-id="basic-forms">
                         @if (session('message'))
                             <div class="alert alert-success" role="alert">
-                                La catégorie a été modifiée avec succès.
+                                {{ session('message') }}
                             </div>
                         @endif
 						<div class="form-title">
 							<h4>Modifier cette catégorie de produits:</h4>
 						</div>
 						<div class="form-body">
-						 <form method="POST" action="{{ route('categories.update', $category->id)}}">
-                            @csrf
-                            {{ method_field('PATCH') }}
-                            <div class="form-group">
-                                <label for="">Libellé</label>
-                                <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Description</label>
-                                <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
-                            </div>
-                            <button type="submit" class="btn btn-default">Modifier</button>
-                        </form>
+                            <form method="POST" action="{{ route('categories.update', $category->id)}}">
+                                @csrf
+                                {{ method_field('PATCH') }}
+                                <div class="form-group">
+                                    <label for="">Libellé</label>
+                                    <input type="text" class="form-control" id="libelle" name="libelle" placeholder="Libellé" required value="{{ $category['libelle']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Description</label>
+                                    <textarea rows="6" id="description" name="description" id="description" class="form-control" placeholder="Description :" >{{ $category['description']}}</textarea>
+                                </div>
+                                <button type="submit" class="btn btn-default">Modifier</button>
+                            </form>
 						</div>
 					</div>
 				</div>

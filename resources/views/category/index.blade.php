@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Longrich Bénin | Liste de catégories :: Admin</title>
+<title>Longrich Bénin | Liste des catégories :: Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Novus Admin Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
@@ -59,7 +59,15 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 {{ session('message') }}
                             </div>
                         @endif
-						<h4>Liste de nos catégories de produits</h4>
+
+                        <span class="col-md-6">
+                            <h4>Nos catégories de produits</h4>
+                        </span>
+                        <span class="col-md-6" style="text-align: right;">
+                            <a href="{{ route('categories.create') }}" class="nav-badge-btm">
+                                <button type="submit" class="btn btn-info" style="box-shadow: 5px 5px 5px gray; margin:0 5px;">Nouvelle catégorie <i class="fa fa-plus-circle"></i></button>
+                            </a>
+                        </span>
 						<table class="table table-bordered">
                             <thead>
                                 <tr>

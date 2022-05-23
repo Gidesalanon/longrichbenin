@@ -6,12 +6,17 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "facade/ignition-self-diagnosis": "^1.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "kkiapay/kkiapay-php": "dev-master",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.4"
+        "laravel/ui": "^3.4",
+        "laravelcollective/html": "^6.3",
+        "laraveldaily/laravel-charts": "^0.1.29",
+        "yoeunes/toastr": "^1.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -3,32 +3,91 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Enterprise;
+use App\Models\Selling;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::where('status', '<>', 1)->get();
-        $nbUserNotApproved = User::where('status', '<>', 1)->count();
-        return view('users', compact('users', 'nbUserNotApproved'));
+        $users = User::where('isban', '>', 0)->get();
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        $enterprises = Enterprise::where('id', '>', 1)->get();
+
+        $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        return view('approvUser.users', compact('users', 'nbUserNotApproved', 'enterprises', 'count_ecart'));
     }
 
-    public function approve($user_id)
-    {
-        $user = User::findOrFail($user_id);
-        $user->update(['status' => 1]);
+    public function create(){
 
-        return redirect()->route('admin.users.index')->withMessage('Utilisateur approuvé avec succès');
+    }
+
+    public function edit(Request $request, $user_id)
+    {
+         $user = User::findOrFail($user_id);
+            $user->update([
+                'isban' => 0,
+                'enterprise_id' => $request->enterprise_id
+            ]);
+
+        toastr()->success('Utilisateur approuvé avec succès', 'Succès');
+        return redirect()->route('users.index');
+    }
+
+    public function show(){
+
     }
 
     public function destroy($user_id)
     {
         User::where('id', $user_id)->delete();
-
-        return redirect()->route('admin.users.index')->withMessage('Utilisateur supprimé avec succès');;  // -> resources/views/stocks/index.blade.php
+        toastr()->success('Utilisateur supprimé avec succès', 'Succès');
+        return redirect()->route('users.index');
     }
 
-    public function administration(){
-        return view('admin');
+    public function administration()
+    {
+        $sellings = Selling::all();
+        $users = User::with('sellings')
+        ->get();
+        $user = User::all();
+                foreach($user as $user) :
+                    $users[$user->id] = $user->nom.' '.$user->prenom;
+                endforeach;
+
+        $products = Product::with('sellings')
+        ->get();
+        $product = Product::all();
+                foreach($product as $product) :
+                    $products[$product->id] = $product->nom.' '.$product->prenom;
+                endforeach;
+
+        $non_execute = count(Order::where('execute', '=', 0)->where('approve', '=', 1)->get());
+        /* $execute = count(Order::whereDay('created_at', today()->day)->where('execute', '=', 1)->where('approve', '=', 1)->get()); */
+
+        $non_approve = count(Order::where('approve', '=', 0)->get());
+        /* $approve = count(Order::whereDay('created_at', today()->day)->where('approve', '=', 1)->get()); */
+
+        $vente_non_declare= count(Order::where('status', '=', 0)->where('approve', '=', 1)->where('execute', '=', 1)->get());
+        /* $vente_declare = count(Order::whereDay('created_at', today()->day)->where('status', '=', 1)->where('approve', '=', 1)->where('execute', '=', 1)->get()); */
+
+         $count_ecart = count(Selling::all()
+            ->where('user_id', Auth::user()->id)
+            ->where('ecart', '>', 0));
+
+        $nbUserNotApproved = User::where('isban', '>', 0)->count();
+
+        return view('admin', ['sellings' => $sellings],compact('non_execute',
+                                             'non_approve', 'vente_non_declare',
+                                             'users', 'products', 'count_ecart', 'nbUserNotApproved'));
     }
 }

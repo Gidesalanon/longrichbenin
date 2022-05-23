@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->string('nom');
             $table->string('prenom');
             $table->string('email')->unique();
@@ -25,8 +25,14 @@ class CreateUsersTable extends Migration
             $table->string('status')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->nullable();
-            $table->rememberToken();
+            $table->boolean('is_magasinier')->nullable();
+            $table->tinyInteger('isban')->default('0');
+            $table->unsignedBigInteger('enterprise_id');
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('enterprise_id')->references('id')->on('enterprises')->onUpdate('cascade') ->onDelete('cascade');
         });
     }
 
@@ -37,6 +43,10 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function(Blueprint $table){
+            $table->dropColumn('control');
+            Schema::dropIfExists('users');
+        });
+
     }
 }

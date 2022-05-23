@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Calculatrice - Longrich Bénin</title>
+  <title>Page de Business - Longrich Bénin</title>
   <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
   <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
 
@@ -32,7 +32,7 @@
           <span class="icon-bar"></span>
         </button>
         <!-- <a class="navbar-brand" href="index.html">Men<span>tor</span></a> -->
-        <a class="logo" href="index.html">
+        <a class="logo" href="{{url('/')}}">
             <img src="img/logo.png" alt="" title="logo" style="height:60px;" />
         </a>
       </div>
@@ -51,7 +51,6 @@
                             {{ Auth::user()->nom }} {{ Auth::user()->prenom }}
                         </a>
                     </li>
-
             @endguest
         </ul>
       </div>
@@ -227,7 +226,7 @@
       <div class="row">
         <div class="header-section text-center">
           <h2>Calculatrice</h2>
-          <p>Calculer ici vos PVs (Points Valeurs), et prix de vos produits sélectionnés.</p>
+          <p>Calculer ici vos commissions sur vos sélections.</p>
           <hr class="bottom-line">
         </div>
         <div class="calculatrice-info">
@@ -270,7 +269,7 @@
               <h3 class="det-txt"> S'inscrire à Longrich c'est Oui à un avenir joyeux!</h3>
               <h4 class="sm-txt">(Longrich c'est du Better Life Better Future)</h4>
             </hgroup>
-            <p class="det-p">Contactez-nous maintenant pour devenir partenaire et profiter aussi de nos prix exceptionnels.</p>
+            <p class="det-p">Contactez-nous dès maintenant pour devenir partenaire et profiter aussi de nos prix exceptionnels.</p>
           </div>
         </div>
       </div>
@@ -284,7 +283,7 @@
       <div class="row">
         <div class="header-section text-center">
           <h2>Contactez Nous</h2>
-          <p>Pour toutes informations, suggestions ou doléances, veuillez nous contactez. Nous vous répondrons au plus tôt.</p>
+          <p>Ecrivez nous aujourd'hui, pour devenir membre et profiter des multiples avantages du business.</p>
           <hr class="bottom-line">
         </div>
         <div id="sendmessage">Your message has been sent. Thank you!</div>
